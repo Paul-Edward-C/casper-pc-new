@@ -75,13 +75,14 @@ production stylesheet in assets/built/screen.css
 /* Full width page blocks */
 .outer {
     position: relative;
+    max-width: 1200px;
     padding: 0 4vmin;
 }
 
 /* Centered content container blocks */
 .inner {
     margin: 0 auto;
-    width: 100%;
+    width: 200%;
 }
 
 
