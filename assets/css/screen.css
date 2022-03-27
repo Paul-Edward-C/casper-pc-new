@@ -82,7 +82,7 @@ production stylesheet in assets/built/screen.css
 /* Centered content container blocks */
 .inner {
     margin: 0 auto;
-    width: 200%;
+    width: 100%;
 }
 
 
