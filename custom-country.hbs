@@ -13,7 +13,7 @@ into the {body} tag of the default.hbs template --}}
 
     <article class="article {{post_class}}">
 
-        {{#get "posts" filter="primary_tag:{{#cycle}}" limit="3"}}
+        {{#get "posts" filter="primary_tag:{{hash-cycle}}" limit="3"}}
             {{#foreach posts}}
                 <li><a href="{{url}}">{{title}}</a></li>
             {{/foreach}}
