@@ -11,13 +11,14 @@ into the {body} tag of the default.hbs template --}}
 
 <main id="site-main" class="site-main">
 
-    {{#get "posts" filter="primary_tag:{{cycle}}" limit="3"}}
-        {{#foreach posts}}
-            <li><a href="{{url}}">{{title}}</a></li>
-        {{/foreach}}
-    {{/get}}
-
     <article class="article {{post_class}}">
+
+        {{#get "posts" filter="primary_tag:{{cycle}}" limit="3"}}
+            {{#foreach posts}}
+                <li><a href="{{url}}">{{title}}</a></li>
+            {{/foreach}}
+        {{/get}}
+
 
         <header class="article-header gh-canvas">
             {{#if feature_image}}
