@@ -11,12 +11,12 @@ into the {body} tag of the default.hbs template --}}
 <main id="site-main" class="site-main">
     <article class="article {{post_class}} {{#match @custom.post_image_width "Full"}}image-full{{else match @custom.post_image_width "=" "Small"}}image-small{{/match}}">
 
-    {{#get "posts"}}
-        {{#foreach posts}}
-            {{title}}
-        {{/foreach}}
-    {{/get}}
-
+{{#get "authors"}}
+    {{! Loop through authors }}
+    {{#foreach authors}}
+        {{name}}
+    {{/foreach}}
+{{/get}}
 
         <section class="gh-content gh-canvas">
             {{content}}
