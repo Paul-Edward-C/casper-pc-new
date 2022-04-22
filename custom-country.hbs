@@ -15,6 +15,7 @@ into the {body} tag of the default.hbs template --}}
 {{#get "posts" filter='tag:hash-korea'}}
     {{#foreach posts}}
         <li><a href="{{url}}">{{title}}</a></li>
+        {{> "post-card"}}
     {{/foreach}}
 {{/get}}
 
