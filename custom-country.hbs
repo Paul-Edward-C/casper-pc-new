@@ -11,11 +11,13 @@ into the {body} tag of the default.hbs template --}}
 <main id="site-main" class="site-main">
     <article class="article {{post_class}} {{#match @custom.post_image_width "Full"}}image-full{{else match @custom.post_image_width "=" "Small"}}image-small{{/match}}">
 
-{{#get "posts" limit="all", tag="hash-korea"}}
-    {{#foreach posts}}
-        <a href="{{slug}}">{{title}}</a>
-    {{/foreach}}
-{{/get}}
+{{#post}}
+    {{#get "posts" filter="primary_tag:{{hash-cycle}}" limit="3"}}
+        {{#foreach posts}}
+            <li><a href="{{url}}">{{title}}</a></li>
+        {{/foreach}}
+    {{/get}}
+{{/post}}
 
         <section class="gh-content gh-canvas">
             {{content}}
