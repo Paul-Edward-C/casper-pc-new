@@ -10,7 +10,23 @@ into the {body} tag of the default.hbs template --}}
 
 <main id="site-main" class="site-main outer">
     <!-- from post.hbs -->
-    <div class="inner">
+    
+    <!-- get the list of posts -->
+    {{#get "posts"}}
+    <div class="inner posts">
+        <div class="post-feed">
+            {{#foreach posts}}
+
+                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
+                {{> "post-card"}}
+
+            {{/foreach}}
+        </div>
+    </div>
+    {{/get}}
+
+
+  <div class="inner">
         {{#page}}
         <article class="post-full {{post_class}} no-image">
 
@@ -29,34 +45,6 @@ into the {body} tag of the default.hbs template --}}
         </article>
         {{/page}}
     </div>
-    
-    <!-- get the list of posts -->
-    {{#get "posts"}}
-    <div class="inner posts">
-        <div class="post-feed">
-            {{#foreach posts}}
-
-                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
-                {{> "post-card"}}
-
-            {{/foreach}}
-        </div>
-    </div>
-    {{/get}}
-
-
-
-        <section class="gh-content gh-canvas">
-            {{content}}
-        </section>
-
-        {{!--
-        <section class="article-comments gh-canvas">
-            If you want to embed comments, this is a good place to paste your code!
-        </section>
-        --}}
-
-    </article>
 
 </main>
 
