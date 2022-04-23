@@ -9,6 +9,12 @@ into the {body} tag of the default.hbs template --}}
 {{!-- Everything inside the #post block pulls data from the post --}}
 
 <main id="site-main" class="site-main outer">
+    
+                <header class="post-full-header">
+
+                <h1 class="post-full-title">{{title}}</h1>
+
+            </header>
     <!-- from post.hbs -->
     
     <!-- get the list of posts -->
@@ -29,12 +35,6 @@ into the {body} tag of the default.hbs template --}}
   <div class="inner">
         {{#page}}
         <article class="post-full {{post_class}} no-image">
-
-            <header class="post-full-header">
-
-                <h1 class="post-full-title">{{title}}</h1>
-
-            </header>
 
             <section class="post-full-content">
                 <div class="post-content">
