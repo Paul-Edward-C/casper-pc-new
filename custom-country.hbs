@@ -8,50 +8,30 @@ into the {body} tag of the default.hbs template --}}
 {{#post}}
 {{!-- Everything inside the #post block pulls data from the post --}}
 
-<main id="site-main" class="site-main">
-    <article class="article {{post_class}} {{#match @custom.post_image_width "Full"}}image-full{{else match @custom.post_image_width "=" "Small"}}image-small{{/match}}">
+<main id="site-main" class="site-main outer">
+    <!-- from post.hbs -->
+    <div class="inner">
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
 
-        <header class="article-header gh-canvas">
+            <header class="post-full-header">
 
-            {{#if primary_tag}}
-            <section class="article-tag">
-                <a href="{{primary_tag.url}}">{{primary_tag.name}}</a>
+                <h1 class="post-full-title">{{title}}</h1>
+
+            </header>
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
             </section>
-            {{/if}}
 
-            <h1 class="article-title">{{title}}</h1>
-
-            {{#if custom_excerpt}}
-            <p class="article-excerpt">{{custom_excerpt}}</p>
-            {{/if}}
-
-            <div class="article-byline">
-                <section class="article-byline-content">
-                    <ul class="author-list">
-                        {{#foreach authors}}
-                        <li class="author-list-item">
-                            {{#if profile_image}}
-                            <a href="{{url}}" class="author-avatar">
-                                <img class="author-profile-image" src="{{img_url profile_image size="xs"}}" alt="{{name}}" />
-                            </a>
-                            {{else}}
-                            <a href="{{url}}" class="author-avatar author-profile-image">{{> "icons/avatar"}}</a>
-                            {{/if}}
-                        </li>
-                        {{/foreach}}
-                    </ul>
-                    <div class="article-byline-meta">
-                        <h4 class="author-name">{{authors}}</h4>
-                        <div class="byline-meta-content">
-                            <time class="byline-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
-                            <span class="byline-reading-time"><span class="bull">&bull;</span> {{reading_time}}</span>
-                        </div>
-                    </div>
-                </section>
-            </div>
-
-
-{{#get "posts"}}
+        </article>
+        {{/page}}
+    </div>
+    
+    <!-- get the list of posts -->
+    {{#get "posts"}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
@@ -63,6 +43,7 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
     {{/get}}
+
 
 
         <section class="gh-content gh-canvas">
