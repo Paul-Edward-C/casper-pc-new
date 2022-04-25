@@ -39,11 +39,11 @@ into the {body} tag of the default.hbs template --}}
     <!-- from post.hbs -->
     
     <!-- get the list of posts -->
-    {{#get "posts" filter='tag:hash-korea'}}
+    {{#get "posts" filter='tag:hash-korea', limit='6'}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
-                {{article-excerpt}}
+                {{excerpt characters="140"}}}
 
                 {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
                 {{> "post-card"}}
