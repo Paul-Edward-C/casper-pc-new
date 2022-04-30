@@ -66,7 +66,7 @@ into the {body} tag of the default.hbs template --}}
         </section>
 
 
-        <div class="outer">
+        <div class="inner">
     
         <article class="post-full {{post_class}} no-image">
 
@@ -86,7 +86,7 @@ into the {body} tag of the default.hbs template --}}
     <!-- from post.hbs -->
     
     <!-- get the list of posts -->
-    {{#get "posts" filter='tag:hash-kr' limit='6'}}
+    {{#get "posts" filter='tag:hash-home' limit='6'}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
