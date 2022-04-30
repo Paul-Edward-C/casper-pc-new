@@ -15,7 +15,7 @@ into the {body} tag of the default.hbs template --}}
                         {{img_url @site.cover_image size="l"}} 1000w,
                         {{img_url @site.cover_image size="xl"}} 2000w"
                 sizes="100vw"
-                src="{{img_url @site.cover_image size="xl"}}"
+                src="{{img_url @site.cover_image size="m"}}"
                 alt=""
             />
         {{/if}}
@@ -80,7 +80,7 @@ into the {body} tag of the default.hbs template --}}
 
 
 
-  <div class="inner">
+  <div class="outer">
     
         {{#page}}
         <article class="post-full {{post_class}} no-image">
