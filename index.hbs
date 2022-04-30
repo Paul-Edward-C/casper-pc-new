@@ -33,13 +33,12 @@ into the {body} of the default.hbs template --}}
 {{!-- The main content area --}}
 <main id="site-main" class="site-main outer">
 
-    <div>
-        <h2>Hey 👋</h2>
-        <p>My name’s Paul. </p>
-    </div>
-
-
     <div class="inner posts">
+
+        <div>
+            <h2>Hey 👋</h2>
+            <p>My name’s Paul. </p>
+        </div>
 
         <div class="post-feed{{#match @custom.feed_layout "List"}} list{{/match}}">
             {{#foreach posts}}
