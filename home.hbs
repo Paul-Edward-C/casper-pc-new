@@ -28,9 +28,7 @@ into the {body} of the default.hbs template --}}
     </div>
 {{/match}}
 
-    <article class="article {{post_class}}">
-
-        <header class="article-header gh-canvas">
+     <header class="article-header gh-canvas">
             {{#if feature_image}}
             <figure class="article-image">
                 {{!-- This is a responsive image, it loads different sizes depending on device
@@ -55,11 +53,22 @@ into the {body} of the default.hbs template --}}
 
             <h1 class="article-title">{{title}}</h1>
 
-            {{content}}
-
         </section>
 
-    </article>
+        <div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+    </div>
 
 
 {{!-- The main content area --}}
