@@ -47,7 +47,11 @@ into the {body} of the default.hbs template --}}
                 {{/if}}
             </figure>
             {{/if}}
-        </header>
+        
+    
+{{#page}}
+        
+    </header>
 
         <section class="gh-content gh-canvas">
 
@@ -55,9 +59,10 @@ into the {body} of the default.hbs template --}}
 
         </section>
 
-        <div class="outer">
-    
-        {{#page}}
+    </header> 
+
+    <div class="outer">
+        
         <article class="post-full {{post_class}} no-image">
 
             <section class="post-full-content">
@@ -65,10 +70,12 @@ into the {body} of the default.hbs template --}}
                     {{content}}
                 </div>
             </section>
-
+ 
         </article>
-        {{/page}}
-    </div>
+
+    </div>      
+
+{{/page}}
 
 
 {{!-- The main content area --}}
