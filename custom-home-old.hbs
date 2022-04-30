@@ -33,9 +33,8 @@ into the {body} tag of the default.hbs template --}}
 {{#post}}
 {{!-- Everything inside the #post block pulls data from the post --}}
 
-<main id="site-main" class="site-main">
-    <article class="article {{post_class}}">
-
+<main id="site-main" class="outer">
+    
         <header class="article-header gh-canvas">
             {{#if feature_image}}
             <figure class="article-image">
@@ -55,20 +54,35 @@ into the {body} tag of the default.hbs template --}}
                 {{/if}}
             </figure>
             {{/if}}
+        
         </header>
+
+    {{#page}}
 
         <section class="gh-content gh-canvas">
 
             <h1 class="article-title">{{title}}</h1>
 
-            {{content}}
-
         </section>
 
-    </article>
-</main>
+
+        <div class="outer">
+    
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+
+        </div>
     
 
+
+</main>
     <!-- from post.hbs -->
     
     <!-- get the list of posts -->
