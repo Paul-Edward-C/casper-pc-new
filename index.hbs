@@ -39,12 +39,10 @@ into the {body} of the default.hbs template --}}
 
         <div>
             <style>
-                p.textstyle {
-            font-family: Georgia
-            }
+                h2, .post-full-content h2 { font-family: ‘Georgia’; }
             </style>
-            <h1> Welcome    歡迎    欢迎</h1>
-            <p>Here's a selection of recent posts. More can be found in the pages for the individual economies Q1GDP<p>
+            <h2> Welcome    歡迎    欢迎</h1>
+            <h2>Here's a selection of recent posts. More can be found in the pages for the individual economies Q1GDP</h2>
         </div>
 
         <div class="post-feed{{#match @custom.feed_layout "List"}} list{{/match}}">
