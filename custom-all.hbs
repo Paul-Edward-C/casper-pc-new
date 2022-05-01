@@ -67,7 +67,8 @@ into the {body} tag of the default.hbs template --}}
                 <div class="post-content">
                     <h1 class="article-title">{{title}}</h1>
                     <h2 class="post-title">Commentary</h2>
-                    <p> This page includes a selection of recent posts. More commentary, and interactive charts, can be found in the pages for the individual economies. </p>
+                    <p> Here are the most recent comments. Older ones can be found in the archive. </p>
+                    <hr class="green">
                 </div>
             </section>
 
@@ -93,6 +94,26 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
     {{/get}}
+
+
+
+  <div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+    </div>
+
+</main>
+
 
 
 {{/post}}
