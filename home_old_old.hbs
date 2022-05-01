@@ -1,8 +1,6 @@
-
 {{!< default}}
-
 {{!-- The tag above means: insert everything in this file
-into the {body} tag of the default.hbs template --}}
+into the {body} of the default.hbs template --}}
 
 {{#match @custom.publication_cover_style "!=" "None"}}
     <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
@@ -15,7 +13,7 @@ into the {body} tag of the default.hbs template --}}
                         {{img_url @site.cover_image size="l"}} 1000w,
                         {{img_url @site.cover_image size="xl"}} 2000w"
                 sizes="100vw"
-                src="{{img_url @site.cover_image size="s"}}"
+                src="{{img_url @site.cover_image size="xl"}}"
                 alt=""
             />
         {{/if}}
@@ -30,13 +28,7 @@ into the {body} tag of the default.hbs template --}}
     </div>
 {{/match}}
 
-
-{{#post}}
-{{!-- Everything inside the #post block pulls data from the post --}}
-
-<main id="site-main" class="site-main outer">
-    
-        <header class="article-header gh-canvas">
+     <header class="article-header gh-canvas">
             {{#if feature_image}}
             <figure class="article-image">
                 {{!-- This is a responsive image, it loads different sizes depending on device
@@ -55,36 +47,43 @@ into the {body} tag of the default.hbs template --}}
                 {{/if}}
             </figure>
             {{/if}}
-        </header>
-
-
-  <div class="outer">
+        
     
-        {{#page}}
+{{#page}}
+        
+    </header>
+
+        <section class="gh-content gh-canvas">
+
+            <h1 class="article-title">{{title}}</h1>
+
+        </section>
+
+    </header> 
+
+    <div class="outer">
+        
         <article class="post-full {{post_class}} no-image">
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <h1 class="article-title">{{title}}</h1>
-                    <h2 class="post-title">Commentary</h2>
-                    <p> Here are the most recent comments. Older ones can be found in the archive. </p>
-                    <hr class="green">
+                    {{content}}
                 </div>
             </section>
-
+ 
         </article>
-        {{/page}}
-</div>
+
+    </div>      
+
+{{/page}}
 
 
+{{!-- The main content area --}}
+<main id="site-main" class="site-main outer">
 
-
-    <!-- from post.hbs -->
-    
-    <!-- get the list of posts -->
-    {{#get "posts" filter='tag:hash-home' limit='6'}}
     <div class="inner posts">
-        <div class="post-feed">
+
+        <div class="post-feed{{#match @custom.feed_layout "List"}} list{{/match}}">
             {{#foreach posts}}
 
                 {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
@@ -92,12 +91,6 @@ into the {body} tag of the default.hbs template --}}
 
             {{/foreach}}
         </div>
+
     </div>
-    {{/get}}
-
-
-
 </main>
-
-
-{{/post}}
