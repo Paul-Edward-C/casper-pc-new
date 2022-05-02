@@ -51,7 +51,7 @@ into the {body} of the default.hbs template --}}
 </div>
 
 
-   {{#get "posts" limit='6'}}
+   {{#get "posts" filter='tag:hash-home' limit='6'}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
