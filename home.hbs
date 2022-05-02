@@ -43,10 +43,9 @@ into the {body} of the default.hbs template --}}
     {{/page}}
 
 
-
+   {{#get "posts"}}
     <div class="inner posts">
-
-        <div class="post-feed{{#match @custom.feed_layout "List"}} list{{/match}}">
+        <div class="post-feed">
             {{#foreach posts}}
 
                 {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
@@ -54,6 +53,6 @@ into the {body} of the default.hbs template --}}
 
             {{/foreach}}
         </div>
-
     </div>
+    {{/get}}
 </main>
