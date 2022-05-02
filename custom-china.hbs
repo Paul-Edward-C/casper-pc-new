@@ -4,6 +4,30 @@
 {{!-- The tag above means: insert everything in this file
 into the {body} tag of the default.hbs template --}}
 
+{{#match @custom.publication_cover_style "!=" "None"}}
+    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
+        {{#if @site.cover_image}}
+            {{!-- This is a responsive image, it loads different sizes depending on device
+            https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+            <img class="site-header-cover"
+                srcset="{{img_url @site.cover_image size="s"}} 300w,
+                        {{img_url @site.cover_image size="m"}} 600w,
+                        {{img_url @site.cover_image size="l"}} 1000w,
+                        {{img_url @site.cover_image size="xl"}} 2000w"
+                sizes="100vw"
+                src="{{img_url @site.cover_image size="s"}}"
+                alt=""
+            />
+        {{/if}}
+        <h1 class="site-title">
+            {{#if @site.logo}}
+                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+            {{else}}
+                China
+            {{/if}}
+        </h1>
+    </div>
+{{/match}}
 
 {{#post}}
 {{!-- Everything inside the #post block pulls data from the post --}}
@@ -38,9 +62,8 @@ into the {body} tag of the default.hbs template --}}
 
             <section class="post-full-content">
                 <div class="post-content">
-                    <h1 class="article-title">{{title}}</h1>
-                    <h2 class="post-title">Commentary</h2>
-                    <p> Here are the most recent comments. Older ones can be found in the archive. </p>
+                    <h1 class="post-title" style="font-weight: bold" "font-family=Georgia">Articles</h1>
+                    <p style="font-weight: bold" "font-family=Georgia"> The most recent comments are shown here, with older ones in the archive. </p>
                 </div>
             </section>
 
