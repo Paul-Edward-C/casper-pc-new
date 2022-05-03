@@ -25,7 +25,10 @@ which templates loop over to generate a list of posts. --}}
         <a class="post-card-content-link" href="{{url}}">
             <header class="post-card-header">
                 <div class="post-card-header-tags">
-                    <span class="post-visibility post-visibility-{{visibility}}"></span>
+                    <div class='post-visibility post-visibility--{{ visibility }}'>
+                        <span class='paid'>Paid</span>
+                        <span class='members'>Members</span>
+                        <span class='public'>Public</span>
                     {{#if primary_tag}}
                         {{#primary_tag}}
                             <div class="post-card-primary-tag">{{name}}</div>
