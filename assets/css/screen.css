@@ -2101,6 +2101,11 @@ html.dark-mode .kg-header-card h3.kg-header-card-subheader {
     background: #104b1f;
     border: none;
 }
+
+.chart_container {
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+ }
 /*
 
 Hey! You reached the end.
