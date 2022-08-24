@@ -2090,6 +2090,17 @@ html.dark-mode .kg-header-card h3.kg-header-card-subheader {
     }
 }
 
+.custom_tab .bk-tabs-header {
+    font-size: 0.9vw;
+    font-family: “Georgia”;
+}
+
+.custom_button .bk-btn-group button {
+    font-family: “Georgia”;
+    font-size: 0.9vw;
+    background: #104b1f;
+    border: none;
+}
 /*
 
 Hey! You reached the end.
