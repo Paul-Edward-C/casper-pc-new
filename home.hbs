@@ -74,28 +74,7 @@ into the {body} of the default.hbs template --}}
     </div>
     {{/get}}
 
-    <div class="outer">
-    
-        {{#page}}
-        <article class="post-full {{post_class}} no-image">
-
-            <div class="post-content">
-                    <br>
-                    <h1 class="post-title" style="font-weight: bold"; "font-family:Georgia";>Charts</h1>
-                    <style>
-                        .centeralign {
-                        text-align: center;
-                        font-weight: bold;
-                        margin: 0px auto 0px auto; 
-                        padding:5px;
-                        background-color: rgba(52, 183, 67, 0.12);
-                        }
-                    </style>
-                    <p class="centeralign">There's a lot more charts in the individual economy pages</p>
-                    <hr color="green">
-            </div>
-
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+ <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
         crossorigin="anonymous"></script>
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
         crossorigin="anonymous"></script>
@@ -106,14 +85,17 @@ into the {body} of the default.hbs template --}}
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
         crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="{{asset 'region/region_script/region_home.js?v=1'}}"></script>
+<script type="text/javascript" src="{{asset 'jp/jp_script/jp_exports.js?v=1'}}"></script>
+   <div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
 
-
-            <figure class="kg-image-card kg-width-full">
-
-            <iframe src="https://home-charts.herokuapp.com/" width = "100%"  style="height:100vh" frameBorder="0"></iframe>
-
-            </figure>
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
 
         </article>
         {{/page}}
