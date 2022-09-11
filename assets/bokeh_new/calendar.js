@@ -1,5 +1,6 @@
 (function() {
   const fn = function() {
+    
     (function(root) {
       function now() {
         return new Date();
@@ -12,11 +13,15 @@
         root._bokeh_is_loading = undefined;
       }
     
+      
+      
     
-    const element = document.getElementById("4435a73d-ec75-4b11-98ab-0db63befd2f8");
+      const element = document.getElementById("52f71db7-780d-4dbb-b690-0bcd188f0859");
         if (element == null) {
-          console.warn("Bokeh: autoload.js configured with elementid '4435a73d-ec75-4b11-98ab-0db63befd2f8' but no matching script tag was found.")
+          console.warn("Bokeh: autoload.js configured with elementid '52f71db7-780d-4dbb-b690-0bcd188f0859' but no matching script tag was found.")
         }
+      
+    
       function run_callbacks() {
         try {
           root._bokeh_onload_callbacks.forEach(function(callback) {
@@ -87,21 +92,27 @@
         document.body.appendChild(element);
       }
     
-      const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"];
+      
+      const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.2.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.2.min.js"];
       const css_urls = [];
+      
     
-      const inline_js = [    function(Bokeh) {
+      const inline_js = [
+        function(Bokeh) {
           Bokeh.set_log_level("info");
         },
+        
         function(Bokeh) {
           (function() {
             const fn = function() {
               Bokeh.safely(function() {
                 (function(root) {
                   function embed_document(root) {
-                  const docs_json = '{"a6e91d93-d720-42f0-b23f-0acedc60894d":{"defs":[],"roots":{"references":[{"attributes":{"editor":{"id":"1012"},"field":"Date","formatter":{"id":"1011"},"title":"Date","width":150},"id":"1005","type":"TableColumn"},{"attributes":{"template":"\\n    &lt;style&gt;\\n        .slick-headerRowHeight {height:120px} \\n        .slick-column-name {font-family: Georgia; font-weight: 900; font-size: x-large}\\n        .slick-cell {font-family: Georgia; font-size: large}\\n    &lt;/style&gt;\\n    &lt;%= value %&gt;"},"id":"1004","type":"HTMLTemplateFormatter"},{"attributes":{},"id":"1015","type":"Selection"},{"attributes":{"columns":[{"id":"1005"},{"id":"1006"}],"index_position":null,"source":{"id":"1003"},"view":{"id":"1010"}},"id":"1008","type":"DataTable"},{"attributes":{},"id":"1012","type":"StringEditor"},{"attributes":{"editor":{"id":"1013"},"field":"Release","formatter":{"id":"1004"},"title":"Release","width":350},"id":"1006","type":"TableColumn"},{"attributes":{},"id":"1013","type":"StringEditor"},{"attributes":{},"id":"1011","type":"StringFormatter"},{"attributes":{"data":{"Date":["Mon September  5","","Tue September  6","","","","Wed September  7","","","","","","","","Thu September  8","","","","","Fri September  9","","","Sat September 10"],"Release":["TW, International reserves","","JP, Household survey","JP, Wages, Provisional","TW, CPI","","CN, Merchandise trade, preliminary","JP, Business conditions index, preliminary","JP, Consumption Activity Index","JP, Monetary Base and the BOJ&#x27;s Transactions","JP, Trade, 20D, provisional","KR, BOP , preliminary","TW, Merchandise trade","","JP, Balance of Payments, July 2022, preliminary","JP, Economy Watchers","JP, GDP, second preliminary","JP, International Transactions in Securities, weekly","","CN, CPI &amp; PPI, monthly","JP, Money Stock","","CN, Monetary supply and credit (earliest date in 5-day window)"],"index":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22]},"selected":{"id":"1015"},"selection_policy":{"id":"1014"}},"id":"1003","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1003"}},"id":"1010","type":"CDSView"},{"attributes":{},"id":"1014","type":"UnionRenderers"}],"root_ids":["1008"]},"title":"Bokeh Application","version":"2.4.3"}}';
-                  const render_items = [{"docid":"a6e91d93-d720-42f0-b23f-0acedc60894d","root_ids":["1008"],"roots":{"1008":"4435a73d-ec75-4b11-98ab-0db63befd2f8"}}];
+                    
+                  const docs_json = '{"fe92840a-b345-4d93-8a5f-146e142cb1ff":{"defs":[],"roots":{"references":[{"attributes":{},"id":"1013","type":"StringEditor"},{"attributes":{"template":"\\n    &lt;style&gt;\\n        .slick-headerRowHeight {height:120px} \\n        .slick-column-name {font-family: Georgia; font-weight: 900; font-size: x-large}\\n        .slick-cell {font-family: Georgia; font-size: large}\\n    &lt;/style&gt;\\n    &lt;%= value %&gt;"},"id":"1004","type":"HTMLTemplateFormatter"},{"attributes":{"editor":{"id":"1012"},"field":"Date","formatter":{"id":"1011"},"title":"Date","width":150},"id":"1005","type":"TableColumn"},{"attributes":{},"id":"1012","type":"StringEditor"},{"attributes":{},"id":"1015","type":"Selection"},{"attributes":{"columns":[{"id":"1005"},{"id":"1006"}],"index_position":null,"source":{"id":"1003"},"view":{"id":"1010"}},"id":"1008","type":"DataTable"},{"attributes":{},"id":"1014","type":"UnionRenderers"},{"attributes":{},"id":"1011","type":"StringFormatter"},{"attributes":{"data":{"Date":["Sat September 10","","Tue September 13","","","","Wed September 14","","","","","Thu September 15","","","","","","","","","Fri September 16","","","","",""],"Release":["CN, Monetary supply and credit (earliest date in 5-day window)","","JP, BOJ Accounts","JP, Business Outlook Survey (July-September 2022)","JP, Corporate Goods Price Index","","JP, IP, final","JP, Machinery Orders","KR, Financial analysis statement, quarterly","TW, Wages","","CN, MLF rate and volume","JP, International Transactions in Securities, weekly","JP, Real exports and imports, headline","JP, Retail sales, final","JP, Tertiary activity","JP, Trade Statistics(August 2022[Provisional])","KR, Full-month foreign trade, details","KR, Public Sector Accounts in 2021, preliminary","","CN, Activity data, monthly","CN, Property prices, monthly","KR, Export/Import Price Index","KR, Household Loans of Depository Corporations","KR, Labour market","KR, Monetary and Liquidity Aggregates"],"index":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25]},"selected":{"id":"1015"},"selection_policy":{"id":"1014"}},"id":"1003","type":"ColumnDataSource"},{"attributes":{"editor":{"id":"1013"},"field":"Release","formatter":{"id":"1004"},"title":"Release","width":350},"id":"1006","type":"TableColumn"},{"attributes":{"source":{"id":"1003"}},"id":"1010","type":"CDSView"}],"root_ids":["1008"]},"title":"Bokeh Application","version":"2.4.2"}}';
+                  const render_items = [{"docid":"fe92840a-b345-4d93-8a5f-146e142cb1ff","root_ids":["1008"],"roots":{"1008":"52f71db7-780d-4dbb-b690-0bcd188f0859"}}];
                   root.Bokeh.embed.embed_items(docs_json, render_items);
+                
                   }
                   if (root.Bokeh !== undefined) {
                     embed_document(root);
@@ -127,14 +138,18 @@
             else document.addEventListener("DOMContentLoaded", fn);
           })();
         },
-    function(Bokeh) {
+        function(Bokeh) {
+        
+        
         }
       ];
     
       function run_inline_js() {
+        
         for (let i = 0; i < inline_js.length; i++) {
           inline_js[i].call(root, root.Bokeh);
         }
+        
       }
     
       if (root._bokeh_is_loading === 0) {
