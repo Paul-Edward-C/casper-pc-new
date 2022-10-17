@@ -68,6 +68,20 @@ into the {body} tag of the default.hbs template --}}
 
 <script type="text/javascript" src="{{asset 'region/region_script/region_calendar.js?v=1'}}"></script>
 
+  <div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+</div>
 
 </main>
 
