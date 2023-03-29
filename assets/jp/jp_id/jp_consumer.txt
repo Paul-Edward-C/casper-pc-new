@@ -1,1 +1,1 @@
-"bk-root" id="2d000dbe-c6ee-425f-904d-a6ae3478ca31" data-root-id="3569" width = "100%" style="aspect-ratio: 16 / 9"
+id="2d000dbe-c6ee-425f-904d-a6ae3478ca31"
