@@ -108,7 +108,40 @@ into the {body} tag of the default.hbs template --}}
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
         crossorigin="anonymous"></script>
 
+<div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <h1 class="post-title" style="font-weight: bold">Consumer</h2>
+                       
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+</div>
+
 <div id="jp_consumer"></div>
+
+<div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <h1 class="post-title" style="font-weight: bold">Exports</h2>
+                       
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+</div>
+
 
 <div id="jp_exports"></div>
 
