@@ -108,11 +108,19 @@ into the {body} tag of the default.hbs template --}}
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
         crossorigin="anonymous"></script>
 
-<div class="outer">   
-<h3 class="post-title" style="font-weight: bold">Consumer</h3>                     
-</div>
-<div id="tw_consumer">
-</div>
+
+       {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+    </div>
 
 <div class="outer">   
 <h3 class="post-title" style="font-weight: bold">Exports</h3>                     
