@@ -95,20 +95,16 @@ into the {body} tag of the default.hbs template --}}
     </div>
     {{/get}}
 
-<h1 class="post-title" style="font-weight: bold">Charts</h1>
+       {{#page}}
+        <article class="post-full {{post_class}} no-image">
 
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
-        crossorigin="anonymous"></script>
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
 
-<div class="outer">   
+            <div class="outer">   
 <h3 class="post-title" style="font-weight: bold">Consumer</h3>                     
 </div>
 <div id="jp_consumer">
@@ -150,18 +146,11 @@ into the {body} tag of the default.hbs template --}}
 <div id="jp_prices">
 </div>
 
-       {{#page}}
-        <article class="post-full {{post_class}} no-image">
-
-            <section class="post-full-content">
-                <div class="post-content">
-                    {{content}}
-                </div>
-            </section>
-
         </article>
         {{/page}}
-    </div>
 
 
+
+
+    
 </main>
