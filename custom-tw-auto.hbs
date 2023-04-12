@@ -22,13 +22,13 @@ into the {body} tag of the default.hbs template --}}
             {{#if @site.logo}}
                 <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
             {{else}}
-                Taiwan
+                Japan
             {{/if}}
         </h1>
     </div>
 {{/match}}
 
-
+<div id="site-main" class="site-main outer">
 {{!-- Everything inside the #post block pulls data from the post --}}
 <main id="site-main" class="site-main outer">
     
@@ -95,7 +95,34 @@ into the {body} tag of the default.hbs template --}}
     </div>
     {{/get}}
 
-<h1 class="post-title" style="font-weight: bold">Charts</h1>
+<div class="myBTNdiv">
+  <a href="https://www.eastasiaecon.com" class="myButton">Article achive</a> 
+</div>
+
+<style>
+.myBTNdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myButton {
+  padding: 0 1.2em;
+  height: 2.4em;
+  line-height: 2.4em;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: .95em;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  background: #104b1f;
+  color: white;
+  transition: opacity .2s ease-in-out;
+}
+
+
+</style>
 
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
         crossorigin="anonymous"></script>
@@ -108,52 +135,59 @@ into the {body} tag of the default.hbs template --}}
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
         crossorigin="anonymous"></script>
 
+<h2 class="post-title" style="font-weight: bold">Charts</h2>   
 
-       {{#page}}
-        <article class="post-full {{post_class}} no-image">
-
-            <section class="post-full-content">
-                <div class="post-content">
-                    {{content}}
-                </div>
-            </section>
-
-        </article>
-        {{/page}}
-
-
-<h1 class="post-title" style="font-weight: bold">Charts</h1>
-
-<div class="outer">   
-<h3 class="post-title" style="font-weight: bold">Exports</h3>                     
 </div>
-<div id="tw_exports">
-</div>
+    <h3 class="post-title" style="font-weight: bold">Consumer</h3>                     
+        
+        </div>
+        <div id="tw_consumer">
+        </div> 
 
-<div class="outer">   
-<h3 class="post-title" style="font-weight: bold">Industry</h3>                     
-</div>
-<div id="tw_industry">
-</div>
+    <h3 class="post-title" style="font-weight: bold">Exports</h3>                     
+        
+        </div>
+        <div id="tw_exports">
+        </div>
+ 
+    <h3 class="post-title" style="font-weight: bold">Industry</h3>                     
+        
+        </div>
+        <div id="tw_industry">
+        </div>
 
-<div class="outer">   
-<h3 class="post-title" style="font-weight: bold">Macro</h3>                     
-</div>
-<div id="tw_macro">
-</div>
+    <h3 class="post-title" style="font-weight: bold">Macro</h3>                     
 
-<div class="outer">   
-<h3 class="post-title" style="font-weight: bold">Money</h3>                     
-</div>
-<div id="tw_money">
-</div>
+        </div>
+        <div id="tw_macro">
+        </div>
 
-<div class="outer">   
-<h3 class="post-title" style="font-weight: bold">Prices</h3>                     
-</div>
-<div id="tw_prices">
+    <h3 class="post-title" style="font-weight: bold">Money</h3>                     
+
+        </div>
+        <div id="tw_money">
+        </div>
+ 
+    <h3 class="post-title" style="font-weight: bold">Prices</h3>                     
+
+        </div>
+        <div id="tw_prices">
+        </div></div>
+
 </div>
 
+{{#page}}
+    <article class="post-full {{post_class}} no-image">
 
+        <section class="post-full-content">
+            <div class="post-content">
+                {{content}}
+            </div>   
+        </section>
+
+    </article>
+
+{{/page}}
 
 </main>
+</div>
