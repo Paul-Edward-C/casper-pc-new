@@ -94,25 +94,30 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
     {{/get}}
-
-       {{#page}}
-        <article class="post-full {{post_class}} no-image">
-
-            <section class="post-full-content">
-                <div class="post-content">
-                    {{content}}
-                </div>   
-            
-            </section>
-
-        </article>
-
-                {{/page}}
-
+    
 <div class="myBTNdiv">
-  <a href="https://www.eastasiaecon.com" class="myButton">Replace this with your text</a> 
+  <a href="https://www.eastasiaecon.com" class="myButton">Article achive</a> 
 </div>
 
+<style>
+.myBTNdiv {
+    display: flex;
+  	justify-content: center;
+    }
+
+.myButton {
+	background-color: #104b1f;
+	border-radius:28px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff !important;
+	font-family:Arial;
+	font-size:18px;
+	padding:16px 31px;
+	text-decoration:none !important;
+}
+
+</style>
 
 <h3 class="post-title" style="font-weight: bold">Consumer</h3>                     
 </div>
@@ -149,7 +154,19 @@ into the {body} tag of the default.hbs template --}}
 <div id="jp_prices">
 </div>
 
+       {{#page}}
+        <article class="post-full {{post_class}} no-image">
 
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>   
+            
+            </section>
+
+        </article>
+
+                {{/page}}
 
 
 
