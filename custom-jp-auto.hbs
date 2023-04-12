@@ -1,10 +1,5 @@
 {{!< default}}
-{{!-- The tag above means: insert everything in this file
-into the {body} tag of the default.hbs template --}}
 
-
-
-{{!-- Everything inside the #post block pulls data from the post --}}
 <main id="site-main" class="site-main outer">
     
     <!-- get the list of posts -->
@@ -13,7 +8,6 @@ into the {body} tag of the default.hbs template --}}
         <div class="post-feed">
             {{#foreach posts}}
 
-                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
                 {{> "post-card"}}
 
             {{/foreach}}
@@ -39,30 +33,7 @@ into the {body} tag of the default.hbs template --}}
 <div id="jp_exports">
 </div>
  
-<h3 class="post-title" style="font-weight: bold">Industry</h3>                     
-</div>
-<div id="jp_industry">
-</div>
 
-<h3 class="post-title" style="font-weight: bold">Labour</h3>                     
-</div>
-<div id="jp_labour">
-</div>
-
-<h3 class="post-title" style="font-weight: bold">Macro</h3>                     
-</div>
-<div id="jp_macro">
-</div>
-
-<h3 class="post-title" style="font-weight: bold">Money</h3>                     
-</div>
-<div id="jp_money">
-</div>
- 
-<h3 class="post-title" style="font-weight: bold">Prices</h3>                     
-</div>
-<div id="jp_prices">
-</div>
 </div>
 
        {{#page}}
