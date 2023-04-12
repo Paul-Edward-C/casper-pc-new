@@ -122,6 +122,20 @@ into the {body} tag of the default.hbs template --}}
         {{/page}}
     </div>
 
+      {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+
+<h1 class="post-title" style="font-weight: bold">Charts</h1>
+
 <div class="outer">   
 <h3 class="post-title" style="font-weight: bold">Exports</h3>                     
 </div>
@@ -152,18 +166,6 @@ into the {body} tag of the default.hbs template --}}
 <div id="tw_prices">
 </div>
 
-       {{#page}}
-        <article class="post-full {{post_class}} no-image">
-
-            <section class="post-full-content">
-                <div class="post-content">
-                    {{content}}
-                </div>
-            </section>
-
-        </article>
-        {{/page}}
-    </div>
 
 
 </main>
