@@ -1,8 +1,8 @@
 
-{{!< default}}
-
+{{!< default}}{{!< default}}
 {{!-- The tag above means: insert everything in this file
 into the {body} tag of the default.hbs template --}}
+
 
 {{#match @custom.publication_cover_style "!=" "None"}}
     <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
@@ -29,8 +29,8 @@ into the {body} tag of the default.hbs template --}}
     </div>
 {{/match}}
 
+<div id="site-main" class="site-main outer">
 {{!-- Everything inside the #post block pulls data from the post --}}
-
 <main id="site-main" class="site-main outer">
     
         <header class="article-header gh-canvas">
@@ -53,7 +53,10 @@ into the {body} tag of the default.hbs template --}}
             </figure>
             {{/if}}
         </header>
-    
+
+
+
+</style>
 
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
         crossorigin="anonymous"></script>
@@ -66,22 +69,27 @@ into the {body} tag of the default.hbs template --}}
 <script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
         crossorigin="anonymous"></script>
 
-<script type="text/javascript" src="{{asset 'region/region_script/region_calendar.js?v=1'}}"></script>
 
-  <div class="outer">
-    
-        {{#page}}
-        <article class="post-full {{post_class}} no-image">
 
-            <section class="post-full-content">
-                <div class="post-content">
-                    {{content}}
-                </div>
-            </section>
 
-        </article>
-        {{/page}}
 </div>
+<div id="region_calendar">
+</div> 
+
+
+
+{{#page}}
+    <article class="post-full {{post_class}} no-image">
+
+        <section class="post-full-content">
+            <div class="post-content">
+                {{content}}
+            </div>   
+        </section>
+
+    </article>
+
+{{/page}}
 
 </main>
-
+</div>
