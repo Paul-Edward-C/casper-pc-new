@@ -151,17 +151,18 @@ into the {body} tag of the default.hbs template --}}
 <div id="kr_prices">
 </div>
 
-      {{#page}}
-        <article class="post-full {{post_class}} no-image">
+{{#page}}
+    <article class="post-full {{post_class}} no-image">
 
-            <section class="post-full-content">
-                <div class="post-content">
-                    {{content}}
-                </div>
-            </section>
+        <section class="post-full-content">
+            <div class="post-content">
+                {{content}}
+            </div>   
+        </section>
 
-        </article>
-        {{/page}}
+    </article>
 
+{{/page}}
 
 </main>
+</div>
