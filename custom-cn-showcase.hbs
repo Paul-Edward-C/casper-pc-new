@@ -52,7 +52,73 @@ into the {body} tag of the default.hbs template --}}
             </figure>
             {{/if}}
         </header>
+<div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
 
+            <section class="post-full-content">
+                <div class="post-content">
+                    <h1 class="post-title" style="font-weight: bold">Articles</h1>
+                        <style>
+                        .centeralign {
+                        text-align: center;
+                        font-weight: bold;
+                        margin: 0px auto 0px auto;
+                        padding:5px;
+                        background-color: rgba(52, 183, 67, 0.12);
+                        }
+                    </style>
+                    <p class="centeralign">The most recent comments are shown here, with older ones in the archive</p>
+                    <hr color="green">
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+</div>
+
+    <!-- from post.hbs -->
+    
+    <!-- get the list of posts -->
+    {{#get "posts" filter = "tag:hash-cn" limit='6'}}
+    <div class="inner posts">
+        <div class="post-feed">
+            {{#foreach posts}}
+
+                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
+                {{> "post-card"}}
+
+            {{/foreach}}
+        </div>
+    </div>
+    {{/get}}
+
+<div class="myBTNdiv">
+  <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article achive</a> 
+</div>
+
+<style>
+.myBTNdiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.myButton {
+  padding: 0 1.2em;
+  height: 2.4em;
+  line-height: 2.4em;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  font-size: .95em;
+  font-weight: 600;
+  text-decoration: none;
+  border: none;
+  border-radius: 5px;
+  background: #104b1f;
+  color: white;
+  transition: opacity .2s ease-in-out;
+}
 
 </style>
 
