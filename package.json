@@ -2,9 +2,10 @@
     "name": "casper",
     "description": "A clean, minimal default theme for the Ghost publishing platform",
     "demo": "https://demo.ghost.io",
-    "version": "5.7.0",
+    "version": "4.7.3",
     "engines": {
-        "ghost": ">=5.0.0"
+        "ghost": ">=4.0.0",
+        "ghost-api": "v4"
     },
     "license": "MIT",
     "screenshots": {
@@ -45,21 +46,21 @@
     "bugs": "https://github.com/TryGhost/Casper/issues",
     "contributors": "https://github.com/TryGhost/Casper/graphs/contributors",
     "devDependencies": {
-        "@tryghost/release-utils": "0.8.1",
-        "autoprefixer": "10.4.7",
+        "@tryghost/release-utils": "0.6.12",
+        "autoprefixer": "10.2.5",
         "beeper": "2.1.0",
-        "cssnano": "5.1.12",
-        "gscan": "4.36.1",
+        "cssnano": "4.1.10",
+        "gscan": "4.22.0",
         "gulp": "4.0.2",
         "gulp-concat": "2.6.1",
         "gulp-livereload": "4.0.2",
-        "gulp-postcss": "9.0.1",
+        "gulp-postcss": "9.0.0",
         "gulp-uglify": "3.0.2",
         "gulp-zip": "5.1.0",
-        "inquirer": "8.2.4",
-        "postcss": "8.2.13",
+        "inquirer": "8.0.0",
+        "postcss": "8.2.8",
         "postcss-color-mod-function": "3.0.3",
-        "postcss-easy-import": "4.0.0",
+        "postcss-easy-import": "3.0.0",
         "pump": "3.0.0"
     },
     "browserslist": [
@@ -89,15 +90,6 @@
         },
         "card_assets": true,
         "custom": {
-            "navigation_layout": {
-                "type": "select",
-                "options": [
-                    "Logo on cover",
-                    "Logo in the middle",
-                    "Stacked"
-                ],
-                "default": "Logo on cover"
-            },
             "title_font": {
                 "type": "select",
                 "options": [
@@ -114,29 +106,24 @@
                 ],
                 "default": "Elegant serif"
             },
-            "show_publication_cover": {
-                "type": "boolean",
-                "default": true,
-                "group": "homepage"
-            },
-            "header_style": {
+            "publication_cover_style": {
                 "type": "select",
                 "options": [
-                    "Center aligned",
-                    "Left aligned",
-                    "Hidden"
+                    "None",
+                    "Medium",
+                    "Large"
                 ],
-                "default": "Center aligned",
+                "default": "Medium",
                 "group": "homepage"
             },
             "feed_layout": {
                 "type": "select",
                 "options": [
-                    "Classic",
-                    "Grid",
+                    "Dynamic grid",
+                    "Simple grid",
                     "List"
                 ],
-                "default": "Classic",
+                "default": "Dynamic grid",
                 "group": "homepage"
             },
             "color_scheme": {
@@ -148,15 +135,36 @@
                 ],
                 "default": "Light"
             },
-            "post_image_style": {
+            "header_button_background": {
+                "type": "color",
+                "default": "#ffffff"
+            },
+            "header_button_text_color": {
+                "type": "select",
+                "options": [
+                    "Light",
+                    "Dark"
+                ],
+                "default": "Dark"
+            },
+            "post_image_width": {
                 "type": "select",
                 "options": [
                     "Wide",
                     "Full",
-                    "Small",
-                    "Hidden"
+                    "Small"
                 ],
                 "default": "Wide",
+                "group": "post"
+            },
+            "email_signup_for_logged_out_visitors": {
+                "type": "select",
+                "options": [
+                    "Footer",
+                    "Bottom of post",
+                    "None"
+                ],
+                "default": "Footer",
                 "group": "post"
             },
             "email_signup_text": {
@@ -164,7 +172,7 @@
                 "default": "Sign up for more like this.",
                 "group": "post"
             },
-            "show_recent_posts_footer": {
+            "show_recent_posts": {
                 "type": "boolean",
                 "default": true,
                 "group": "post"
