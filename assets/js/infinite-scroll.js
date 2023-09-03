@@ -14,8 +14,6 @@
  */
 
 (function (window, document) {
-    if (document.documentElement.classList.contains('no-infinite-scroll')) return;
-
     // next link element
     var nextElement = document.querySelector('link[rel=next]');
     if (!nextElement) {
