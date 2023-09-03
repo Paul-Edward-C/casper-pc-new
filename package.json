@@ -112,20 +112,16 @@
                     "Medium",
                     "Large"
                 ],
-                "default": "Medium",
-                "group": "homepage"
+                "default": "Medium"
             },
             "feed_layout": {
                 "type": "select",
                 "options": [
                     "Dynamic grid",
                     "Simple grid",
-                    "List",
-                    "Classic",
-                    "Grid"
+                    "List"
                 ],
-                "default": "Dynamic grid",
-                "group": "homepage"
+                "default": "Dynamic grid"
             },
             "color_scheme": {
                 "type": "select",
@@ -135,44 +131,6 @@
                     "Auto"
                 ],
                 "default": "Light"
-            },
-            "header_button_background": {
-                "type": "color",
-                "default": "#ffffff"
-            },
-            "header_button_text_color": {
-                "type": "select",
-                "options": [
-                    "Light",
-                    "Dark"
-                ],
-                "default": "Dark"
-            },
-            "post_image_width": {
-                "type": "select",
-                "options": [
-                    "Wide",
-                    "Full",
-                    "Small",
-                    "Hidden"
-                ],
-                "default": "Wide",
-                "group": "post"
-            },
-            "email_signup_for_logged_out_visitors": {
-                "type": "select",
-                "options": [
-                    "Footer",
-                    "Bottom of post",
-                    "None"
-                ],
-                "default": "Footer",
-                "group": "post"
-            },
-            "email_signup_text": {
-                "type": "text",
-                "default": "Sign up for more like this.",
-                "group": "post"
             },
             "show_recent_posts": {
                 "type": "boolean",
@@ -188,11 +146,6 @@
                 ],
                 "default": "Logo on cover"
             },
-            "show_publication_cover": {
-                "type": "boolean",
-                "default": true,
-                "group": "homepage"
-            },
             "header_style": {
                 "type": "select",
                 "options": [
@@ -200,26 +153,18 @@
                     "Left aligned",
                     "Hidden"
                 ],
-                "default": "Center aligned",
-                "group": "homepage"
+                "default": "Center aligned"
             },
             "post_image_style": {
                 "type": "select",
                 "options": [
                     "Wide",
                     "Full",
-                    "Small",
-                    "Hidden"
+                    "Small"
                 ],
-                "default": "Wide",
-                "group": "post"
-            },
-            "show_recent_posts_footer": {
-                "type": "boolean",
-                "default": true,
-                "group": "post"
+                "default": "Wide"
             }
-        }              
+        }
     },
     "renovate": {
         "extends": [
@@ -227,3 +172,4 @@
         ]
     }
 }
+
