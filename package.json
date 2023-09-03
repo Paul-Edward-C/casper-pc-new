@@ -106,6 +106,16 @@
                 ],
                 "default": "Modern sans-serif"
             },
+            "publication_cover_style": {
+                "type": "select",
+                "options": [
+                    "None",
+                    "Medium",
+                    "Large"
+                ],
+                "default": "Medium",
+                "group": "homepage"
+            },
             "body_font": {
                 "type": "select",
                 "options": [
