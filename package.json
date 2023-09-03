@@ -89,6 +89,15 @@
         },
         "card_assets": true,
         "custom": {
+            "navigation_layout": {
+                "type": "select",
+                "options": [
+                    "Logo on cover",
+                    "Logo in the middle",
+                    "Stacked"
+                ],
+                "default": "Logo on cover"
+            },
             "title_font": {
                 "type": "select",
                 "options": [
@@ -105,23 +114,30 @@
                 ],
                 "default": "Elegant serif"
             },
-            "publication_cover_style": {
+            "show_publication_cover": {
+                "type": "boolean",
+                "default": true,
+                "group": "homepage"
+            },
+            "header_style": {
                 "type": "select",
                 "options": [
-                    "None",
-                    "Medium",
-                    "Large"
+                    "Center aligned",
+                    "Left aligned",
+                    "Hidden"
                 ],
-                "default": "Medium"
+                "default": "Center aligned",
+                "group": "homepage"
             },
             "feed_layout": {
                 "type": "select",
                 "options": [
-                    "Dynamic grid",
-                    "Simple grid",
+                    "Classic",
+                    "Grid",
                     "List"
                 ],
-                "default": "Dynamic grid"
+                "default": "Classic",
+                "group": "homepage"
             },
             "color_scheme": {
                 "type": "select",
@@ -132,37 +148,26 @@
                 ],
                 "default": "Light"
             },
-            "show_recent_posts": {
-                "type": "boolean",
-                "default": true,
-                "group": "post"
-            },
-            "navigation_layout": {
-                "type": "select",
-                "options": [
-                    "Logo on cover",
-                    "Logo in the middle",
-                    "Stacked"
-                ],
-                "default": "Logo on cover"
-            },
-            "header_style": {
-                "type": "select",
-                "options": [
-                    "Center aligned",
-                    "Left aligned",
-                    "Hidden"
-                ],
-                "default": "Center aligned"
-            },
             "post_image_style": {
                 "type": "select",
                 "options": [
                     "Wide",
                     "Full",
-                    "Small"
+                    "Small",
+                    "Hidden"
                 ],
-                "default": "Wide"
+                "default": "Wide",
+                "group": "post"
+            },
+            "email_signup_text": {
+                "type": "text",
+                "default": "Sign up for more like this.",
+                "group": "post"
+            },
+            "show_recent_posts_footer": {
+                "type": "boolean",
+                "default": true,
+                "group": "post"
             }
         }
     },
