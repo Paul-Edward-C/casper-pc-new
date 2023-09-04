@@ -1018,16 +1018,6 @@ production stylesheet in assets/built/screen.css
     font-family: var(--font-sans);
 }
 
-.post-card-excerpt p {
-    margin-bottom: 1em;
-    display: -webkit-box;
-    overflow-y: hidden;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    word-break: break-word;
-}
-
-
 .post-card:not(.post-card-large):not(.post-card-full):not(.dynamic):not(.no-image) .post-card-excerpt {
     -webkit-line-clamp: 2;
 }
