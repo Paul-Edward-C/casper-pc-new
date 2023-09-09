@@ -1100,24 +1100,7 @@ production stylesheet in assets/built/screen.css
 
 /* styling date and reaidng time in post card */
 
-.post-card-content-link {
-    /* Your existing styles for .post-card-content-link */
-}
 
-/* Style date and read time to be on the same line with a separator */
-.post-date,
-.post-read-time {
-    color: #ccc; /* Adjust the color to a lighter shade of gray */
-    font-size: 14px; /* Adjust the font size as needed */
-    display: inline-block; /* Display them on the same line */
-    margin-right: 8px; /* Adjust the spacing between them as needed */
-}
-
-/* Add a separator (e.g., a dot) between date and read time */
-.post-read-time:before {
-    content: "\00b7"; /* You can use a dot or any other separator you prefer */
-    margin-left: 8px; /* Adjust the spacing between the separator and read time */
-}
 
 /* Special Styling for home page grid (below):
 
