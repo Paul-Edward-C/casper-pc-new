@@ -1100,8 +1100,8 @@ production stylesheet in assets/built/screen.css
 
 /* styling date and reaidng time in post card */
 
-.post-meta {
-    margin-top: 0.5em; /* Adjust the margin as needed */
+.post-card-content-link {
+    /* Your existing styles for .post-card-content-link */
 }
 
 /* Style date and read time to be on the same line with a separator */
