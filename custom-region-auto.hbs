@@ -84,9 +84,9 @@ into the {body} tag of the default.hbs template --}}
     <!-- get the list of posts -->
 {{#get "posts" filter="tag:hash-all" limit="6"}}
 <div class="inner posts">
-    <div class="post-feed grid-container">
+    <div class="post-feed">
         {{#foreach posts}}
-            <div class="post">
+            <div class="post-card">
                 <h2>{{title}}</h2>
                 <p>{{excerpt words="50"}} <!-- Adjust the number of words as needed --></p>
                 <a href="{{url}}">Read More</a>

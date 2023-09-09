@@ -1084,6 +1084,19 @@ production stylesheet in assets/built/screen.css
     padding: 0;
 }
 
+/* making a grid */
+
+.post-feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Adjust the column width as needed */
+    gap: 20px; /* Adjust the gap between grid items */
+}
+
+.post-card {
+    /* Style for individual post cards */
+    padding: 20px;
+    border: 1px solid #ddd;
+}
 
 /* Special Styling for home page grid (below):
 
