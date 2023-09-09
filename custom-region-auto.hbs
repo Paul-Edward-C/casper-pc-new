@@ -89,7 +89,10 @@ into the {body} tag of the default.hbs template --}}
             <div class="post-card">
                 <h2>{{title}}</h2>
                 <p>{{excerpt words="50"}} <!-- Adjust the number of words as needed --></p>
-                <a href="{{url}}">Read More</a>
+                <div class="post-meta">
+                    <p class="post-date">{{date format="MMMM D, YYYY"}}</p>
+                    <p class="post-read-time">{{reading_time}} min read</p>
+                </div>
             </div>
         {{/foreach}}
     </div>

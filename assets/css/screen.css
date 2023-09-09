@@ -1098,6 +1098,17 @@ production stylesheet in assets/built/screen.css
     border: 1px solid #ddd;
 }
 
+/* styling date and reaidng time in post card */
+
+.post-meta {
+    font-size: 14px; /* Adjust the font size as needed */
+    color: #888; /* Adjust the color as needed */
+}
+
+.post-date, .post-read-time {
+    margin: 4px 0; /* Adjust the margin as needed */
+}
+
 /* Special Styling for home page grid (below):
 
 The first post in the list is styled to be bigger than the others and take over
