@@ -88,7 +88,7 @@ into the {body} tag of the default.hbs template --}}
         {{#foreach posts}}
             <div class="post-card">
                 <h2>{{title}}</h2>
-                <p>{{excerpt words="30"}} <!-- Adjust the number of words as needed --></p>
+                <p>{{excerpt words="30"}}</p>
                 <div class="post-meta">
                     <p class="post-date">{{date format="MMM D, YYYY"}}</p>
                     <p class="post-read-time">{{reading_time}}</p>
@@ -97,6 +97,7 @@ into the {body} tag of the default.hbs template --}}
         {{/foreach}}
     </div>
 </div>
+
 {{/get}}
 
 <div class="myBTNdiv">
