@@ -50,15 +50,23 @@
     {{/page}}
   </div>
 
-  {{#get "posts" filter='tag:hash-home' limit='12'}}
-  <div class="inner posts">
+  {{#get "posts" filter="tag:hash-all" limit="12"}}
+<div class="inner posts">
     <div class="post-feed">
-      {{#foreach posts}}
-      {{> "post-card"}}
-      {{/foreach}}
+        {{#foreach posts}}
+            <div class="post-card">
+                <h2>{{title}}</h2>
+                <p>{{excerpt words="30"}} <!-- Adjust the number of words as needed --></p>
+                <div class="post-meta" style="margin-top: auto;">
+                    <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
+                    <span class="post-read-time" style="color: #555; font-size: 14px;">{{reading_time}}</span>
+                </div>
+            </div>
+        {{/foreach}}
     </div>
-  </div>
-  {{/get}}
+</div>
+
+{{/get}}
 
   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js" crossorigin="anonymous"></script>
   <script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js" crossorigin="anonymous"></script>
