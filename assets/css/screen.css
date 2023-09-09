@@ -3037,6 +3037,23 @@ html.dark-mode .footer-cta-title {
     background: none;
 }
 
+.site-header-title {
+    text-align: center;
+  }
+  
+  /* Style the site title (h1) */
+  .site-title {
+    font-size: 2rem; /* Adjust the font size as needed */
+    margin: 0; /* Remove default margin to center it properly */
+  }
+  
+  /* Style the site description (p) as a subtitle */
+.site-description {
+    font-size: 1.2rem; /* Adjust the font size as needed */
+    color: #888; /* Adjust the color as needed */
+    margin-top: 8px; /* Add space between title and description */
+  }
+
 /*
 
 Hey! You reached the end.
