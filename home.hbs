@@ -13,15 +13,15 @@
         alt=""
       />
     {{/if}}
-    <div class="site-header-title">
-      <h1 class="site-title">
-        {{#if @site.logo}}
-          <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
-        {{else}}
-          {{@site.title}}
-        {{/if}}
-      </h1>
-      <p class="site-description">{{@site.description}}</p>
+    <div class="site-title">
+      {{#if @site.logo}}
+        <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+      {{else}}
+        {{@site.title}}
+      {{/if}}
+    </div>
+    <div class="site-description">
+      <p>{{@site.description}}</p>
     </div>
   </div>
 {{/match}}
