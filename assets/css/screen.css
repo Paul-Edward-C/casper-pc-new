@@ -1101,13 +1101,15 @@ production stylesheet in assets/built/screen.css
 /* styling date and reaidng time in post card */
 
 .post-meta {
-    font-size: 10px; /* Adjust the font size as needed */
+    font-size: 14px; /* Adjust the font size as needed */
     color: #888; /* Adjust the color as needed */
 }
 
 .post-date, .post-read-time {
     margin: 4px 0; /* Adjust the margin as needed */
+    color: #ccc; /* Adjust the color to a lighter shade of gray */
 }
+
 
 /* Special Styling for home page grid (below):
 
