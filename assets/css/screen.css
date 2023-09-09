@@ -1101,7 +1101,7 @@ production stylesheet in assets/built/screen.css
 /* styling date and reaidng time in post card */
 
 .post-meta {
-    font-size: 14px; /* Adjust the font size as needed */
+    font-size: 10px; /* Adjust the font size as needed */
     color: #888; /* Adjust the color as needed */
 }
 
