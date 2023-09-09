@@ -1,45 +1,14 @@
-/* Table of Contents
-/* ------------------------------------------------------------
-
-This is a development CSS file which is built to a minified
-production stylesheet in assets/built/screen.css
-
-1.  Global Styles
-2.  Layout
-3.  Site Header
-4.  Site Navigation
-5.  Post Feed
-6.  Single Post
-  6.1. Post Byline
-  6.2. Subscribe
-  6.3. Read More
-  6.4. Comments
-7.  Author Template
-8.  Tag Template
-9.  Error Template
-10.  Site Footer
-11. Dark Mode
-12. Lightbox
-
-*/
-
-/* 1. Global - Set up the things
-/* ---------------------------------------------------------- */
-
 /* Import CSS reset and base styles */
 @import "global.css";
 
 :root {
-
     /* Colours */
     --color-green: #a4d037;
     --color-yellow: #fecd35;
     --color-red: #f05230;
     --color-darkgrey: #15171A;
     --color-midgrey: #738a94;
-    --color-lightgrey: #f1f1f1;
-    --color-secondary-text: #979797;
-    --color-border: #e1e1e1;
+    --color-lightgrey: #c5d2d9;
     --color-wash: #e5eff5;
     --color-darkmode: #151719;
 
@@ -53,18 +22,13 @@ production stylesheet in assets/built/screen.css
      */
 
     /* Fonts */
-    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --font-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
     --font-serif: Georgia, Times, serif;
     --font-mono: Menlo, Courier, monospace;
-
 }
 
-
-/* 2. Layout - Page building blocks
-/* ---------------------------------------------------------- */
-
+/* 2. Layout - Page building blocks */
 .viewport {
-    position: relative;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -77,26 +41,87 @@ production stylesheet in assets/built/screen.css
 /* Full width page blocks */
 .outer {
     position: relative;
-    padding: 0 max(4vmin, 20px);
+    max-width: 1200px;
+    padding: 0 4vmin;
 }
 
 /* Centered content container blocks */
 .inner {
     margin: 0 auto;
-    max-width: 1200px;
     width: 100%;
 }
 
-
-/* 3. Site Header
-/* ---------------------------------------------------------- */
-
+/* 4. Site Header */
 .site-header {
     position: relative;
     color: #fff;
     background: var(--ghost-accent-color);
 }
 
+.site-header-cover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.site-header-content {
+    position: relative;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 6vw 3vw;
+    min-height: 200px;
+    max-height: 340px;
+    text-align: center;
+}
+
+.site-title {
+    z-index: 10;
+    margin: 0 0 0.15em;
+    padding: 0;
+}
+
+.site-logo {
+    max-height: 55px;
+}
+
+.site-header-content p {
+    z-index: 10;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.2em;
+    opacity: 0.8;
+}
+
+@media (max-width: 600px) {
+    .site-header-content p {
+        max-width: 80vmin;
+        font-size: 1.8rem;
+    }
+}
+
+/* 4.1 Home header */
+.site-home-header {
+    position: relative;
+    z-index: 1000;
+    overflow: hidden;
+}
+
+.site-header-content.large {
+    padding-top: 28vmin;
+    padding-bottom: 28vmin;
+}
+
+/* Add the styles from the second code snippet below this comment */
+
+/* 3. Site Header (Second Set of Styles) */
 .site-header-cover {
     position: absolute;
     top: 0;
@@ -130,109 +155,7 @@ production stylesheet in assets/built/screen.css
     text-align: left;
 }
 
-.has-cover .site-header-content.left-aligned {
-    align-items: flex-end;
-    padding-bottom: max(4vmin, 32px);
-}
-
-.site-header-content.no-content {
-    padding-top: 0;
-    padding-bottom: 2vmin;
-}
-
-.site-header-inner {
-    position: relative;
-}
-
-.site-header-content.left-aligned .site-header-inner {
-    align-items: flex-start;
-}
-
-.site-logo {
-    flex-shrink: 0;
-    margin: 0 auto;
-    max-height: 120px;
-}
-
-.site-header-content.left-aligned .site-logo {
-    margin-right: auto;
-    margin-left: 0;
-    max-height: 96px;
-}
-
-.site-title {
-    z-index: 10;
-    margin: 0;
-    padding: 0;
-    font-size: 5rem;
-    font-weight: 800;
-}
-
-.has-serif-title .site-title {
-    font-family: var(--font-serif);
-}
-
-.has-cover .site-title {
-    font-size: 6rem;
-}
-
-.site-header-content.left-aligned .site-title {
-    font-size: 4.4rem;
-}
-
-.has-cover .site-header-content.left-aligned .site-title {
-    font-size: 4.6rem;
-}
-
-.site-description {
-    display: inline-block;
-    z-index: 10;
-    max-width: 960px;
-    font-size: 6rem;
-    font-weight: 700;
-    line-height: 1.1;
-}
-
-:is(.site-logo, .site-title) + .site-description {
-    max-width: 640px;
-    margin-top: 16px;
-    font-size: 2.4rem;
-    font-weight: 400;
-    line-height: 1.4;
-}
-
-.site-logo + .site-description {
-    margin-top: 20px;
-}
-
-.site-title + .site-description {
-    color: var(--color-secondary-text);
-}
-
-.has-cover .site-description {
-    letter-spacing: -0.005em;
-    color: #fff;
-}
-
-.has-cover :is(.site-logo, .site-title) + .site-description {
-    font-size: 2.4rem;
-}
-
-.has-cover .site-header-content.left-aligned :is(.site-logo, .site-title) + .site-description {
-    font-size: 2.2rem;
-}
-
-@media (min-width: 992px) {
-    .is-head-stacked.has-cover .site-header-content {
-        padding-top: calc(19vmin + 120px);
-    }
-}
-
-@media (max-width: 991px) {
-    .site-header-content {
-        padding-top: calc(19vmin + 32px);
-    }
-}
+/* ... (Add the rest of the styles from the second code snippet here) */
 
 @media (max-width: 767px) {
     .has-cover .site-header-content {
@@ -258,8 +181,7 @@ production stylesheet in assets/built/screen.css
     }
 }
 
-
-/* 4. Site Navigation
+/* 4. Site Navigation */
 /* ---------------------------------------------------------- */
 
 .gh-head {
@@ -298,7 +220,7 @@ production stylesheet in assets/built/screen.css
     height: 100%;
 }
 
-/* Header styles
+/* Header styles */
 /* ---------------------------------------------------------- */
 
 .is-head-left-logo .gh-head-inner {
@@ -394,7 +316,7 @@ production stylesheet in assets/built/screen.css
     }
 }
 
-/* Brand
+/* Brand */
 /* ---------------------------------------------------------- */
 
 .gh-head-brand {
@@ -425,8 +347,7 @@ production stylesheet in assets/built/screen.css
     max-height: 40px;
 }
 
-
-/* Primary Navigation
+/* Primary Navigation */
 /* ---------------------------------------------------------- */
 
 .gh-head-menu {
@@ -483,8 +404,7 @@ production stylesheet in assets/built/screen.css
     }
 }
 
-
-/* Dropdown
+/* Dropdown */
 /* ---------------------------------------------------------- */
 
 .gh-dropdown {
@@ -535,8 +455,7 @@ production stylesheet in assets/built/screen.css
     padding: 8px 0;
 }
 
-
-/* Secondary Navigation
+/* Secondary Navigation */
 /* ---------------------------------------------------------- */
 
 .gh-social {
@@ -606,8 +525,7 @@ production stylesheet in assets/built/screen.css
     }
 }
 
-
-/* Search
+/* Search */
 /* ---------------------------------------------------------- */
 
 .gh-search {
@@ -647,8 +565,7 @@ production stylesheet in assets/built/screen.css
     }
 }
 
-
-/* Mobile Menu Trigger
+/* Mobile Menu Trigger */
 /* ---------------------------------------------------------- */
 
 .gh-burger {
@@ -698,8 +615,7 @@ production stylesheet in assets/built/screen.css
     transform: rotate(-45deg);
 }
 
-
-/* Mobile Menu
+/* Mobile Menu */
 /* ---------------------------------------------------------- */
 /* IDs needed to ensure sufficient specificity */
 
@@ -834,45 +750,40 @@ production stylesheet in assets/built/screen.css
         transition-delay: 0.4s;
     }
 }
-
-
-/* 5. Post Feed
-/* ---------------------------------------------------------- */
-
+/* Post Feed */
 .post-feed {
     position: relative;
     display: grid;
-    gap: 4.8vmin 4vmin;
-    grid-template-columns: repeat(6, 1fr);
-    padding: max(4.8vmin, 36px) 0 0;
-}
+    grid-gap: 4vmin;
+    padding: 4.8vmin 0 0; /* Adjust padding as needed */
+    grid-template-columns: repeat(6, 1fr); /* Default to 6 columns */
 
-:is(.tag-template, .author-template) .post-feed {
-    margin-top: 4vmin;
-}
-
-@media (max-width: 991px) {
-    .post-feed {
-        grid-template-columns: 1fr 1fr;
+    /* Responsive adjustments */
+    @media (max-width: 1000px) {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on screens up to 1000px wide */
+    }
+    @media (max-width: 767px) {
+        grid-template-columns: 1fr; /* 1 column on screens up to 767px wide */
+        grid-gap: 40px; /* Adjust gap as needed */
     }
 }
 
-@media (max-width: 767px) {
-    .post-feed {
-        grid-template-columns: 1fr;
-        grid-gap: 40px;
-    }
-}
-
+/* Post Card */
 .post-card {
     position: relative;
-    grid-column: span 2;
     display: flex;
     flex-direction: column;
     background-size: cover;
     word-break: break-word;
+    grid-column: span 2; /* Default to 2 columns */
+
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        grid-column: span 1; /* 1 column on screens up to 767px wide */
+    }
 }
 
+/* Post Card Image Link */
 .post-card-image-link {
     position: relative;
     overflow: hidden;
@@ -886,21 +797,7 @@ production stylesheet in assets/built/screen.css
     padding-bottom: 55%;
 }
 
-.post-card[class*="post-access-"] .post-card-image-link::after {
-    background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(3px);
-}
-
-.post-card.keep-ratio[class*="post-access-"] .post-card-image-link::after {
-    position: absolute;
-    inset: 0;
-    padding-bottom: 0;
-}
-
-.post-card.keep-ratio:not(.post-card-large):not(.post-card-full) .post-card-image-link::after {
-    padding-bottom: 0;
-}
-
+/* Post Card Image */
 .post-card-image {
     position: absolute;
     inset: 0;
@@ -910,23 +807,7 @@ production stylesheet in assets/built/screen.css
     object-fit: cover;
 }
 
-.post-card.keep-ratio:not(.post-card-large):not(.post-card-full) .post-card-image {
-    position: static;
-}
-
-.post-card-access {
-    position: absolute;
-    inset: 0;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #fff;
-}
-
+/* Post Card Content Link */
 .post-card-content-link {
     position: relative;
     display: block;
@@ -937,14 +818,7 @@ production stylesheet in assets/built/screen.css
     text-decoration: none;
 }
 
-.post-feed .no-image .post-card-content-link {
-    padding: 0;
-}
-
-.no-image .post-card-header {
-    margin-top: 0;
-}
-
+/* Post Card Tags */
 .post-card-tags {
     display: flex;
     align-items: center;
@@ -957,51 +831,20 @@ production stylesheet in assets/built/screen.css
     line-height: 1;
 }
 
-.post-card-featured {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    padding-left: 18px;
-    color: var(--ghost-accent-color);
-}
-
-.post-card-featured svg {
-    position: absolute;
-    left: 0;
-}
-
+/* Post Card Title */
 .post-card-title {
     margin: 0;
     font-size: 2.6rem;
     font-weight: 800;
     line-height: 1.2;
+
+    /* Responsive adjustments */
+    @media (max-width: 500px) {
+        font-size: 1.9rem; /* Adjust font size as needed */
+    }
 }
 
-.post-card-content-link:hover .post-card-title {
-    opacity: 0.9;
-}
-
-.no-image .post-card-title {
-    margin-top: 0;
-}
-
-.has-serif-title .post-card-title {
-    font-family: var(--font-serif);
-    letter-spacing: -0.005em;
-}
-
-.post-card-title svg {
-    margin-top: -3px;
-    margin-left: -1px;
-}
-
-.post-card-content {
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-}
-
+/* Post Card Excerpt */
 .post-card-excerpt {
     display: -webkit-box;
     overflow-y: hidden;
@@ -1012,25 +855,14 @@ production stylesheet in assets/built/screen.css
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     word-break: break-word;
+
+    /* Responsive adjustments */
+    @media (max-width: 767px) {
+        -webkit-line-clamp: 2; /* Adjust line clamp as needed */
+    }
 }
 
-.has-sans-body .post-card-excerpt {
-    font-family: var(--font-sans);
-}
-
-.post-card:not(.post-card-large):not(.post-card-full):not(.dynamic):not(.no-image) .post-card-excerpt {
-    -webkit-line-clamp: 2;
-}
-
-:is(.tag-template, .author-template) .post-card-excerpt {
-    margin-top: 6px;
-}
-
-:is(.tag-template, .author-template) .post-card-large .post-card-excerpt {
-    display: block;
-    overflow-y: auto;
-}
-
+/* Post Card Meta */
 .post-card-meta {
     display: flex;
     align-items: center;
@@ -1041,147 +873,10 @@ production stylesheet in assets/built/screen.css
     color: var(--color-secondary-text);
 }
 
-.post-card-meta > * {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
+/* Add the rest of your CSS rules from both sets here */
+/* ... */
 
-.post-card-meta > * + *:not(script)::before {
-    width: 2px;
-    height: 2px;
-    content: "";
-    background-color: var(--color-secondary-text);
-    border-radius: 50%;
-}
-
-.post-card-meta .sep {
-    margin: 0 4px;
-}
-
-.author-profile-image {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background: color-mod(var(--color-lightgrey) l(+10%));
-    border-radius: 100%;
-
-    object-fit: cover;
-}
-
-.author-list {
-    display: flex;
-    flex-wrap: wrap;
-    margin: 0 0 0 4px;
-    padding: 0;
-    list-style: none;
-}
-
-.author-list-item {
-    position: relative;
-    flex-shrink: 0;
-    margin: 0;
-    padding: 0;
-}
-
-
-/* Special Styling for home page grid (below):
-
-The first post in the list is styled to be bigger than the others and take over
-the full width of the grid to give it more emphasis. Wrapped in a media query to
-make sure this only happens on large viewports / desktop-ish devices.
-
-*/
-
-@media (min-width: 1001px) {
-    .post-card-large {
-        grid-column: span 6;
-        display: grid;
-        grid-gap: 4vmin;
-        grid-template-columns: repeat(3, 1fr);
-        border-top: 0;
-    }
-
-    .post-card-large:not(.no-image) .post-card-header {
-        margin-top: 0;
-    }
-
-    .post-card-large .post-card-image-link {
-        position: relative;
-        grid-column: span 2;
-        margin-bottom: 0;
-    }
-
-    .post-card-large .post-card-content {
-        grid-column: span 1;
-    }
-
-    .post-card-large.no-image .post-card-content {
-        grid-column: span 2;
-    }
-
-    .post-card-large .post-card-image {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-    }
-
-    .post-card-large .post-card-tags {
-        margin-bottom: 12px;
-    }
-
-    .post-card-large .post-card-title {
-        margin-top: 0;
-        font-size: 4.4rem;
-        line-height: 1.05;
-    }
-
-    .post-card-large .post-card-excerpt {
-        margin-top: 16px;
-    }
-
-    .post-card-full {
-        grid-column: span 6;
-    }
-
-    .post-card-full .post-card-image-link {
-        margin-bottom: 40px;
-    }
-
-    .post-card-full .post-card-tags {
-        margin-bottom: 14px;
-    }
-
-    .post-card-full .post-card-title {
-        font-size: 6.4rem;
-        line-height: 0.95;
-    }
-
-    .post-card-full .post-card-excerpt {
-        margin-top: 20px;
-        font-size: 1.8rem;
-    }
-
-    .post-card-large + .post-card-large:nth-child(even) {
-        margin: 32px 0;
-    }
-
-    .post-card-large + .post-card-large:nth-child(even) .post-card-content {
-        order: -1;
-    }
-
-    .post-card.dynamic {
-        grid-column: span 3;
-    }
-
-    .post-card.dynamic .post-card-title {
-        font-size: 3rem;
-    }
-}
-
-/* Pagination
-/* ---------------------------------------------------------- */
-
+/* Pagination */
 .pagination {
     display: none;
     grid-template-columns: 1fr auto 1fr;
@@ -1213,34 +908,31 @@ html.no-infinite-scroll .pagination {
         display: none;
     }
 }
-
-
-/* 6. Single Post
-/* ---------------------------------------------------------- */
-
+/* Single Post Styles */
 .article {
     word-break: break-word;
+    padding: 8vmin 0;
 }
 
-.post-template .article {
-    padding: max(8vmin, 40px) 0 max(8vmin, 64px);
-}
-
-.post-template .article-header {
-    padding: 0 0 max(6.4vmin, 40px);
-}
-
-.page-template .article-header {
-    padding: max(12vmin, 64px) 0 max(3.2vmin, 28px);
+.article-header {
+    padding: 0 0 6vmin 0;
 }
 
 .article-tag {
-    margin-bottom: 16px;
-    font-size: 1.6rem;
+    margin: 0 0 0.5rem;
+    font-size: 1.3rem;
+    line-height: 1.4em;
+    letter-spacing: 0.02em;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: var(--color-midgrey);
 }
 
 .article-tag a {
-    color: var(--color-secondary-text);
+    color: var(--ghost-accent-color);
 }
 
 .article-title {
@@ -1256,25 +948,17 @@ html.no-infinite-scroll .pagination {
 }
 
 .article-excerpt {
-    margin-top: 20px;
+    margin: 20px 0 1rem;
     max-width: 720px;
     font-size: 2rem;
-    line-height: 1.45;
-    color: var(--color-darkgrey);
+    line-height: 1.4em;
+    opacity: 0.6;
 }
 
-.gh-canvas .article-image {
-    grid-column: wide-start / wide-end;
-    width: 100%;
-    margin: max(6.4vmin, 40px) 0 0;
-}
-
-.image-full .article-image {
-    grid-column: full-start / full-end;
-}
-
+.gh-canvas .article-image,
+.image-full .article-image,
 .image-small .article-image {
-    grid-column: main-start / main-end;
+    width: 100%;
 }
 
 .gh-canvas .article-image img {
@@ -1284,29 +968,17 @@ html.no-infinite-scroll .pagination {
     width: 100%;
 }
 
+/* Media Queries */
 @media (max-width: 767px) {
     .article-excerpt {
-        margin-top: 14px;
+        margin: 14px 0 1rem;
         font-size: 1.7rem;
     }
 }
 
-/* -------- */
-
-/* Content grid
-/* ---------------------------------------------------------- */
-
-/* Canvas creates a multi-column, centered grid which the post
-is laid out on top of. Canvas just defines the grid, we don't
-use it for applying any other styles. */
-
+/* Content grid */
 .gh-canvas,
 .kg-width-full.kg-content-wide {
-    --gap: max(4vmin, 20px);
-    --main: min(var(--content-width, 720px), 100% - var(--gap) * 2);
-    --wide: minmax(0, calc((var(--container-width, 1200px) - var(--content-width, 720px)) / 2));
-    --full: minmax(var(--gap), 1fr);
-
     display: grid;
     grid-template-columns:
         [full-start] var(--full)
@@ -1333,26 +1005,16 @@ use it for applying any other styles. */
     width: 100%;
 }
 
-
-/* Content
-/* ---------------------------------------------------------- */
-
-/* Content refers to styling all page and post content that is
-created within the Ghost editor. The main content handles
-headings, text, images and lists. We deal with cards lower down. */
-
-/* Default vertical spacing */
+/* Content Styles */
 .gh-content > * + * {
     margin-top: max(3.2vmin, 24px);
     margin-bottom: 0;
 }
 
-/* Remove space between full-width cards */
 .gh-content > .kg-width-full + .kg-width-full:not(.kg-width-full.kg-card-hascaption + .kg-width-full) {
     margin-top: 0;
 }
 
-/* [id] represents all headings h1-h6, reset all margins */
 .gh-content > [id] {
     margin: 0;
     color: var(--color-darkgrey);
@@ -1362,29 +1024,25 @@ headings, text, images and lists. We deal with cards lower down. */
     font-family: var(--font-serif);
 }
 
-/* Add back a top margin to all headings, unless a heading
-is the very first element in the post content */
 .gh-content > [id]:not(:first-child) {
     margin: 2em 0 0;
 }
 
-/* Add a small margin between a heading and anything after it */
 .gh-content > [id] + * {
     margin-top: 1.5rem !important;
 }
 
-/* A larger margin before/after HRs and blockquotes */
 .gh-content > hr,
 .gh-content > blockquote {
     position: relative;
     margin-top: max(4.8vmin, 32px);
 }
+
 .gh-content > hr + *,
 .gh-content > blockquote + * {
     margin-top: max(4.8vmin, 32px) !important;
 }
 
-/* Now the content typography styles */
 .gh-content a {
     color: var(--ghost-accent-color);
     text-decoration: underline;
@@ -1403,7 +1061,7 @@ is the very first element in the post content */
 }
 
 .gh-content > p img {
-  margin: 0 auto;
+    margin: 0 auto;
 }
 
 .page-template .gh-content:only-child > *:first-child:not(.kg-width-full) {
@@ -1463,265 +1121,419 @@ is the very first element in the post content */
 }
 
 .gh-content > blockquote:not([class]) {
-    position: relative;
-    font-style: italic;
-    padding: 0;
-}
-
-.gh-content > blockquote:not([class])::before {
-    content: "";
-    position: absolute;
-    left: -1.5em;
-    top: 0;
-    bottom: 0;
-    width: 0.3rem;
-    background: var(--ghost-accent-color);
-}
-
-.gh-content :not(pre) > code {
-    vertical-align: middle;
-    padding: 0.15em 0.4em 0.15em;
-    border: #e1eaef 1px solid;
-    font-weight: 400 !important;
-    font-size: 0.9em;
-    line-height: 1em;
-    color: #15171A;
-    background: #f0f6f9;
-    border-radius: 0.25em;
-}
-
-.gh-content pre {
-    overflow: auto;
-    padding: 16px 20px;
-    color: var(--color-wash);
-    font-size: 1.4rem;
+    font-size: 2rem;
     line-height: 1.5em;
-    background: var(--color-darkgrey);
-    border-radius: 5px;
-    box-shadow: 0 2px 6px -2px rgba(0,0,0,.1), 0 0 1px rgba(0,0,0,.4);
+    font-weight: 600;
+    border-left: 4px solid var(--color-midgrey);
+    padding-left: 2.4em;
+    opacity: 0.7;
 }
 
-.gh-content ol ol li {
-    list-style-type: lower-alpha;
+.gh-content > blockquote:not([class]) p {
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+    margin: 0;
+    opacity: 1;
 }
 
-.gh-content ol ol ol li {
-    list-style-type: lower-roman;
+.gh-content > blockquote:not([class]) p + * {
+    margin-top: max(4.8vmin, 32px);
 }
 
-@media (max-width: 650px) {
-    .gh-content > blockquote:not([class]),
-    .gh-content > ol,
-    .gh-content > ul,
-    .gh-content > dl,
-    .gh-content > p,
-    .gh-content .kg-callout-card .kg-callout-text,
-    .gh-content .kg-toggle-card .kg-toggle-content > ol,
-    .gh-content .kg-toggle-card .kg-toggle-content > ul,
-    .gh-content .kg-toggle-card .kg-toggle-content > p {
-        font-size: 1.8rem;
-    }
-
-    .gh-content .kg-product-card .kg-product-card-description > p,
-    .gh-content .kg-product-card .kg-product-card-description > ol,
-    .gh-content .kg-product-card .kg-product-card-description > ul {
-        font-size: 1.6rem;
-    }
-
-    .gh-content blockquote:not([class])::before {
-        left: min(-4vmin, -20px);
-    }
-}
-
-
-/* Cards
-/* ---------------------------------------------------------- */
-
-/* Cards are dynamic blocks of content which appear within Ghost
-posts, for example: embedded videos, tweets, galleries, or
-specially styled bookmark links. We add extra styling here to
-make sure they look good, and are given a bit of extra spacing. */
-
-/* Add extra margin before/after any cards,
-except for when immediately preceeded by a heading */
-.gh-content :not(.kg-card):not([id]) + .kg-card {
-    margin-top: 6vmin;
-}
-.gh-content .kg-card + :not(.kg-card) {
-    margin-top: 6vmin;
-}
-
-/* This keeps small embeds centered */
-.kg-embed-card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.gh-content .kg-gallery-card .kg-gallery-image img {
+    object-fit: cover;
     width: 100%;
+    height: 100%;
+    object-position: center top;
 }
 
-/* This keeps small iamges centered */
-.kg-image-card img {
-    margin: auto;
+/* Highlight Styles */
+.gh-content pre code {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    line-height: 1.6em;
+    border-radius: 0;
+    overflow-x: scroll;
 }
 
-.kg-image[width][height],
-.kg-gallery-image {
-    cursor: pointer;
+.gh-content pre code::selection {
+    background-color: rgba(101, 102, 104, 0.3);
+    color: inherit;
 }
 
-.has-serif-title .kg-toggle-card .kg-toggle-heading-text {
-    font-family: var(--font-serif);
+.gh-content pre code::-moz-selection {
+    background-color: rgba(101, 102, 104, 0.3);
+    color: inherit;
 }
 
-.gh-content .kg-callout-card-accent a {
-    text-decoration: underline;
+.gh-content code,
+.gh-content .kg-inline-code {
+    font-family: var(--font-mono);
+    font-size: 1.8rem;
+    line-height: 1.6em;
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    background-color: rgba(101, 102, 104, 0.3);
 }
 
-.kg-blockquote-alt {
-    font-family: var(--font-serif);
-    color: var(--color-midgrey);
+/* Lists */
+.gh-content > ul,
+.gh-content > ol,
+.gh-content > dl {
+    padding-left: 2em;
+    margin: 2em 0;
 }
 
-.has-sans-body .kg-blockquote-alt {
-    font-family: var(--font-sans);
+.gh-content > ul li,
+.gh-content > ol li {
+    margin: 1.2em 0;
 }
 
-.kg-card.kg-header-card.kg-style-dark {
-    background: var(--color-darkgrey);
+.gh-content > ul li ul,
+.gh-content > ol li ol {
+    margin: 1.2em 0;
 }
 
-.kg-header-card.kg-style-light h2.kg-header-card-header {
-    color: color-mod(var(--color-darkgrey) l(-5%));
+/* Blockquotes */
+.gh-content blockquote {
+    margin: 2.4em 0;
+    padding: 0.8em 0.8em 0.8em 2.4em;
+    border-left: 4px solid var(--color-midgrey);
+    background: var(--color-lightgrey);
+    opacity: 0.9;
 }
 
-.has-serif-title .kg-header-card h2.kg-header-card-header {
-    font-family: var(--font-serif);
+.gh-content blockquote p {
+    margin: 0;
+    font-size: inherit;
+    line-height: inherit;
+    font-weight: inherit;
+    opacity: 1;
 }
 
+/* Images */
+.gh-content img {
+    max-width: 100%;
+    display: block;
+    margin: 2em auto;
+}
+
+/* Responsive Images */
+.gh-content img {
+    max-width: 100%;
+    height: auto;
+}
 
 /* Captions */
-figcaption {
-    padding: 1.5rem 1.5rem 0;
+.gh-content .kg-width-full.kg-card-hascaption > .kg-card > figcaption {
     text-align: center;
-    color: rgba(0,0,0,0.5);
-    font-size: 1.3rem;
-    line-height: 1.4em;
-}
-figcaption strong {
-    color: rgba(0,0,0,0.8);
-}
-figcaption a {
-    text-decoration: underline;
+    font-size: 1.6rem;
+    margin: 0.6em auto;
 }
 
-
-/* Highly specific styles for traditional Instagram embeds */
-iframe.instagram-media {
-    margin-top: 6vmin !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    margin-bottom: 0 !important;
+.gh-content .kg-width-full.kg-card-hascaption > .kg-card {
+    display: block;
+    margin: 0 auto;
 }
 
-iframe.instagram-media + script + :not([id]) {
-    margin-top: 6vmin;
+.gh-content .kg-width-full.kg-card-hascaption img {
+    max-width: 100%;
+    height: auto;
 }
 
-
-/* Card captions
-/* ---------------------------------------------------------- */
-
-.kg-width-full.kg-card-hascaption {
-    display: grid;
-    grid-template-columns: inherit;
-}
-
-.kg-width-wide.kg-card-hascaption img {
-    grid-column: wide-start / wide-end;
-}
-.kg-width-full.kg-card-hascaption img {
-    grid-column: 1 / -1;
-}
-
-.kg-width-full.kg-card-hascaption figcaption {
-    grid-column: main-start / main-end;
-}
-
-.article-comments {
-    margin: 6vmin 0 0 0;
-}
-
-/* -----old------ */
-
-.footnotes-sep {
-    margin-bottom: 30px;
-}
-
-.footnotes {
-    font-size: 1.5rem;
-}
-
-.footnotes p {
-    margin: 0;
-}
-
-.footnote-backref {
-    font-size: 1.2rem;
-    font-weight: bold;
-    text-decoration: none !important;
-    box-shadow: none !important;
+/* Card Styles */
+.gh-content .kg-card {
+    padding: 1.6em;
+    border-radius: 4px;
+    background: var(--color-lightgrey);
+    margin: 1.6em 0;
 }
 
 /* Tables */
-.gh-content table:not(.gist table) {
-    display: inline-block;
-    overflow-x: auto;
-    max-width: 100%;
-    width: auto;
-    border-spacing: 0;
+.gh-content table {
+    width: 100%;
     border-collapse: collapse;
-    font-family: var(--font-sans);
-    font-size: 1.6rem;
-    white-space: nowrap;
-    vertical-align: top;
-    -webkit-overflow-scrolling: touch;
-    background: radial-gradient(ellipse at left, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 0 center, radial-gradient(ellipse at right, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 75%) 100% center;
-    background-attachment: scroll, scroll;
-    background-size: 10px 100%, 10px 100%;
-    background-repeat: no-repeat;
+    margin: 2em 0;
+    overflow-x: auto;
 }
 
-.gh-content table:not(.gist table) td:first-child {
-    background-image: linear-gradient(to right, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
-    background-size: 20px 100%;
-    background-repeat: no-repeat;
-}
-
-.gh-content table:not(.gist table) td:last-child {
-    background-image: linear-gradient(to left, rgba(255,255,255, 1) 50%, rgba(255,255,255, 0) 100%);
-    background-position: 100% 0;
-    background-size: 20px 100%;
-    background-repeat: no-repeat;
-}
-
-.gh-content table:not(.gist table) th {
-    color: var(--color-darkgrey);
-    font-size: 1.2rem;
-    font-weight: 700;
-    letter-spacing: 0.2px;
+.gh-content th,
+.gh-content td {
+    border: 1px solid var(--color-midgrey);
+    padding: 1em;
     text-align: left;
-    text-transform: uppercase;
-    background-color: color-mod(var(--color-wash) l(+4%));
+    font-weight: 400;
 }
 
-.gh-content table:not(.gist table) th,
-.gh-content table:not(.gist table) td {
-    padding: 6px 12px;
-    border: color-mod(var(--color-wash) l(-1%) s(-5%)) 1px solid;
+.gh-content th {
+    background-color: var(--color-lightgrey);
+    font-weight: 600;
 }
 
+/* Footnotes */
+.gh-content .footnotes {
+    font-size: 1.7rem;
+    line-height: 1.6em;
+}
 
-/* 6.1. Post Byline
+.gh-content .footnotes ol {
+    padding-left: 2em;
+}
+
+/* Post Navigation */
+.gh-content .post-nav {
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 0;
+    font-size: 1.7rem;
+    line-height: 1.6em;
+}
+
+.gh-content .post-nav-prev {
+    text-align: left;
+    flex-basis: 49%;
+}
+
+.gh-content .post-nav-next {
+    text-align: right;
+    flex-basis: 49%;
+}
+
+.gh-content .post-nav a {
+    text-decoration: underline;
+    color: var(--ghost-accent-color);
+}
+
+/* Comments Section */
+.gh-comments {
+    margin-top: max(12vmin, 64px);
+}
+
+.gh-comments-title {
+    font-size: 2.2rem;
+    margin-bottom: 1em;
+}
+
+.gh-comments-count {
+    font-size: 2rem;
+    margin-bottom: 1em;
+}
+
+.gh-comments-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-right: 1em;
+}
+
+.gh-comments-name {
+    font-weight: 600;
+}
+
+.gh-comments-time {
+    font-size: 1.6rem;
+    opacity: 0.6;
+}
+
+.gh-comments-text {
+    margin-top: 1em;
+    font-size: 1.8rem;
+    line-height: 1.6em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .gh-canvas {
+        grid-template-columns:
+            [full-start] var(--full) [full-end]
+            [main-start] var(--main) [main-end]
+            [wide-start] var(--wide) [wide-end]
+            [full-start] var(--full) [full-end];
+    }
+
+    .gh-canvas > * {
+        grid-column: main-start / main-end;
+    }
+
+    .gh-content .kg-width-full > img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .gh-comments-avatar {
+        width: 48px;
+        height: 48px;
+        margin-right: 0.5em;
+    }
+
+    .gh-comments-title {
+        font-size: 2rem;
+    }
+
+    .gh-comments-count {
+        font-size: 1.8rem;
+    }
+
+    .gh-comments-text {
+        font-size: 1.7rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .article-title {
+        font-size: clamp(2.8rem, 8vw, 4.8rem);
+    }
+
+    .article-excerpt {
+        font-size: 1.8rem;
+    }
+
+    .gh-content > * + * {
+        margin-top: max(2.4vmin, 16px);
+    }
+
+    .gh-comments-title {
+        font-size: 1.8rem;
+    }
+
+    .gh-comments-count {
+        font-size: 1.6rem;
+    }
+
+    .gh-comments-avatar {
+        width: 36px;
+        height: 36px;
+        margin-right: 0.4em;
+    }
+
+    .gh-comments-name {
+        font-size: 1.6rem;
+    }
+
+    .gh-comments-time {
+        font-size: 1.4rem;
+    }
+
+    .gh-comments-text {
+        font-size: 1.6rem;
+    }
+
+    .gh-content .kg-width-full.kg-card-hascaption img {
+        max-width: 100%;
+    }
+
+    .gh-content pre code {
+        font-size: 1.6rem;
+    }
+
+    .gh-content code,
+    .gh-content .kg-inline-code {
+        font-size: 1.6rem;
+        padding: 0.15em 0.4em;
+    }
+
+    .gh-content .footnotes {
+        font-size: 1.6rem;
+    }
+}
+
+/* Dark Mode Styles */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #121212;
+        --color-background-secondary: #1E1E1E;
+        --color-background-tertiary: #2E2E2E;
+        --color-background-code: #111111;
+        --color-text: #E0E0E0;
+        --color-text-secondary: #B0B0B0;
+        --color-midgrey: #B0B0B0;
+        --color-lightgrey: #262626;
+        --color-border: #333333;
+        --color-primary: #0EB2D4;
+        --color-accent: #FACC15;
+        --color-error: #FF453A;
+    }
+
+    .gh-canvas {
+        background-color: var(--color-background);
+    }
+
+    .gh-content {
+        color: var(--color-text);
+    }
+
+    .gh-content a {
+        color: var(--color-primary);
+    }
+
+    .gh-content h1,
+    .gh-content h2,
+    .gh-content h3,
+    .gh-content h4,
+    .gh-content h5,
+    .gh-content h6 {
+        color: var(--color-text);
+    }
+
+    .gh-content hr {
+        background-color: var(--color-midgrey);
+    }
+
+    .gh-content blockquote {
+        background: var(--color-background-secondary);
+        border-left: 4px solid var(--color-midgrey);
+    }
+
+    .gh-content .kg-card {
+        background: var(--color-background-secondary);
+    }
+
+    .gh-content pre code,
+    .gh-content code,
+    .gh-content .kg-inline-code {
+        background-color: var(--color-background-code);
+        color: var(--color-text);
+    }
+
+    .gh-content table {
+        border-color: var(--color-border);
+    }
+
+    .gh-content th {
+        background-color: var(--color-background-tertiary);
+        color: var(--color-text);
+    }
+
+    .gh-content th,
+    .gh-content td {
+        border-color: var(--color-border);
+    }
+
+    .gh-comments {
+        background-color: var(--color-background-secondary);
+        color: var(--color-text);
+    }
+
+    .gh-comments-title {
+        color: var(--color-text);
+    }
+
+    .gh-comments-count {
+        color: var(--color-text);
+    }
+
+    .gh-comments-avatar {
+        border: 2px solid var(--color-background-tertiary);
+    }
+}
+
+/* Custom Styles */
+/* You can add your custom styles below this comment */
+
+/* End of Custom Styles */
+
+/* 6.1. Post Byline */
 /* ---------------------------------------------------------- */
 
 .article-byline {
@@ -1783,8 +1595,7 @@ iframe.instagram-media + script + :not([id]) {
     }
 }
 
-
-/* 6.2. Subscribe
+/* 6.2. Subscribe */
 /* ---------------------------------------------------------- */
 
 .footer-cta {
@@ -1833,8 +1644,7 @@ iframe.instagram-media + script + :not([id]) {
     border-radius: 6px;
 }
 
-
-/* 6.3. Read more
+/* 6.3. Read more */
 /* ---------------------------------------------------------- */
 
 .read-more-wrap {
@@ -1873,7 +1683,7 @@ iframe.instagram-media + script + :not([id]) {
     }
 }
 
-/* 6.4. Comments
+/* 6.4. Comments */
 /* ---------------------------------------------------------- */
 .comments {
     display: flex;
@@ -1881,7 +1691,6 @@ iframe.instagram-media + script + :not([id]) {
     align-items: center;
     margin: 60px 0 44px;
 }
-
 
 .comments-head {
     display: flex;
@@ -1910,10 +1719,255 @@ iframe.instagram-media + script + :not([id]) {
     max-width: 720px;
 }
 
-
-/* 7. Author Template
+/* 7.1. Post Byline */
 /* ---------------------------------------------------------- */
 
+.article-byline {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 0 0;
+}
+
+.article-byline-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.article-byline-content .author-list {
+    justify-content: flex-start;
+    padding: 0 12px 0 0;
+}
+
+.article-byline-meta {
+    color: color-mod(var(--color-midgrey));
+    font-size: 1.4rem;
+    line-height: 1.2em;
+}
+
+.article-byline-meta h4 {
+    margin: 0 0 3px;
+    font-size: 1.6rem;
+}
+
+.article-byline-meta .bull {
+    display: inline-block;
+    margin: 0 2px;
+    opacity: 0.6;
+}
+
+.author-avatar {
+    display: block;
+    overflow: hidden;
+    margin: 0 -4px;
+    width: 50px;
+    height: 50px;
+    border: #fff 2px solid;
+    border-radius: 100%;
+    transition: all 0.5s cubic-bezier(0.4, 0.01, 0.165, 0.99) 700ms;
+}
+
+.basic-info .avatar-wrapper {
+    position: relative;
+    margin: 0;
+    width: 60px;
+    height: 60px;
+    border: none;
+    background: rgba(229, 239, 245, 0.1);
+}
+
+.basic-info .avatar-wrapper svg {
+    margin: 0;
+    width: 60px;
+    height: 60px;
+    opacity: 0.15;
+}
+
+.page-template .article-title {
+    margin-bottom: 0;
+}
+
+/* 7.3. Subscribe */
+/* ---------------------------------------------------------- */
+
+.footer-cta {
+    position: relative;
+    margin-bottom: -40px;
+    padding: 9vmin 4vmin 10vmin;
+    color: #fff;
+    text-align: center;
+    background: var(--color-darkgrey);
+}
+
+.footer-cta.cta-alt {
+    padding: 2vmin 4vmin 12vmin;
+    background: transparent;
+}
+
+/* Increases the default h2 size by 15%, for small and large screens */
+.footer-cta h2 {
+    margin: 0 0 30px;
+    font-size: 3.2rem;
+}
+
+.footer-cta.cta-alt h2 {
+    color: var(--color-darkgrey);
+}
+
+@media (max-width: 600px) {
+    .footer-cta h2 {
+        font-size: 2.65rem;
+    }
+}
+
+.footer-cta-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 500px;
+    padding: 5px 5px 5px 15px;
+    font-size: 1.8rem;
+    color: var(--color-midgrey);
+    background: #fff;
+    border-radius: 8px;
+}
+
+.footer-cta.cta-alt .footer-cta-button {
+    border: 1px solid var(--color-lightgrey);
+}
+
+.footer-cta-button span {
+    display: inline-block;
+    padding: 10px 15px;
+    color: #fff;
+    font-weight: 500;
+    background: var(--ghost-accent-color);
+    border-radius: 5px;
+}
+
+/* 7.4. Read more */
+/* ---------------------------------------------------------- */
+
+.read-more-wrap {
+    width: 100%;
+    padding: 4vmin;
+    margin: 40px auto -40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: color-mod(var(--color-darkgrey) l(-5%));
+}
+
+.read-more {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 4vmin;
+}
+
+.read-more .post-card-title {
+    color: #fff;
+    opacity: 0.8;
+}
+
+.read-more .post-card-excerpt {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.read-more .post-card-byline-content a {
+    color: #fff;
+}
+
+@media (max-width: 1000px) {
+    .read-more {
+        grid-template-columns: 1fr 1fr;
+    }
+    .read-more article:nth-child(3) {
+        display: none;
+    }
+}
+
+@media (max-width: 700px) {
+    .read-more {
+        grid-template-columns: 1fr;
+    }
+    .read-more article:nth-child(2) {
+        display: none;
+    }
+}
+/* 8. Author Template */
+/* ---------------------------------------------------------- */
+
+.author-template .posts {
+    position: relative;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr 1fr;
+    grid-gap: 4vmin;
+}
+
+.author-template .posts .post-feed {
+    grid-column: 2 / 4;
+    grid-template-columns: 1fr 1fr;
+}
+
+.author-profile {
+    padding: 4vmin 0;
+}
+
+.author-profile-content {
+    height: auto;
+    position: sticky;
+    top: 4vmin;
+    font-size: 1.4rem;
+    line-height: 1.4em;
+}
+
+/* Retained author-profile-pic styles from both sets */
+.author-profile-pic {
+    display: block;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 0 2rem;
+    background: color-mod(var(--color-lightgrey) l(+10%));
+    border-radius: 50%;
+}
+
+.author-profile h1 {
+    margin: 0 0 0.3em;
+    font-size: 2rem;
+}
+
+.author-profile p {
+    margin: 0 0 1.5em;
+    color: color-mod(var(--color-midgrey) l(-8%));
+}
+
+/* Retained author-profile-location from the second set */
+.author-profile-location {
+    margin: 0 0 1.5em;
+    font-weight: 700;
+}
+
+.author-profile-social-link {
+    display: block;
+    padding: 0 0 5px;
+    font-size: 1.3rem;
+    color: color-mod(var(--color-midgrey) l(-8%));
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+    white-space: nowrap;
+}
+
+.author-profile-social-link:hover {
+    color: var(--color-darkgrey);
+}
+
+/* 7. Author Template */
+/* ---------------------------------------------------------- */
+
+/* Adjusted author-profile-pic styles from the second set */
 .author-profile-pic {
     display: block;
     width: 80px;
@@ -1928,10 +1982,12 @@ iframe.instagram-media + script + :not([id]) {
     margin-top: 16px;
 }
 
+/* Retained author-profile-location from the first set */
 .author-profile-location {
     font-weight: 700;
 }
 
+/* Added author-profile-meta and author-profile-social-link svg styles from the second set */
 .author-profile-meta {
     display: flex;
     gap: 10px;
@@ -1951,38 +2007,43 @@ iframe.instagram-media + script + :not([id]) {
     height: 16px;
 }
 
+/* Media Queries */
+@media (max-width: 900px) {
+    .author-template .posts .post-feed {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 650px) {
+    .author-template .posts {
+        grid-template-columns: 1fr;
+        grid-gap: 0;
+    }
+    .author-template .posts .post-feed {
+        grid-column: 1 / auto;
+    }
+    .author-profile {
+        padding-right: 0;
+    }
+    .author-profile-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
 @media (min-width: 1001px) {
     .author-template .post-card-large .post-card-content:only-child {
         grid-column: span 2;
         max-width: 640px;
     }
 }
-
-
-/* 8. Tag Template
-/* ---------------------------------------------------------- */
-
-.tag-template .post-card-large .post-card-image-link {
-    grid-column: 2 / span 2;
-    order: 2;
-}
-
-.tag-template .post-card-large .post-card-content {
-    order: 1;
-}
-
-@media (min-width: 1001px) {
-    .tag-template .post-card-large .post-card-content:only-child {
-        grid-column: span 2;
-        max-width: 640px;
-    }
-}
-
 /* 9. Error Template
 /* ---------------------------------------------------------- */
 
 .error-content {
-    padding: 14vw 4vw 2vw;
+    padding: 14vw 4vw 6vw;
 }
 
 .error-message {
@@ -1995,6 +2056,7 @@ iframe.instagram-media + script + :not([id]) {
     font-size: 12vw;
     line-height: 1em;
     letter-spacing: -5px;
+    color: var(--ghost-accent-color); /* Added color from the first set */
 }
 
 .error-description {
@@ -2044,7 +2106,6 @@ iframe.instagram-media + script + :not([id]) {
     }
 }
 
-
 /* 10. Site Footer
 /* ---------------------------------------------------------- */
 
@@ -2065,7 +2126,7 @@ iframe.instagram-media + script + :not([id]) {
     display: grid;
     grid-gap: 40px;
     grid-template-columns: auto 1fr auto;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.3rem;
 }
 
@@ -2076,11 +2137,11 @@ iframe.instagram-media + script + :not([id]) {
 }
 
 .site-footer a {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .site-footer a:hover {
-    color: rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
     text-decoration: none;
 }
 
@@ -2134,198 +2195,212 @@ iframe.instagram-media + script + :not([id]) {
         margin-bottom: 16px;
     }
 }
-
-
-/* 11. Dark Mode
+/* 11. Dark Mode */
 /* ---------------------------------------------------------- */
 
-html.dark-mode body {
+html.dark-mode, html.auto-color body {
     color: rgba(255, 255, 255, 0.75);
     background: var(--color-darkmode);
 }
 
-html.dark-mode img {
+html.dark-mode, html.auto-color img {
     opacity: 0.9;
 }
 
-html.dark-mode kbd {
+html.dark-mode, html.auto-color kbd {
     background: color-mod(var(--color-darkmode) l(+5%));
 }
 
-html.dark-mode figcaption a {
+html.dark-mode figcaption a, html.auto-color figcaption a {
     color: #fff;
 }
 
-html.dark-mode body:not(.has-cover) .gh-head {
+html.dark-mode body:not(.has-cover) .gh-head, html.auto-color body:not(.has-cover) .gh-head {
     background: var(--color-darkmode);
     color: #fff;
 }
 
 html.dark-mode .gh-burger::before,
-html.dark-mode .gh-burger::after {
+html.dark-mode .gh-burger::after,
+html.auto-color .gh-burger::before,
+html.auto-color .gh-burger::after {
     background-color: #fff;
 }
 
-html.dark-mode .site-header-content {
+html.dark-mode .site-header-content, html.auto-color .site-header-content {
     color: #fff;
 }
 
-html.dark-mode .post-card-image {
+html.dark-mode .post-card-image, html.auto-color .post-card-image {
     background: var(--color-darkmode);
 }
 
-html.dark-mode :is(.post-card-tags, .post-card-meta, .article-tag a, .byline-meta-content, .pagination .page-number) {
+html.dark-mode :is(.post-card-tags, .post-card-meta, .article-tag a, .byline-meta-content, .pagination .page-number),
+html.auto-color :is(.post-card-tags, .post-card-meta, .article-tag a, .byline-meta-content, .pagination .page-number) {
     color: color-mod(var(--color-secondary-text) l(-22%));
 }
 
-html.dark-mode .post-card-featured {
+html.dark-mode .post-card-featured, html.auto-color .post-card-featured {
     color: #fff;
 }
 
-html.dark-mode .post-card-title {
+html.dark-mode .post-card-title, html.auto-color .post-card-title {
     color: #fff;
 }
 
-html.dark-mode .post-card-excerpt {
+html.dark-mode .post-card-excerpt, html.auto-color .post-card-excerpt {
     color: var(--color-secondary-text);
 }
 
-html.dark-mode .pagination a {
+html.dark-mode .pagination a, html.auto-color .pagination a {
     color: #fff;
 }
 
-html.dark-mode .author-profile-location {
+html.dark-mode .author-profile-location, html.auto-color .author-profile-location {
     color: #fff;
 }
 
-html.dark-mode .author-profile-social-link:hover {
+html.dark-mode .author-profile-social-link:hover, html.auto-color .author-profile-social-link:hover {
     color: #fff;
 }
 
-html.dark-mode .article-title {
+html.dark-mode .article-title, html.auto-color .article-title {
     color: #fff;
 }
 
-html.dark-mode .article-excerpt {
+html.dark-mode .article-excerpt, html.auto-color .article-excerpt {
     color: var(--color-secondary-text);
 }
 
-html.dark-mode .post-full-image {
+html.dark-mode .post-full-image, html.auto-color .post-full-image {
     background-color: color-mod(var(--color-darkmode) l(+8%));
 }
 
-html.dark-mode .author-avatar {
+html.dark-mode .author-avatar, html.auto-color .author-avatar {
     border-color: var(--color-darkmode);
     background-color: color-mod(var(--color-darkmode) l(+8%));
 }
 
-html.dark-mode .author-profile-image {
+html.dark-mode .author-profile-image, html.auto-color .author-profile-image {
     opacity: 1;
 }
 
-html.dark-mode .author-profile-image path {
+html.dark-mode .author-profile-image path, html.auto-color .author-profile-image path {
     fill: var(--color-darkmode);
 }
 
-html.dark-mode .article-byline-meta .author-name a {
+html.dark-mode .article-byline-meta .author-name a, html.auto-color .article-byline-meta .author-name a {
     color: #fff;
 }
 
-html.dark-mode .no-image .author-social-link a {
+html.dark-mode .no-image .author-social-link a, html.auto-color .no-image .author-social-link a {
     color: rgba(255, 255, 255, 0.75);
 }
 
-html.dark-mode .gh-content > [id] {
+html.dark-mode .gh-content > [id], html.auto-color .gh-content > [id] {
     color: rgba(255, 255, 255, 0.9);
 }
 
-html.dark-mode .gh-content pre {
+html.dark-mode .gh-content pre, html.auto-color .gh-content pre {
     background: color-mod(var(--color-darkgrey) l(-8%));
 }
 
-html.dark-mode .gh-content :not(pre) > code {
+html.dark-mode .gh-content :not(pre) > code, html.auto-color .gh-content :not(pre) > code {
     background: color-mod(var(--color-darkgrey) l(+6%));
     border-color: color-mod(var(--color-darkmode) l(+8%));
     color: var(--color-wash);
 }
 
-:where(html.dark-mode) .gh-content a {
+:where(html.dark-mode), :where(html.auto-color) .gh-content a {
     color: #fff;
 }
 
-html.dark-mode .gh-content strong {
+html.dark-mode .gh-content strong, html.auto-color .gh-content strong {
     color: #fff;
 }
 
-html.dark-mode .gh-content em {
+html.dark-mode .gh-content em, html.auto-color .gh-content em {
     color: #fff;
 }
 
-html.dark-mode .gh-content code {
+html.dark-mode .gh-content code, html.auto-color .gh-content code {
     color: #fff;
     background: #000;
 }
 
-html.dark-mode hr {
+html.dark-mode hr, html.auto-color hr {
     border-top-color: color-mod(var(--color-darkmode) l(+8%));
 }
 
-html.dark-mode .gh-content hr:after {
+html.dark-mode .gh-content hr:after, html.auto-color .gh-content hr:after {
     background: color-mod(var(--color-darkmode) l(+8%));
     box-shadow: var(--color-darkmode) 0 0 0 5px;
 }
 
-html.dark-mode figcaption {
+html.dark-mode figcaption, html.auto-color figcaption {
     color: rgba(255, 255, 255, 0.6);
 }
 
-html.dark-mode .gh-content table:not(.gist table) td:first-child {
+html.dark-mode .gh-content table:not(.gist table) td:first-child,
+html.auto-color .gh-content table:not(.gist table) td:first-child {
     background-image: linear-gradient(to right, var(--color-darkmode) 50%, color-mod(var(--color-darkmode) a(0%)) 100%);
 }
 
-html.dark-mode .gh-content table:not(.gist table) td:last-child {
+html.dark-mode .gh-content table:not(.gist table) td:last-child,
+html.auto-color .gh-content table:not(.gist table) td:last-child {
     background-image: linear-gradient(to left, var(--color-darkmode) 50%, color-mod(var(--color-darkmode) a(0%)) 100%);
 }
 
-html.dark-mode .gh-content table:not(.gist table) th {
+html.dark-mode .gh-content table:not(.gist table) th,
+html.auto-color .gh-content table:not(.gist table) th {
     color: rgba(255, 255, 255, 0.85);
     background-color: color-mod(var(--color-darkmode) l(+8%));
 }
 
 html.dark-mode .gh-content table:not(.gist table) th,
-html.dark-mode .gh-content table:not(.gist table) td {
+html.dark-mode .gh-content table:not(.gist table) td,
+html.auto-color .gh-content table:not(.gist table) th,
+html.auto-color .gh-content table:not(.gist table) td {
     border: color-mod(var(--color-darkmode) l(+8%)) 1px solid;
 }
 
-html.dark-mode .gh-content :is(input, textarea) {
+html.dark-mode .gh-content :is(input, textarea),
+html.auto-color .gh-content :is(input, textarea) {
     color: color-mod(var(--color-midgrey) l(-30%));
 }
 
-html.dark-mode .site-archive-header .no-image {
+html.dark-mode .site-archive-header .no-image,
+html.auto-color .site-archive-header .no-image {
     color: rgba(255, 255, 255, 0.9);
     background: var(--color-darkmode);
 }
 
-html.dark-mode .kg-header-card.kg-style-dark {
+html.dark-mode .kg-header-card.kg-style-dark,
+html.auto-color .kg-header-card.kg-style-dark {
     background: color-mod(var(--color-darkgrey) l(-5%));
 }
 
-html.dark-mode .kg-header-card.kg-style-light {
+html.dark-mode .kg-header-card.kg-style-light,
+html.auto-color .kg-header-card.kg-style-light {
     background: color-mod(var(--color-darkgrey) l(+5%));
 }
 
 html.dark-mode .kg-header-card h2.kg-header-card-header,
-html.dark-mode .kg-header-card h3.kg-header-card-subheader {
+html.auto-color .kg-header-card h2.kg-header-card-header,
+html.dark-mode .kg-header-card h3.kg-header-card-subheader,
+html.auto-color .kg-header-card h3.kg-header-card-subheader {
     color: #fff;
 }
 
-html.dark-mode .footer-cta-title {
+html.dark-mode .footer-cta-title, html.auto-color .footer-cta-title {
     color: #fff;
 }
 
 @media (max-width: 767px) {
     html.dark-mode .gh-head-open:not(.has-cover) #gh-head,
-    html.dark-mode .gh-head-open:not(.has-cover) #gh-head .gh-head-actions {
+    html.auto-color .gh-head-open:not(.has-cover) #gh-head,
+    html.dark-mode .gh-head-open:not(.has-cover) #gh-head .gh-head-actions,
+    html.auto-color .gh-head-open:not(.has-cover) #gh-head .gh-head-actions {
         background: var(--color-darkmode);
     }
 }
@@ -2522,8 +2597,6 @@ html.dark-mode .footer-cta-title {
         }
     }
 }
-
-
 /* 12. Lightbox
 /* ---------------------------------------------------------- */
 
@@ -3019,18 +3092,3 @@ html.dark-mode .footer-cta-title {
 .pswp--minimal--dark .pswp__top-bar {
     background: none;
 }
-
-/*
-
-Hey! You reached the end.
-
-Hope you enjoyed this CSS file, if you have any suggestions
-for improvements that might be useful for everyone who uses
-this theme, you can find the open source repository for it
-here: https://github.com/tryghost/casper
-
-Or, if you've just scrolled all the way to the bottom of the
-file to add some of your own styles. Well, you've come to
-the right place. Onward!
-
- */
