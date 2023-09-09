@@ -13,14 +13,14 @@
         alt=""
       />
     {{/if}}
-    <h1 class="site-title" style="text-align: center;">
+    <h1 class="site-title" style="text-align: center !important;">
       {{#if @site.logo}}
         <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
       {{else}}
         {{@site.title}}
       {{/if}}
     </h1>
-    <p style="text-align: center; font-size: 16px;">{{@site.description}}</p>
+    <p style="text-align: center !important; font-size: 16px !important;">{{@site.description}}</p>
   </div>
 {{/match}}
 
@@ -32,7 +32,7 @@
       <section class="post-full-content">
         <div class="post-content">
           <br>
-          <h1 class="post-title" style="font-weight: bold; font-family: Georgia;"></h1>
+          <h1 class="post-title" style="font-weight: bold; font-family: Georgia;">Welcome</h1>
           <style>
             .centeralign {
               text-align: center;
