@@ -84,7 +84,7 @@ into the {body} tag of the default.hbs template --}}
     <!-- get the list of posts -->
 {{#get "posts" filter="tag:hash-all" limit="6"}}
 <div class="inner posts">
-    <div class="post-feed">
+    <div class="post-feed grid-container">
         {{#foreach posts}}
             <div class="post">
                 <h2>{{title}}</h2>
