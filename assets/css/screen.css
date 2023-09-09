@@ -1109,7 +1109,7 @@ production stylesheet in assets/built/screen.css
 .post-read-time {
     color: #ccc; /* Adjust the color to a lighter shade of gray */
     font-size: 14px; /* Adjust the font size as needed */
-    display: inline; /* Display them on the same line */
+    display: inline-block; /* Display them on the same line */
     margin-right: 8px; /* Adjust the spacing between them as needed */
 }
 
@@ -1118,7 +1118,6 @@ production stylesheet in assets/built/screen.css
     content: "\00b7"; /* You can use a dot or any other separator you prefer */
     margin-left: 8px; /* Adjust the spacing between the separator and read time */
 }
-
 
 /* Special Styling for home page grid (below):
 
