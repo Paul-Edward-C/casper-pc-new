@@ -86,13 +86,14 @@ into the {body} tag of the default.hbs template --}}
 <div class="inner posts">
     <div class="post-feed">
         {{#foreach posts}}
-            <div class="post-card">
+            <div class="post">
                 <h2>{{title}}</h2>
-                <p>{{excerpt words="30"}} <!-- Adjust the number of words as needed --></p>
+                <p>{{excerpt words="50"}} <!-- Adjust the number of words as needed --></p>
                 <div class="post-meta">
-                    <p class="post-date">{{date format="MMM D, YYYY"}}</p>
-                    <p class="post-read-time">{{reading_time}}</p>
+                    <span class="post-date">{{published_at}}</span>
+                    <span class="post-read-time">{{read_time}}</span>
                 </div>
+                <a href="{{url}}">Read More</a>
             </div>
         {{/foreach}}
     </div>
