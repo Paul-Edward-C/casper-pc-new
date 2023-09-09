@@ -3,6 +3,12 @@
 into the {body} tag of the default.hbs template --}}
 
 
+<style>
+    .site-header-cover {
+        max-height: 300px; /* Adjust the height as needed */
+    }
+</style>
+
 {{#match @custom.publication_cover_style "!=" "None"}}
     <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
         {{#if @site.cover_image}}
@@ -26,6 +32,7 @@ into the {body} tag of the default.hbs template --}}
             {{/if}}
         </h1>
     </div>
+
 {{/match}}
 
 <div id="site-main" class="site-main outer">
