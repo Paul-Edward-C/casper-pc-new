@@ -87,7 +87,7 @@ into the {body} tag of the default.hbs template --}}
     <div class="post-feed">
         {{#foreach posts}}
             <div class="post-card">
-                <h2>{{title}}</h2>
+                <h2><a href="{{url}}">{{title}}</a></h2>
                 <p>{{excerpt words="30"}} <!-- Adjust the number of words as needed --></p>
                 <div class="post-meta" style="margin-top: auto;">
                     <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
@@ -99,6 +99,13 @@ into the {body} tag of the default.hbs template --}}
 </div>
 
 {{/get}}
+
+<style>
+  /* Add space above the .myBTNdiv */
+  .myBTNdiv {
+    margin-top: 20px; /* Adjust the value as needed to control the amount of space */
+  }
+</style>
 
 <div class="myBTNdiv">
   <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article achive</a> 
