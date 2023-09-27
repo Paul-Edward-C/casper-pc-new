@@ -1,0 +1,138 @@
+
+{{!< default}}
+
+{{!-- The tag above means: insert everything in this file
+into the {body} tag of the default.hbs template --}}
+
+{{#match @custom.publication_cover_style "!=" "None"}}
+    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
+        {{#if @site.cover_image}}
+            {{!-- This is a responsive image, it loads different sizes depending on device
+            https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+            <img class="site-header-cover"
+                srcset="{{img_url @site.cover_image size="s"}} 300w,
+                        {{img_url @site.cover_image size="m"}} 600w,
+                        {{img_url @site.cover_image size="l"}} 1000w,
+                        {{img_url @site.cover_image size="xl"}} 2000w"
+                sizes="100vw"
+                src="{{img_url @site.cover_image size="s"}}"
+                alt=""
+            />
+        {{/if}}
+        <h1 class="site-title">
+            {{#if @site.logo}}
+                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+            {{else}}
+                Region
+            {{/if}}
+        </h1>
+    </div>
+{{/match}}
+
+
+{{!-- Everything inside the #post block pulls data from the post --}}
+
+<main id="site-main" class="site-main outer">
+    
+        <header class="article-header gh-canvas">
+            {{#if feature_image}}
+            <figure class="article-image">
+                {{!-- This is a responsive image, it loads different sizes depending on device
+                https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
+                <img
+                    srcset="{{img_url feature_image size="s"}} 300w,
+                            {{img_url feature_image size="m"}} 600w,
+                            {{img_url feature_image size="l"}} 1000w,
+                            {{img_url feature_image size="xl"}} 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="{{img_url feature_image size="xl"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                />
+                {{#if feature_image_caption}}
+                    <figcaption>{{feature_image_caption}}</figcaption>
+                {{/if}}
+            </figure>
+            {{/if}}
+        </header>
+
+
+  <div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    <h1 class="post-title" style="font-weight: bold">Articles</h1>
+                        <style>
+                        .centeralign {
+                        text-align: center;
+                        font-weight: bold;
+                        margin: 0px auto 0px auto;
+                        padding:5px;
+                        background-color: rgba(52, 183, 67, 0.12);
+                        }
+                    </style>
+                    <p class="centeralign">The most recent comments are shown here, with older ones in the archive</p>
+                    <hr color="green">
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+</div>
+
+
+
+
+    <!-- from post.hbs -->
+    
+    <!-- get the list of posts -->
+    {{#get "posts" filter='tag:hash-all' limit='6'}}
+    <div class="inner posts">
+        <div class="post-feed">
+            {{#foreach posts}}
+
+                {{!-- The tag below includes the markup for each post - partials/post-card.hbs --}}
+                {{> "post-card"}}
+
+            {{/foreach}}
+        </div>
+    </div>
+    {{/get}}
+
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
+        crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="{{asset 'region/region_script/region_exports.js?v=1'}}"></script>
+<script type="text/javascript" src="{{asset 'region/region_script/region_industry.js?v=1'}}"></script>
+<script type="text/javascript" src="{{asset 'region/region_script/region_consumer.js?v=1'}}"></script>
+<script type="text/javascript" src="{{asset 'region/region_script/region_macro.js?v=1'}}"></script>
+<script type="text/javascript" src="{{asset 'region/region_script/region_money.js?v=1'}}"></script>
+<script type="text/javascript" src="{{asset 'region/region_script/region_prices.js?v=1'}}"></script>
+
+  <div class="outer">
+    
+        {{#page}}
+        <article class="post-full {{post_class}} no-image">
+
+            <section class="post-full-content">
+                <div class="post-content">
+                    {{content}}
+                </div>
+            </section>
+
+        </article>
+        {{/page}}
+    </div>
+
+</main>
+
