@@ -1,4 +1,7 @@
 .green-box {
-  background-color: green; /* Change this to the desired shade of green */
-  padding: 20px; /* Add padding to create space around the content */
+  background-color: rgba(52, 183, 67, 0.12);
+  padding: 20px;
+  border: 2px solid black;
+  width: 100%; /* Make the box span the full width */
+  box-sizing: border-box; /* Include padding and border in the width */
 }
