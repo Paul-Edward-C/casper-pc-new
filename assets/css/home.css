@@ -1,7 +1,12 @@
 .green-box {
   background-color: rgba(52, 183, 67, 0.12);
   padding: 20px;
-  border: 2px solid black;
-  width: 80%; /* Make the box span the full width */
+  width: 60%; /* Make the box 80% of the width */
   box-sizing: border-box; /* Include padding and border in the width */
+  margin: 0 auto; /* Center the box horizontally */
+  border: 2px solid black; /* Add a 2px black border around the box */
+}
+
+.green-box p {
+  margin-bottom: 0.5em; /* Add spacing between paragraphs (adjust as needed) */
 }
