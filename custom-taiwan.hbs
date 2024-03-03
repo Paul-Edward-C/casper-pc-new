@@ -127,15 +127,13 @@ into the {body} tag of the default.hbs template --}}
                                 </h2>
                             </header>
                             {{#if excerpt}}
-                                <div class="post-card-excerpt">{{excerpt}}</div>
+                                <div class="post-card-excerpt">{{excerpt words="50"}}</div>  <!-- Change the number of words as needed -->
                             {{/if}}
                         </a>
 
                         <footer class="post-card-meta">
                             <time class="post-card-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
-                            {{#if reading_time}}
-                                <span class="post-card-meta-length">{{reading_time}}</span>
-                            {{/if}}
+                            <span class="post-card-meta-length">{{reading_time}}</span>  <!-- Display reading time -->
                             {{#if @site.comments_enabled}}
                                 {{comment_count}}
                             {{/if}}
@@ -148,6 +146,7 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
 {{/get}}
+
 
 
 
