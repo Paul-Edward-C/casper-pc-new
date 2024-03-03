@@ -91,19 +91,6 @@ into the {body} tag of the default.hbs template --}}
                                 loading="lazy"
                             />
 
-                            {{#unless access}}
-                                {{^has visibility="public"}}
-                                    <div class="post-card-access">
-                                        {{> "icons/lock"}}
-                                        {{#has visibility="members"}}
-                                            Members only
-                                        {{else}}
-                                            Paid-members only
-                                        {{/has}}
-                                    </div>
-                                {{/has}}
-                            {{/unless}}
-
                         </a>
                     {{/if}}
 
