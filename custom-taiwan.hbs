@@ -81,11 +81,13 @@ into the {body} tag of the default.hbs template --}}
                         </div>
                     {{/if}}
 
-                    <h2><a href="{{url}}">{{title}}</a></h2>
-                    <p>{{excerpt words="30"}}</p>
-                    <div class="post-meta" style="margin-top: auto;">
-                        <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
-                        <span class="post-read-time" style="color: #555; font-size: 14px;">{{reading_time}}</span>
+                    <div class="post-card-content">
+                        <h2><a href="{{url}}">{{title}}</a></h2>
+                        <p>{{excerpt words="30"}}</p>
+                        <div class="post-meta" style="margin-top: auto;">
+                            <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
+                            <span class="post-read-time" style="color: #555; font-size: 14px;">{{reading_time}}</span>
+                        </div>
                     </div>
                 </div>
             {{/foreach}}
