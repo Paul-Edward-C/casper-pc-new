@@ -88,12 +88,15 @@ into the {body} tag of the default.hbs template --}}
                             <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
                             <span class="post-read-time" style="color: #555; font-size: 14px;">{{reading_time}}</span>
                         </div>
+
+                        {{!-- Additional metadata or elements can be added here --}}
                     </div>
                 </div>
             {{/foreach}}
         </div>
     </div>
 {{/get}}
+
 
 <style>
   /* Add space above the .myBTNdiv */
