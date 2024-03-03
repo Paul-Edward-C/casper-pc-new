@@ -70,21 +70,27 @@ into the {body} tag of the default.hbs template --}}
     
     <!-- get the list of posts -->
 {{#get "posts" filter="tag:hash-tw" limit="9"}}
-<div class="inner posts">
-    <div class="post-feed">
-        {{#foreach posts}}
-            <div class="post-card">
-                <h2><a href="{{url}}">{{title}}</a></h2>
-                <p>{{excerpt words="30"}} <!-- Adjust the number of words as needed --></p>
-                <div class="post-meta" style="margin-top: auto;">
-                    <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
-                    <span class="post-read-time" style="color: #555; font-size: 14px;">{{reading_time}}</span>
-                </div>
-            </div>
-        {{/foreach}}
-    </div>
-</div>
+    <div class="inner posts">
+        <div class="post-feed">
+            {{#foreach posts}}
+                <div class="post-card">
+                    {{!-- Check if the post has a feature image --}}
+                    {{#if feature_image}}
+                        <div class="post-card-image">
+                            <img src="{{img_url feature_image size="m"}}" alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}" />
+                        </div>
+                    {{/if}}
 
+                    <h2><a href="{{url}}">{{title}}</a></h2>
+                    <p>{{excerpt words="30"}}</p>
+                    <div class="post-meta" style="margin-top: auto;">
+                        <span class="post-date" style="color: #555; font-size: 14px; margin-bottom: 4px;">{{date format="MMM D, YYYY"}}</span>
+                        <span class="post-read-time" style="color: #555; font-size: 14px;">{{reading_time}}</span>
+                    </div>
+                </div>
+            {{/foreach}}
+        </div>
+    </div>
 {{/get}}
 
 <style>
