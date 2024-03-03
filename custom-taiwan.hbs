@@ -75,6 +75,9 @@ into the {body} tag of the default.hbs template --}}
             {{#foreach posts}}
                 <article class="post-card {{post_class}}{{#match @custom.feed_layout "Classic"}}{{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}{{/match}}{{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}{{#match @custom.feed_layout "List"}}{{#is "home, paged"}} post-card-large{{/is}}{{/match}}{{#unless access}} post-access-{{visibility}}{{/unless}}">
 
+                        <a class="post-card-content-link" href="{{url}}">
+                        <header class="post-card-header">
+                        </a>
                     {{#if feature_image}}
                         <a class="post-card-image-link" href="{{url}}">
                             <img class="post-card-image"
@@ -105,8 +108,6 @@ into the {body} tag of the default.hbs template --}}
                     {{/if}}
 
                     <div class="post-card-content">
-                        <a class="post-card-content-link" href="{{url}}">
-                            <header class="post-card-header">
                                 <div class="post-card-tags">
                                     {{#primary_tag}}
                                         <span class="post-card-primary-tag">{{name}}</span>
