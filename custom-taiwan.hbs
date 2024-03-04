@@ -92,6 +92,8 @@ into the {body} tag of the default.hbs template --}}
                                         />
                                     </a>
                                 {{/if}}
+                                <p>{{excerpt words="70"}}</p>
+
                                 <footer class="post-card-meta">
                                     <time class="post-card-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
                                     <span class="post-card-meta-length">{{reading_time}}</span>
@@ -99,6 +101,7 @@ into the {body} tag of the default.hbs template --}}
                                         {{comment_count}}
                                     {{/if}}
                                 </footer>
+
                             </div>
                         </header>
                     </a>
@@ -107,6 +110,7 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
 {{/get}}
+
 
 
 
