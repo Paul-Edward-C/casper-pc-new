@@ -154,13 +154,34 @@ into the {body} tag of the default.hbs template --}}
     <h1>Charts</h1>
     <a href="#charts"></a> 
 
-    <a href="#cn_consumer_charts">Consumer</a><br>
-    <a href="#cn_export_charts">Export</a><br>
-    <a href="#cn_industry_charts">Industry</a><br>
-    <a href="#cn_macro_charts">Macro</a><br>
-    <a href="#cn_markets_charts">Markets</a><br>
-    <a href="#cn_money_charts">Money</a><br>
-    <a href="#cn_prices_charts">Prices</a><br>
+    <style>
+    /* Menu item styles */
+    .menu-item {
+        display: inline-block;
+        margin-right: 20px; /* Adjust spacing between menu items */
+        font-size: 16px;
+        color: #333; /* Adjust text color */
+        text-decoration: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        background-color: #f4f4f4; /* Adjust background color */
+        transition: background-color 0.3s ease;
+    }
+
+    /* Hover effect */
+    .menu-item:hover {
+        background-color: #ddd; /* Adjust hover background color */
+    }
+    </style>
+
+
+    <a href="#cn_consumer_charts" class="menu-item">Consumer</a><br>
+    <a href="#cn_export_charts" class="menu-item">Export</a><br>
+    <a href="#cn_industry_charts" class="menu-item">Industry</a><br>
+    <a href="#cn_macro_charts" class="menu-item">Macro</a><br>
+    <a href="#cn_markets_charts" class="menu-item">Markets</a><br>
+    <a href="#cn_money_charts" class="menu-item">Money</a><br>
+    <a href="#cn_prices_charts" class="menu-item">Prices</a><br>
 
 
         <div id="cn_consumer_charts">
