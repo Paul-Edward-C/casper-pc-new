@@ -183,9 +183,37 @@ into the {body} tag of the default.hbs template --}}
                 margin-left: -50px; /* Adjust negative margin to center the iframe */
             }
         }
+
+        /* Add space above the .myBTNdiv */
+        .myBTNdiv {
+            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .myButton {
+            padding: 0 1.2em;
+            height: 2.4em;
+            line-height: 2.4em;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            font-size: .95em;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            background: #104b1f;
+            color: white;
+            transition: opacity .2s ease-in-out;
+        }
     </style>
 </head>
+
 <body>
+
+<div id="site-main" class="site-main outer">
+    <!-- Your site content here -->
+</div>
 
 <div id="charts">
     <h1>Charts</h1>
@@ -256,7 +284,10 @@ into the {body} tag of the default.hbs template --}}
     </figure>
 </div>
 
+<div class="myBTNdiv">
+    <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
+</div>
+
 </body>
-</html>
 
 
