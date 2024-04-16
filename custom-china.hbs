@@ -117,7 +117,7 @@ into the {body} tag of the default.hbs template --}}
         </style>
 
         <div class="myBTNdiv">
-          <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article achive</a> 
+          <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
         </div>
 
         <style>
@@ -127,20 +127,6 @@ into the {body} tag of the default.hbs template --}}
           align-items: center;
         }
 
-        .myButton {
-          padding: 0 1.2em;
-          height: 2.4em;
-          line-height: 2.4em;
-          font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-          font-size: .95em;
-          font-weight: 600;
-          text-decoration: none;
-          border: none;
-          border-radius: 5px;
-          background: #104b1f;
-          color: white;
-          transition: opacity .2s ease-in-out;
-        }
         </style>
 
     </main>
@@ -151,8 +137,8 @@ into the {body} tag of the default.hbs template --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
     <style>
-        /* Menu item styles */
-        .menu-item {
+        /* Menu item and button styles */
+        .menu-item, .myButton {
             display: inline-block;
             margin: 10px 5px;
             font-size: 16px;
@@ -164,10 +150,12 @@ into the {body} tag of the default.hbs template --}}
             background-color: #104b1f; /* Adjust background color */
             transition: background-color 0.3s ease;
             font-weight: bold;
+            text-align: center;
+            width: 150px; /* Standard width for all boxes */
         }
 
         /* Hover effect */
-        .menu-item:hover {
+        .menu-item:hover, .myButton:hover {
             background-color: rgba(16, 75, 31, 0.7); /* Adjust hover background color */
         }
 
@@ -192,23 +180,8 @@ into the {body} tag of the default.hbs template --}}
             align-items: center;
         }
 
-        .myButton {
-            padding: 0 1.2em;
-            height: 2.4em;
-            line-height: 2.4em;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-            font-size: .95em;
-            font-weight: 600;
-            text-decoration: none;
-            border: none;
-            border-radius: 5px;
-            background: #104b1f;
-            color: white;
-            transition: opacity .2s ease-in-out;
-        }
     </style>
 </head>
-
 <body>
 
 <div id="site-main" class="site-main outer">
@@ -216,17 +189,16 @@ into the {body} tag of the default.hbs template --}}
 </div>
 
 <div id="charts">
-    <a href="#charts"></a>
     <h1>Charts</h1>
-    <br>
+    <a href="#charts">Jump to Charts Section</a><br>
 
-    <a href="#cn_consumer_charts_anchor" class="menu-item">Consumer</a><br>
-    <a href="#cn_export_charts_anchor" class="menu-item">Export</a><br>
-    <a href="#cn_industry_charts_anchor" class="menu-item">Industry</a><br>
-    <a href="#cn_macro_charts_anchor" class="menu-item">Macro</a><br>
-    <a href="#cn_markets_charts_anchor" class="menu-item">Markets</a><br>
-    <a href="#cn_money_charts_anchor" class="menu-item">Money</a><br>
-    <a href="#cn_prices_charts_anchor" class="menu-item">Prices</a><br>
+    <a href="#cn_consumer_charts_anchor" class="menu-item">Consumer</a>
+    <a href="#cn_export_charts_anchor" class="menu-item">Export</a>
+    <a href="#cn_industry_charts_anchor" class="menu-item">Industry</a>
+    <a href="#cn_macro_charts_anchor" class="menu-item">Macro</a>
+    <a href="#cn_markets_charts_anchor" class="menu-item">Markets</a>
+    <a href="#cn_money_charts_anchor" class="menu-item">Money</a>
+    <a href="#cn_prices_charts_anchor" class="menu-item">Prices</a>
 </div>
 
 <div id="cn_consumer_charts">
@@ -285,10 +257,8 @@ into the {body} tag of the default.hbs template --}}
     </figure>
 </div>
 
-<div class="myBTNdiv">
-    <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
-</div>
-
 </body>
+</html>
+
 
 
