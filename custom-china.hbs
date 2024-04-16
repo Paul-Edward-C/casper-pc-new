@@ -122,9 +122,14 @@ into the {body} tag of the default.hbs template --}}
 
         <style>
         .myBTNdiv {
-          display: flex;
-          justify-content: center;
-          align-items: center;
+            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .myButton {
+        width: 200px; /* Adjust the width as needed */
         }
 
         </style>
@@ -188,7 +193,7 @@ into the {body} tag of the default.hbs template --}}
     <!-- Your site content here -->
 </div>
 
-<div id="charts">
+<div id="charts" style="display: flex; justify-content: center;">
     <h1>Charts</h1>
     <a href="#charts">Jump to Charts Section</a><br>
 
