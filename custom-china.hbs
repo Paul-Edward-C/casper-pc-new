@@ -186,41 +186,28 @@ into the {body} tag of the default.hbs template --}}
     <a href="#cn_prices_charts" class="menu-item">Prices</a><br>
 
 
-  <section id="cn_consumer_charts">
+<div id="cn_consumer_charts">
+    <a href="#cn_consumer_charts_anchor">Jump to Consumer Section</a>
     <h2>Consumer</h2>
-    <figure class="chart-container">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_consumer" class="responsive-iframe" allowfullscreen></iframe>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_consumer" class="responsive-iframe" width="100%" style="height: auto;"></iframe>
     </figure>
-</section>
-
-<style>
-    .responsive-iframe {
-        width: 100%;
-        height: auto;
-        min-height: 1000px;
-    }
-
-    @media only screen and (max-device-width: 1023px) {
+    <style>
         .responsive-iframe {
-            width: calc(100vw + 600px);
-            margin-left: -50px;
+            width: 100%; /* Occupy full width by default */
+            height: auto; /* Auto adjust height */
+            min-height: 1000px; /* Minimum height */
         }
-    }
 
-    /* Additional Styles */
-    .chart-container {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-        position: relative;
-    }
+        @media only screen and (max-device-width: 1023px) {
+            .responsive-iframe {
+                width: calc(100vw + 600px); /* Make the iframe wider than the screen on mobile and tablets */
+                margin-left: -50px; /* Adjust negative margin to center the iframe */
+            }
+        }
+    </style>
+</div>
 
-    .chart-container::after {
-        content: "";
-        display: block;
-        clear: both;
-    }
-</style>
 
 
 
