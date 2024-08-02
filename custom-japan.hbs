@@ -143,6 +143,32 @@ into the {body} tag of the default.hbs template --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
     <style>
+
+        .menu-item, .myButton {
+            display: inline-block;
+            margin: 10px 5px;
+            font-size: 16px;
+            color: #ffffff; /* Adjust text color */
+            text-decoration: none;
+            padding: 2px 15px;
+            border-radius: 5px;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+            background-color: #104b1f; /* Adjust background color */
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+            width: 150px; /* Standard width for all boxes */
+        }
+
+        /* Hover effect */
+        .menu-item:hover, .myButton:hover {
+            background-color: rgba(16, 75, 31, 0.7); /* Adjust hover background color */
+        }
+        
+        body {
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
+
         .responsive-iframe {
             width: 100%; /* Occupy full width by default */
             height: auto; /* Auto adjust height */
@@ -151,8 +177,8 @@ into the {body} tag of the default.hbs template --}}
 
         @media only screen and (max-width: 1023px) {
             .responsive-iframe {
-                width: 100vw; /* Occupy full viewport width */
-                min-height: 600px; /* Reduce minimum height for mobile */
+                width: calc(100vw + 600px); /* Make the iframe wider than the screen on mobile devices */
+                margin-left: -50px; /* Adjust negative margin to center the iframe */
             }
         }
 
