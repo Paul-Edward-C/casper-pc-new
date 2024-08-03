@@ -86,10 +86,11 @@ into the {body} tag of the default.hbs template --}}
             padding: 0;
         }
 
-        .iframe-wrapper {
+        .iframe-container {
             position: relative;
             width: 100%;
-            height: 60vh; /* Adjust the height to fit your needs */
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
             overflow: hidden;
             margin: 0 auto;
         }
@@ -98,14 +99,18 @@ into the {body} tag of the default.hbs template --}}
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%;
+            width: 150vw; /* Make the iframe wider than the screen */
             height: 100%;
             border: 0;
         }
 
-        @media only screen and (max-width: 767px) {
-            .iframe-wrapper {
-                height: 50vh; /* Adjust height for smaller screens if needed */
+        @media (max-width: 767px) {
+            .iframe-container {
+                padding-bottom: 75%; /* Adjust the aspect ratio for smaller screens if needed */
+            }
+
+            .responsive-iframe {
+                width: 200vw; /* Make the iframe even wider on small screens */
             }
         }
 
@@ -129,6 +134,10 @@ into the {body} tag of the default.hbs template --}}
             .menu-item {
                 display: block; /* Stack menu items vertically */
                 margin: 10px 0; /* Add space between menu items */
+            }
+
+            .desktop-only {
+                display: none; /* Hide charts on mobile */
             }
         }
 
@@ -159,16 +168,27 @@ into the {body} tag of the default.hbs template --}}
         <a href="#jp_prices_charts_anchor" class="menu-item">Prices</a>
     </div>
 
-    <div id="jp_consumer_charts">
+    <div id="jp_consumer_charts" class="desktop-only">
         <a id="jp_consumer_charts_anchor"></a>
         <h2>Consumer</h2>
         <figure class="kg-image-card kg-width-full">
-            <div class="iframe-wrapper">
+            <div class="iframe-container">
                 <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_consumer" class="responsive-iframe" loading="lazy"></iframe>
             </div>
         </figure>
     </div>
-    <!-- Add other chart sections here similarly -->
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-only">
+        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/macro" class="menu-item">Macro</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
+    </div>
+
 </div>
 
 </body>
