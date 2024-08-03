@@ -135,10 +135,8 @@ into the {body} tag of the default.hbs template --}}
 
 <div id="site-main" class="site-main outer">
     <!-- Your site content here -->
-</div>
-
-<div id="charts">
-    <h1>Consumer</h1>
+    <div class="desktop-only">
+        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
         <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
         <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
         <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
@@ -146,6 +144,18 @@ into the {body} tag of the default.hbs template --}}
         <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
         <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
     </div>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-only">
+        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/macro" class="menu-item">Macro</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
+        <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
+    </div>
+
 
     <!-- Desktop Charts -->
     <div id="jp_consumer_charts">
