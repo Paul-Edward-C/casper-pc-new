@@ -54,7 +54,6 @@ into the {body} tag of the default.hbs template --}}
     </main>
 </div>
 
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -68,7 +67,7 @@ into the {body} tag of the default.hbs template --}}
             text-decoration: none;
             padding: 2px 15px;
             border-radius: 5px;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
             background-color: #104b1f; /* Adjust background color */
             transition: background-color 0.3s ease;
             font-weight: bold;
@@ -123,21 +122,11 @@ into the {body} tag of the default.hbs template --}}
                 display: block; /* Stack menu items vertically */
                 margin: 10px 0; /* Add space between menu items */
             }
-
-            .desktop-only {
-                display: none; /* Hide charts on mobile */
-            }
         }
 
         @media (min-width: 1024px) {
             .mobile-only {
                 display: none; /* Hide mobile navigation links on desktop */
-            }
-        }
-
-        @media (max-width: 1023px) {
-            .desktop-only {
-                display: none; /* Hide desktop charts on mobile */
             }
         }
     </style>
@@ -146,28 +135,17 @@ into the {body} tag of the default.hbs template --}}
 
 <div id="site-main" class="site-main outer">
     <!-- Your site content here -->
-    <div class="desktop-only">
-        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/macro" class="menu-item">Macro</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
+    <div id="charts">
+        <a href="#jp_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#jp_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#jp_industry_charts_anchor" class="menu-item">Industry</a>
+        <a href="#jp_labour_charts_anchor" class="menu-item">Labour</a>
+        <a href="#jp_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#jp_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#jp_prices_charts_anchor" class="menu-item">Prices</a>
     </div>
 
-    <!-- Mobile Navigation -->
-    <div class="mobile-only">
-        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/macro" class="menu-item">Macro</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
-    </div>
-
-    <div id="jp_consumer_charts" class="desktop-only">
+    <div id="jp_consumer_charts">
         <a id="jp_consumer_charts_anchor"></a>
         <h2>Consumer</h2>
         <figure class="kg-image-card kg-width-full">
@@ -176,7 +154,7 @@ into the {body} tag of the default.hbs template --}}
             </div>
         </figure>
     </div>
-
+    <!-- Add other chart sections here similarly -->
 </div>
 
 </body>
