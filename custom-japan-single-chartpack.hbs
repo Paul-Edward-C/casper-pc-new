@@ -103,8 +103,14 @@ into the {body} tag of the default.hbs template --}}
 
         @media (max-width: 1023px) {
             .iframe-wrapper {
-                width: 150%;
-                margin-left: -25%; /* Center the iframe */
+                width: 100%;
+                padding-bottom: 75%; /* Adjust aspect ratio for better view on mobile */
+                height: 0;
+            }
+
+            .responsive-iframe {
+                width: 200%;
+                margin-left: -50%; /* Center the iframe */
             }
         }
 
