@@ -67,7 +67,7 @@ into the {body} tag of the default.hbs template --}}
             text-decoration: none;
             padding: 2px 15px;
             border-radius: 5px;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
             background-color: #104b1f; /* Adjust background color */
             transition: background-color 0.3s ease;
             font-weight: bold;
@@ -84,15 +84,26 @@ into the {body} tag of the default.hbs template --}}
             overflow-x: auto; /* Enable horizontal scrolling */
         }
 
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
         .responsive-iframe {
-            width: 100%; /* Occupy full width by default */
-            height: auto; /* Auto adjust height */
-            min-height: 1000px; /* Minimum height */
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
         @media only screen and (max-width: 1023px) {
-            .responsive-iframe {
-                width: 200vw; /* Make the iframe wider than the screen on mobile devices */
+            .iframe-wrapper {
+                padding-bottom: 75%; /* Adjust aspect ratio for mobile devices */
             }
         }
 
@@ -117,21 +128,11 @@ into the {body} tag of the default.hbs template --}}
                 display: block; /* Stack menu items vertically */
                 margin: 10px 0; /* Add space between menu items */
             }
-
-            .desktop-only {
-                display: none; /* Hide charts on mobile */
-            }
         }
 
         @media (min-width: 1024px) {
             .mobile-only {
                 display: none; /* Hide mobile navigation links on desktop */
-            }
-        }
-
-        @media (max-width: 1023px) {
-            .desktop-only {
-                display: none; /* Hide desktop charts on mobile */
             }
         }
     </style>
@@ -140,36 +141,26 @@ into the {body} tag of the default.hbs template --}}
 
 <div id="site-main" class="site-main outer">
     <!-- Your site content here -->
-    <div class="desktop-only">
-        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/macro" class="menu-item">Macro</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
+    <div id="charts">
+        <a href="#jp_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#jp_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#jp_industry_charts_anchor" class="menu-item">Industry</a>
+        <a href="#jp_labour_charts_anchor" class="menu-item">Labour</a>
+        <a href="#jp_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#jp_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#jp_prices_charts_anchor" class="menu-item">Prices</a>
     </div>
-
-    <!-- Mobile Navigation -->
-    <div class="mobile-only">
-        <a href="https://www.eastasiaecon.com/charts/jp/consumer" class="menu-item">Consumer</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/export" class="menu-item">Export</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/industry" class="menu-item">Industry</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/labour" class="menu-item">Labour</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/macro" class="menu-item">Macro</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/money" class="menu-item">Money</a>
-        <a href="https://www.eastasiaecon.com/charts/jp/prices" class="menu-item">Prices</a>
-    </div>
-
 
     <div id="jp_consumer_charts">
         <a id="jp_consumer_charts_anchor"></a>
         <h2>Consumer</h2>
         <figure class="kg-image-card kg-width-full">
-            <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_consumer" class="responsive-iframe" loading="lazy"></iframe>
+            <div class="iframe-wrapper">
+                <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_consumer" class="responsive-iframe" loading="lazy"></iframe>
+            </div>
         </figure>
     </div>
-
+    <!-- Add other chart sections here similarly -->
 </div>
 
 </body>
