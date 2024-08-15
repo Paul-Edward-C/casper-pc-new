@@ -142,7 +142,7 @@ into the {body} tag of the default.hbs template --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
     <style>
-        /* Menu item and button styles */
+
         .menu-item, .myButton {
             display: inline-block;
             margin: 10px 5px;
@@ -163,19 +163,17 @@ into the {body} tag of the default.hbs template --}}
         .menu-item:hover, .myButton:hover {
             background-color: rgba(16, 75, 31, 0.7); /* Adjust hover background color */
         }
+        
+        body {
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
 
         .responsive-iframe {
-            width: 100%; /* Occupy full width by default */
+            width: 100%; /* Occupy full width */
             height: auto; /* Auto adjust height */
             min-height: 1000px; /* Minimum height */
         }
 
-        @media only screen and (max-device-width: 1023px) {
-            .responsive-iframe {
-                width: calc(100vw + 600px); /* Make the iframe wider than the screen on mobile and tablets */
-                margin-left: -50px; /* Adjust negative margin to center the iframe */
-            }
-        }
         /* Add space above the .myBTNdiv */
         .myBTNdiv {
             margin-top: 20px; /* Adjust the value as needed to control the amount of space */
@@ -184,6 +182,13 @@ into the {body} tag of the default.hbs template --}}
             align-items: center;
         }
 
+        .menu-item {
+            margin: 0 10px; /* Add space between menu items */
+        }
+        #charts {
+            text-align: center; /* Center align the chart navigation */
+            margin-bottom: 20px; /* Add some space below the navigation */
+        }
     </style>
 </head>
 <body>
@@ -213,7 +218,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_consumer_charts_anchor"></a>
     <h2>Consumer</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_consumer" width="100%"  style="aspect-ratio: 16 / 9" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_consumer" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -221,7 +226,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_export_charts_anchor"></a>
     <h2>Exports</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_exports" style="aspect-ratio: 16 / 9"  width="100%"loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_exports" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -229,7 +234,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_flows_charts_anchor"></a>
     <h2>Flows</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_flows" style="aspect-ratio: 16 / 9"  width="100%" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_flows" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -237,7 +242,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_industry_charts_anchor"></a>
     <h2>Industry</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_industry" style="aspect-ratio: 16 / 9"  width="100%" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_industry" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -245,7 +250,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_macro_charts_anchor"></a>
     <h2>Macro</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_macro" style="aspect-ratio: 16 / 9"  width="100%" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_macro" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -253,7 +258,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_markets_charts_anchor"></a>
     <h2>Markets</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_markets" style="aspect-ratio: 16 / 9"  width="100%" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_markets" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -261,7 +266,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_money_charts_anchor"></a>
     <h2>Money</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_money" style="aspect-ratio: 16 / 9"   width="100%" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_money" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -269,7 +274,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="cn_prices_charts_anchor"></a>
     <h2>Prices</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_prices" style="aspect-ratio: 16 / 9"  width="100%" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_prices" class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
