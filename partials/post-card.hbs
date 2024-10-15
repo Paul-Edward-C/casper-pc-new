@@ -12,19 +12,6 @@
             alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
             loading="lazy"
         />
-
-        {{#unless access}}
-        {{^has visibility="public"}}
-            <div class="post-card-access">
-                {{> "icons/lock"}}
-                {{#has visibility="members"}}
-                    Members only
-                {{else}}
-                    Paid-members only
-                {{/has}}
-            </div>
-        {{/has}}
-        {{/unless}}
     </a>
     {{/if}}
 
@@ -39,33 +26,27 @@
                         <span class="post-card-featured">{{> "icons/fire"}} Featured</span>
                     {{/if}}
                 </div>
+
                 <h2 class="post-card-title">
-                    {{#unless access}}
-                    {{^has visibility="public"}}
-                        {{#unless feature_image}}
-                            {{> "icons/lock"}}
-                        {{/unless}}
-                    {{/has}}
-                    {{/unless}}
                     {{title}}
                 </h2>
-
-                {{!-- Display label based on visibility --}}
-                {{#if access}}
-                    <div class="post-card-visibility-label">
-                        {{#has visibility="paid"}}
-                            <span class="label paid-member-label">Paid Members</span>
-                        {{/has}}
-                        {{#has visibility="members"}}
-                            <span class="label all-member-label">All Members</span>
-                        {{/has}}
-                    </div>
-                {{/if}}
-
             </header>
             {{#if excerpt}}
                 <div class="post-card-excerpt">{{excerpt}}</div>
             {{/if}}
+
+            {{!-- Display label based on visibility --}}
+            {{#if access}}
+                <div class="post-card-visibility-label">
+                    {{#has visibility="paid"}}
+                        <span class="label paid-member-label">Paid Members</span>
+                    {{/has}}
+                    {{#has visibility="members"}}
+                        <span class="label all-member-label">All Members</span>
+                    {{/has}}
+                </div>
+            {{/if}}
+
         </a>
 
         <footer class="post-card-meta">
@@ -79,6 +60,7 @@
         </footer>
     </div>
 </article>
+
 
 
 
