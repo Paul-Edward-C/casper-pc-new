@@ -84,6 +84,16 @@
                         <header class="post-card-header">
                             <div class="post-card-content">
                                 <h2 class="post-card-title">{{title}}</h2>
+
+                                {{!-- Visibility label --}}
+                                {{#if access}}
+                                    {{#if (eq visibility "paid")}}
+                                        <span class="label paid-member-label">Paid Members</span>
+                                    {{else if (eq visibility "members")}}
+                                        <span class="label all-member-label">All Members</span>
+                                    {{/if}}
+                                {{/if}}
+
                                 {{#if feature_image}}
                                     <a class="post-card-image-link" href="{{url}}">
                                         <img class="post-card-image"
