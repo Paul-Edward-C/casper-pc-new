@@ -1,13 +1,7 @@
-{{!-- This is a partial file used to generate a post "card"
-which templates loop over to generate a list of posts. --}}
-
 <article class="post-card {{post_class}}{{#match @custom.feed_layout "Classic"}}{{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}{{/match}}{{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}{{#match @custom.feed_layout "List"}}{{#is "home, paged"}} post-card-large{{/is}}{{/match}}{{#unless access}} post-access-{{visibility}}{{/unless}}">
 
     {{#if feature_image}}
     <a class="post-card-image-link" href="{{url}}">
-
-        {{!-- This is a responsive image, it loads different sizes depending on device
-        https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
         <img class="post-card-image"
             srcset="{{img_url feature_image size="s"}} 300w,
                     {{img_url feature_image size="m"}} 600w,
@@ -31,12 +25,10 @@ which templates loop over to generate a list of posts. --}}
             </div>
         {{/has}}
         {{/unless}}
-
     </a>
     {{/if}}
 
     <div class="post-card-content">
-
         <a class="post-card-content-link" href="{{url}}">
             <header class="post-card-header">
                 <div class="post-card-tags">
@@ -59,16 +51,17 @@ which templates loop over to generate a list of posts. --}}
                 </h2>
 
                 {{!-- Display label based on visibility --}}
-                <div class="post-card-visibility-label">
-                    {{#if access}}
-                        {{#if (eq visibility "paid")}}
+                {{#if access}}
+                    <div class="post-card-visibility-label">
+                        {{#has visibility="paid"}}
                             <span class="label paid-member-label">Paid Members</span>
-                        {{else if (eq visibility "members")}}
+                        {{/has}}
+                        {{#has visibility="members"}}
                             <span class="label all-member-label">All Members</span>
-                        {{/if}}
-                    {{/if}}
-                </div>
-                
+                        {{/has}}
+                    </div>
+                {{/if}}
+
             </header>
             {{#if excerpt}}
                 <div class="post-card-excerpt">{{excerpt}}</div>
@@ -84,9 +77,8 @@ which templates loop over to generate a list of posts. --}}
                 {{comment_count}}
             {{/if}}
         </footer>
-
     </div>
-
 </article>
+
 
 
