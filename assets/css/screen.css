@@ -3054,6 +3054,26 @@ html.dark-mode .footer-cta-title {
     margin-top: 8px; /* Add space between title and description */
 }
 
+.label {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: bold;
+    border-radius: 3px;
+    margin-right: 10px;
+}
+
+.paid-member-label {
+    background-color: #FF5733;
+    color: white;
+}
+
+.all-member-label {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
 /*
 
 Hey! You reached the end.
