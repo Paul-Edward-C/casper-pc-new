@@ -67,63 +67,52 @@ into the {body} tag of the default.hbs template --}}
         <!-- from post.hbs -->
 
         <!-- get the list of posts -->
-{{#get "posts" filter="tag:hash-cn" limit="9"}}
-    <div class="inner posts">
-        <div class="post-feed">
-            {{#foreach posts}}
-                <article class="post-card {{post_class}}{{#match @custom.feed_layout "Classic"}}{{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}{{/match}}{{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}{{#match @custom.feed_layout "List"}}{{#is "home, paged"}} post-card-large{{/is}}{{/match}}">
-                    <a class="post-card-content-link" href="{{url}}">
-                        <header class="post-card-header">
-                            <div class="post-card-content">
-                                <h2 class="post-card-title">
-                                    {{#unless access}}
-                                        {{^has visibility="public"}}
-                                            <div class="post-card-access">
-                                                {{> "icons/lock"}}
-                                                {{#has visibility="members"}}
-                                                    Members only
-                                                {{else}}
-                                                    Paid-members only
-                                                {{/has}}
-                                            </div>
-                                        {{/has}}
-                                    {{/unless}}
+        {{#get "posts" filter="tag:hash-cn" limit="9"}}
+            <div class="inner posts">
+                <div class="post-feed">
+                    {{#foreach posts}}
+                        <article class="post-card {{post_class}}{{#match @custom.feed_layout "Classic"}}{{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}{{/match}}{{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}{{#match @custom.feed_layout "List"}}{{#is "home, paged"}} post-card-large{{/is}}{{/match}}">
+                            <a class="post-card-content-link" href="{{url}}">
+                                <header class="post-card-header">
+                                    <div class="post-card-content">
+                                    <h2 class="post-card-title">
+                                    {{#has visibility="public"}}
+                                        <span class="post-card-public-label">Public Post</span>
+                                    {{/has}}
                                     {{title}}
                                 </h2>
+                                        {{#if feature_image}}
+                                            <a class="post-card-image-link" href="{{url}}">
+                                                <img class="post-card-image"
+                                                    srcset="{{img_url feature_image size="s"}} 300w,
+                                                            {{img_url feature_image size="m"}} 600w,
+                                                            {{img_url feature_image size="l"}} 1000w,
+                                                            {{img_url feature_image size="xl"}} 2000w"
+                                                    sizes="(max-width: 1000px) 400px, 800px"
+                                                    src="{{img_url feature_image size="m"}}"
+                                                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                                                    loading="lazy"
+                                                />
+                                            </a>
+                                        {{/if}}
+                                        <p>{{excerpt words="70"}}</p>
 
-                                {{#if feature_image}}
-                                    <a class="post-card-image-link" href="{{url}}">
-                                        <img class="post-card-image"
-                                            srcset="{{img_url feature_image size="s"}} 300w,
-                                                    {{img_url feature_image size="m"}} 600w,
-                                                    {{img_url feature_image size="l"}} 1000w,
-                                                    {{img_url feature_image size="xl"}} 2000w"
-                                            sizes="(max-width: 1000px) 400px, 800px"
-                                            src="{{img_url feature_image size="m"}}"
-                                            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-                                            loading="lazy"
-                                        />
-                                    </a>
-                                {{/if}}
+                                        <footer class="post-card-meta">
+                                            <time class="post-card-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
+                                            <span class="post-card-meta-length">{{reading_time}}</span>
+                                            {{#if @site.comments_enabled}}
+                                                {{comment_count}}
+                                            {{/if}}
+                                        </footer>
 
-                                <p>{{excerpt words="70"}}</p>
-
-                                <footer class="post-card-meta">
-                                    <time class="post-card-meta-date" datetime="{{date format="YYYY-MM-DD"}}">{{date}}</time>
-                                    <span class="post-card-meta-length">{{reading_time}}</span>
-                                    {{#if @site.comments_enabled}}
-                                        {{comment_count}}
-                                    {{/if}}
-                                </footer>
-
-                            </div>
-                        </header>
-                    </a>
-                </article>
-            {{/foreach}}
-        </div>
-    </div>
-{{/get}}
+                                    </div>
+                                </header>
+                            </a>
+                        </article>
+                    {{/foreach}}
+                </div>
+            </div>
+        {{/get}}
 
         <style>
           /* Add space above the .myBTNdiv */
