@@ -5,8 +5,6 @@ into the {body} tag of the default.hbs template --}}
 {{#match @custom.publication_cover_style "!=" "None"}}
     <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
         {{#if @site.cover_image}}
-            {{!-- This is a responsive image, it loads different sizes depending on device
-            https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
             <img class="site-header-cover"
                 srcset="{{img_url @site.cover_image size="s"}} 300w,
                         {{img_url @site.cover_image size="m"}} 600w,
@@ -28,13 +26,10 @@ into the {body} tag of the default.hbs template --}}
 {{/match}}
 
 <div id="site-main" class="site-main outer">
-    {{!-- Everything inside the #post block pulls data from the post --}}
     <main id="site-main" class="site-main outer">
         <header class="article-header gh-canvas">
             {{#if feature_image}}
             <figure class="article-image">
-                {{!-- This is a responsive image, it loads different sizes depending on device
-                https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
                 <img
                     srcset="{{img_url feature_image size="s"}} 300w,
                             {{img_url feature_image size="m"}} 600w,
@@ -64,23 +59,21 @@ into the {body} tag of the default.hbs template --}}
             {{/page}}
         </div>
 
-        <!-- from post.hbs -->
-
-        <!-- get the list of posts -->
+        <!-- Article list section -->
         {{#get "posts" filter="tag:hash-cn" limit="9"}}
             <div class="inner posts">
                 <div class="post-feed">
                     {{#foreach posts}}
-                        <article class="post-card {{post_class}}{{#match @custom.feed_layout "Classic"}}{{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}{{/match}}{{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}{{#match @custom.feed_layout "List"}}{{#is "home, paged"}} post-card-large{{/is}}{{/match}}">
+                        <article class="post-card {{post_class}}">
                             <a class="post-card-content-link" href="{{url}}">
                                 <header class="post-card-header">
                                     <div class="post-card-content">
-                                    <h2 class="post-card-title">
-                                    {{#has visibility="public"}}
-                                        <span class="post-card-public-label">Public Post</span>
-                                    {{/has}}
-                                    {{title}}
-                                </h2>
+                                        <h2 class="post-card-title">
+                                            {{#has visibility="public"}}
+                                                <span class="post-card-public-label">Public Post</span>
+                                            {{/has}}
+                                            {{title}}
+                                        </h2>
                                         {{#if feature_image}}
                                             <a class="post-card-image-link" href="{{url}}">
                                                 <img class="post-card-image"
@@ -104,7 +97,6 @@ into the {body} tag of the default.hbs template --}}
                                                 {{comment_count}}
                                             {{/if}}
                                         </footer>
-
                                     </div>
                                 </header>
                             </a>
@@ -114,31 +106,10 @@ into the {body} tag of the default.hbs template --}}
             </div>
         {{/get}}
 
-        <style>
-          /* Add space above the .myBTNdiv */
-          .myBTNdiv {
-            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
-          }
-        </style>
-
+        <!-- Button section -->
         <div class="myBTNdiv">
-          <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
+            <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article Archive</a> 
         </div>
-
-        <style>
-        .myBTNdiv {
-            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .myButton {
-        width: 200px; /* Adjust the width as needed */
-        }
-
-        </style>
-
     </main>
 </div>
 
@@ -147,65 +118,59 @@ into the {body} tag of the default.hbs template --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
     <style>
-
+        /* Reuse of button and layout styles */
         .menu-item, .myButton {
             display: inline-block;
             margin: 10px 5px;
             font-size: 16px;
-            color: #ffffff; /* Adjust text color */
+            color: #ffffff;
             text-decoration: none;
-            padding: 2px 15px;
+            padding: 10px 20px;
             border-radius: 5px;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-            background-color: #104b1f; /* Adjust background color */
+            background-color: #104b1f;
             transition: background-color 0.3s ease;
             font-weight: bold;
             text-align: center;
-            width: 150px; /* Standard width for all boxes */
+            width: 150px;
         }
 
         /* Hover effect */
         .menu-item:hover, .myButton:hover {
-            background-color: rgba(16, 75, 31, 0.7); /* Adjust hover background color */
-        }
-        
-        body {
-            overflow-x: auto; /* Enable horizontal scrolling */
+            background-color: rgba(16, 75, 31, 0.7);
         }
 
-        .responsive-iframe {
-            width: 100%; /* Occupy full width */
-            height: auto; /* Auto adjust height */
-            min-height: 1000px; /* Minimum height */
-        }
-
-        /* Add space above the .myBTNdiv */
         .myBTNdiv {
-            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
+            margin-top: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .menu-item {
-            margin: 0 10px; /* Add space between menu items */
+        body {
+            overflow-x: auto;
         }
+
+        .responsive-iframe {
+            width: 100%;
+            height: auto;
+            min-height: 1000px;
+        }
+
+        /* Chart navigation styles */
         #charts {
-            text-align: center; /* Center align the chart navigation */
-            margin-bottom: 20px; /* Add some space below the navigation */
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #charts a.menu-item {
+            margin: 0 10px;
         }
     </style>
 </head>
 <body>
 
-<div id="site-main" class="site-main outer">
-    <!-- Your site content here -->
-</div>
-
 <div id="charts">
-    <a href="#charts"></a><br>
     <h1>Charts</h1>
-
     <div style="display: flex; justify-content: center;">
         <a href="#cn_consumer_charts_anchor" class="menu-item">Consumer</a>
         <a href="#cn_export_charts_anchor" class="menu-item">Exports</a>
@@ -218,7 +183,7 @@ into the {body} tag of the default.hbs template --}}
     </div>
 </div>
 
-
+<!-- Embed chart sections -->
 <div id="cn_consumer_charts">
     <a id="cn_consumer_charts_anchor"></a>
     <h2>Consumer</h2>
@@ -284,7 +249,7 @@ into the {body} tag of the default.hbs template --}}
 </div>
 
 </body>
-</html>
+
 
 
 
