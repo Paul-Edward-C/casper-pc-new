@@ -30,6 +30,8 @@ which templates loop over to generate a list of posts. --}}
 
     <div class="post-card-content">
 
+
+
         <a class="post-card-content-link" href="{{url}}">
             <header class="post-card-header">
                 <div class="post-card-tags">
@@ -40,14 +42,26 @@ which templates loop over to generate a list of posts. --}}
                         <span class="post-card-featured">{{> "icons/fire"}} Featured</span>
                     {{/if}}
                 </div>
+
+                                {{#has visibility="public"}}
+                                    <span class="post-label">Public Post</span>
+                                {{/has}}
+
+                                <!-- Label for Members Only -->
+                                {{#has visibility="members"}}
+                                    <span class="post-label">Members Only</span>
+                                {{/has}}
+
+                                <!-- Label for Paid Members Only -->
+                                {{#has visibility="paid"}}
+                                    <span class="post-label">Paid Member Post</span>
+                                {{/has}}
+
+                                <!-- Label for Specific Tier(s) -->
+                                {{#has visibility="tiers"}}
+                                    <span class="post-label">Subscribers Only</span>
+                                {{/has}}
                 <h2 class="post-card-title">
-                    {{#unless access}}
-                    {{^has visibility="public"}}
-                        {{#unless feature_image}}
-                            {{> "icons/lock"}}
-                        {{/unless}}
-                    {{/has}}
-                    {{/unless}}
                     {{title}}
                 </h2>
             </header>
@@ -67,5 +81,24 @@ which templates loop over to generate a list of posts. --}}
         </footer>
 
     </div>
+   <style>
+        .post-label {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #ffffff; /* White background */
+        border: 2px solid #104b1f; /* Green border */
+        border-radius: 5px;
+        color: #104b1f; /* Green text color */
+        text-align: center;
+        margin: 5px 0; /* Space between the labels */
+        }
+
+          /* Add space above the .myBTNdiv */
+          .myBTNdiv {
+            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
+          }
+    </style>
 
 </article>
