@@ -88,14 +88,24 @@ into the {body} tag of the default.hbs template --}}
                             <div class="post-card-content">
 
                                 <!-- Label for Public Post -->
-                                {{#has visibility="public"}}
+                                {{#if (eq visibility "public")}}
                                     <span class="menu-item">Public Post</span>
-                                {{/has}}
+                                {{/if}}
 
-                                <!-- Label for Paid Member Post -->
-                                {{#has visibility="paid"}}
+                                <!-- Label for Members Only -->
+                                {{#if (eq visibility "members")}}
+                                    <span class="menu-item">Members Only</span>
+                                {{/if}}
+
+                                <!-- Label for Paid Members Only -->
+                                {{#if (eq visibility "paid")}}
                                     <span class="menu-item paid-post">Paid Member Post</span>
-                                {{/has}}
+                                {{/if}}
+
+                                <!-- Label for Specific Tier(s) -->
+                                {{#if (eq visibility "specific_tiers")}}
+                                    <span class="menu-item">Specific Tier(s) Access</span>
+                                {{/if}}
 
                                 <h2 class="post-card-title">{{title}}</h2>
 
@@ -131,6 +141,7 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
 {{/get}}
+
 
 
 
