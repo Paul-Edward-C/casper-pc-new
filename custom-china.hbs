@@ -88,22 +88,22 @@ into the {body} tag of the default.hbs template --}}
                             <div class="post-card-content">
                                 <!-- Label for Public Post -->
                                 {{#has visibility="public"}}
-                                    <span class="menu-item">Public Post</span>
+                                    <span class="post-label">Public Post</span>
                                 {{/has}}
 
                                 <!-- Label for Members Only -->
                                 {{#has visibility="members"}}
-                                    <span class="menu-item">Members Only</span>
+                                    <span class="post-label">Members Only</span>
                                 {{/has}}
 
                                 <!-- Label for Paid Members Only -->
                                 {{#has visibility="paid"}}
-                                    <span class="menu-item paid-post">Paid Member Post</span>
+                                    <span class="post-label">Paid Member Post</span>
                                 {{/has}}
 
                                 <!-- Label for Specific Tier(s) -->
                                 {{#has visibility="tiers"}}
-                                    <span class="menu-item">Specific Tier(s) Access</span>
+                                    <span class="post-label">Subscribers Only</span>
                                 {{/has}}
 
                                 <h2 class="post-card-title">{{title}}</h2>
@@ -166,6 +166,19 @@ into the {body} tag of the default.hbs template --}}
         .myButton {
         width: 200px; /* Adjust the width as needed */
         }
+
+        .post-label {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #ffffff; /* White background */
+        border: 2px solid #00a859; /* Green border */
+        border-radius: 5px;
+        color: #00a859; /* Green text color */
+        text-align: center;
+        margin: 5px 0; /* Space between the labels */
+    }
 
         </style>
 
