@@ -1,5 +1,25 @@
 {{!< default}}
 
+<style>
+.post-feed {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns for big cards */
+    gap: 40px;
+    padding: 40px 0 0;
+}
+.post-card {
+    padding: 32px;
+    border: 1px solid #ddd;
+    background: #fff;
+    /* You can add box-shadow or border-radius if you use it in your version */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border-radius: 6px;
+}
+.section-feed {
+    margin-bottom: 56px;
+}
+</style>
+
 <div id="site-main" class="site-main outer">
     <main id="site-main" class="site-main outer">
         <div class="outer">
