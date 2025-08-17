@@ -1,0 +1,76 @@
+{{!< default}}
+
+<div id="site-main" class="site-main outer">
+    <main id="site-main" class="site-main outer">
+        <div class="outer">
+            <article class="post-full no-image">
+                <section class="post-full-content">
+                    <div class="post-content">
+                        <h1 class="post-title" style="font-weight: bold">Sample Articles for Subscribers</h1>
+                        <p>Explore public samples from each section. Subscribe for full access!</p>
+                    </div>
+                </section>
+            </article>
+        </div>
+
+        {{!-- Daily --}}
+        <section class="home-section">
+            <h2>Daily</h2>
+            <div class="post-feed section-feed">
+                {{#get "posts" filter="slug:[daily-post-1,daily-post-2,daily-post-3]+visibility:public" limit="3"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </section>
+
+        {{!-- Daily + Data --}}
+        <section class="home-section">
+            <h2>Daily + Data</h2>
+            <div class="post-feed section-feed">
+                {{#get "posts" filter="slug:[daily-data-post-1,daily-data-post-2,daily-data-post-3]+visibility:public" limit="3"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </section>
+
+        {{!-- Cycle Update --}}
+        <section class="home-section">
+            <h2>Cycle Update</h2>
+            <div class="post-feed section-feed">
+                {{#get "posts" filter="slug:[cycle-update-post-1,cycle-update-post-2,cycle-update-post-3]+visibility:public" limit="3"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </section>
+
+        {{!-- Taking Stock --}}
+        <section class="home-section">
+            <h2>Taking Stock</h2>
+            <div class="post-feed section-feed">
+                {{#get "posts" filter="slug:[taking-stock-post-1,taking-stock-post-2,taking-stock-post-3]+visibility:public" limit="3"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </section>
+
+        {{!-- Structural --}}
+        <section class="home-section">
+            <h2>Structural</h2>
+            <div class="post-feed section-feed">
+                {{#get "posts" filter="slug:[structural-post-1,structural-post-2,structural-post-3]+visibility:public" limit="3"}}
+                    {{#foreach posts}}
+                        {{> "post-card"}}
+                    {{/foreach}}
+                {{/get}}
+            </div>
+        </section>
+    </main>
+</div>
