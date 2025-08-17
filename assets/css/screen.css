@@ -1101,7 +1101,18 @@ production stylesheet in assets/built/screen.css
 
 /* styling date and reaidng time in post card */
 
-
+.post-label {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
+    border: 2px solid #104b1f;
+    border-radius: 5px;
+    color: #104b1f;
+    text-align: center;
+    margin: 5px 0;
+}
 
 /* Special Styling for home page grid (below):
 
