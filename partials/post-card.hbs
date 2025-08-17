@@ -2,6 +2,25 @@
 which templates loop over to generate a list of posts. --}}
 
 {{!-- Modified post-card.hbs to use your preferred formatting as described in your earlier example --}}
+
+
+
+
+<style>
+.post-label {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
+    border: 2px solid #104b1f;
+    border-radius: 5px;
+    color: #104b1f;
+    text-align: center;
+    margin: 5px 0;
+}
+</style>
+
 <article class="post-card {{post_class}}
     {{#match @custom.feed_layout "Classic"}}
         {{#is "home"}}
