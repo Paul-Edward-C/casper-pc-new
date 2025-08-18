@@ -13,11 +13,7 @@
   {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
   {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-  {{!-- Visibility label over the image --}}
-  {{#has visibility="public"}}<span class="post-label on-image">Public Post</span>{{/has}}
-  {{#has visibility="members"}}<span class="post-label on-image">Members Only</span>{{/has}}
-  {{#has visibility="paid"}}<span class="post-label on-image">Paid Member Post</span>{{/has}}
-  {{#has visibility="tiers"}}<span class="post-label on-image">Subscribers Only</span>{{/has}}
+  
 
   {{#if feature_image}}
     <a class="post-card-image-link" href="{{url}}">
@@ -42,6 +38,20 @@
         {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
         {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
         <h2 class="post-card-title">{{title}}</h2>
+{{#if feature_image}}
+  <div class="post-card-image-inline">
+    <img
+      srcset="{{img_url feature_image size="s"}} 300w,
+              {{img_url feature_image size="m"}} 600w,
+              {{img_url feature_image size="l"}} 1000w,
+              {{img_url feature_image size="xl"}} 2000w"
+      sizes="(max-width: 1000px) 400px, 800px"
+      src="{{img_url feature_image size="m"}}"
+      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+      loading="lazy"
+    />
+  </div>
+{{/if}}
         <p>{{excerpt words="70"}}</p>
         <footer class="post-card-meta">
           <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
@@ -72,11 +82,7 @@
   {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
   {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-  {{!-- Visibility label over the image --}}
-  {{#has visibility="public"}}<span class="post-label on-image">Public Post</span>{{/has}}
-  {{#has visibility="members"}}<span class="post-label on-image">Members Only</span>{{/has}}
-  {{#has visibility="paid"}}<span class="post-label on-image">Paid Member Post</span>{{/has}}
-  {{#has visibility="tiers"}}<span class="post-label on-image">Subscribers Only</span>{{/has}}
+  
 
   {{#if feature_image}}
     <a class="post-card-image-link" href="{{url}}">
@@ -101,6 +107,20 @@
         {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
         {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
         <h2 class="post-card-title">{{title}}</h2>
+{{#if feature_image}}
+  <div class="post-card-image-inline">
+    <img
+      srcset="{{img_url feature_image size="s"}} 300w,
+              {{img_url feature_image size="m"}} 600w,
+              {{img_url feature_image size="l"}} 1000w,
+              {{img_url feature_image size="xl"}} 2000w"
+      sizes="(max-width: 1000px) 400px, 800px"
+      src="{{img_url feature_image size="m"}}"
+      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+      loading="lazy"
+    />
+  </div>
+{{/if}}
         <p>{{excerpt words="70"}}</p>
         <footer class="post-card-meta">
           <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
@@ -131,11 +151,7 @@
   {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
   {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-  {{!-- Visibility label over the image --}}
-  {{#has visibility="public"}}<span class="post-label on-image">Public Post</span>{{/has}}
-  {{#has visibility="members"}}<span class="post-label on-image">Members Only</span>{{/has}}
-  {{#has visibility="paid"}}<span class="post-label on-image">Paid Member Post</span>{{/has}}
-  {{#has visibility="tiers"}}<span class="post-label on-image">Subscribers Only</span>{{/has}}
+  
 
   {{#if feature_image}}
     <a class="post-card-image-link" href="{{url}}">
@@ -160,6 +176,20 @@
         {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
         {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
         <h2 class="post-card-title">{{title}}</h2>
+{{#if feature_image}}
+  <div class="post-card-image-inline">
+    <img
+      srcset="{{img_url feature_image size="s"}} 300w,
+              {{img_url feature_image size="m"}} 600w,
+              {{img_url feature_image size="l"}} 1000w,
+              {{img_url feature_image size="xl"}} 2000w"
+      sizes="(max-width: 1000px) 400px, 800px"
+      src="{{img_url feature_image size="m"}}"
+      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+      loading="lazy"
+    />
+  </div>
+{{/if}}
         <p>{{excerpt words="70"}}</p>
         <footer class="post-card-meta">
           <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
@@ -190,11 +220,7 @@
   {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
   {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-  {{!-- Visibility label over the image --}}
-  {{#has visibility="public"}}<span class="post-label on-image">Public Post</span>{{/has}}
-  {{#has visibility="members"}}<span class="post-label on-image">Members Only</span>{{/has}}
-  {{#has visibility="paid"}}<span class="post-label on-image">Paid Member Post</span>{{/has}}
-  {{#has visibility="tiers"}}<span class="post-label on-image">Subscribers Only</span>{{/has}}
+  
 
   {{#if feature_image}}
     <a class="post-card-image-link" href="{{url}}">
@@ -219,6 +245,20 @@
         {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
         {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
         <h2 class="post-card-title">{{title}}</h2>
+{{#if feature_image}}
+  <div class="post-card-image-inline">
+    <img
+      srcset="{{img_url feature_image size="s"}} 300w,
+              {{img_url feature_image size="m"}} 600w,
+              {{img_url feature_image size="l"}} 1000w,
+              {{img_url feature_image size="xl"}} 2000w"
+      sizes="(max-width: 1000px) 400px, 800px"
+      src="{{img_url feature_image size="m"}}"
+      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+      loading="lazy"
+    />
+  </div>
+{{/if}}
         <p>{{excerpt words="70"}}</p>
         <footer class="post-card-meta">
           <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
@@ -238,7 +278,7 @@
 {{!-- === THEMATIC === --}}
 <section id="thematic" class="section-feed">
   <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Thematic</h2>
-  {{#get "posts" filter="slug:[cn-cny-aug-25,region-plaza-ii,taiwan-how-to-dispose-of-usd100bn]+visibility:public"}}
+  {{#get "posts" filter="tag:thematic" limit="9" order="published_at desc"}}
     <div class="inner posts">
   <div class="post-feed">
     {{#foreach posts}}
@@ -249,11 +289,7 @@
   {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
   {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-  {{!-- Visibility label over the image --}}
-  {{#has visibility="public"}}<span class="post-label on-image">Public Post</span>{{/has}}
-  {{#has visibility="members"}}<span class="post-label on-image">Members Only</span>{{/has}}
-  {{#has visibility="paid"}}<span class="post-label on-image">Paid Member Post</span>{{/has}}
-  {{#has visibility="tiers"}}<span class="post-label on-image">Subscribers Only</span>{{/has}}
+  
 
   {{#if feature_image}}
     <a class="post-card-image-link" href="{{url}}">
@@ -278,6 +314,20 @@
         {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
         {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
         <h2 class="post-card-title">{{title}}</h2>
+{{#if feature_image}}
+  <div class="post-card-image-inline">
+    <img
+      srcset="{{img_url feature_image size="s"}} 300w,
+              {{img_url feature_image size="m"}} 600w,
+              {{img_url feature_image size="l"}} 1000w,
+              {{img_url feature_image size="xl"}} 2000w"
+      sizes="(max-width: 1000px) 400px, 800px"
+      src="{{img_url feature_image size="m"}}"
+      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+      loading="lazy"
+    />
+  </div>
+{{/if}}
         <p>{{excerpt words="70"}}</p>
         <footer class="post-card-meta">
           <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
@@ -308,6 +358,10 @@
   margin:0 0 8px 0;
 }
 /* Hide any legacy labels placed directly under .post-card (above the image) */
-.post-card > .post-label{ display:none; }
+
+/* Hide the original image so we can place it inline under the title */
+.post-card > .post-card-image-link{ display:none; }
+/* Inline image styling */
+.post-card .post-card-image-inline img{ width:100%; height:auto; display:block; margin:8px 0 12px; border-radius:4px; }
 </style>
 
