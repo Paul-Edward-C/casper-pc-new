@@ -1,374 +1,72 @@
 {{!< default}}
-{{!-- === DAILY === --}}
-<section id="daily" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily</h2>
-  {{#get "posts" filter="tag:daily" limit="9" order="published_at desc"}}
-  <div class="inner posts">
-    <div class="post-feed">
-      {{#foreach posts}}
+
+{{!-- Inline partials to DRY up cards & sections --}}
+{{#*inline "post-card-feed"}}
+<div class="inner posts">
+  <div class="post-feed">
+    {{#foreach posts}}
       <article class="post-card {{post_class}}
-  {{#match @custom.feed_layout "Classic"}}
-    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-  {{/match}}
-  {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-  {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
-
-  
-
-  {{#if feature_image}}
-    <a class="post-card-image-link" href="{{url}}">
-      <img class="post-card-image"
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(max-width: 1000px) 400px, 800px"
-        src="{{img_url feature_image size="m"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-        loading="lazy"
-      />
-    </a>
-  {{/if}}
-  <div class="post-card-labels">
-    {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-    {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-    {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-    {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
-  </div>
-  <a class="post-card-content-link" href="{{url}}">
-    <header class="post-card-header">
-      <div class="post-card-content">
-                                        <h2 class="post-card-title">{{title}}</h2>
-{{#if feature_image}}
-  <div class="post-card-image-inline">
-    <img
-      srcset="{{img_url feature_image size="s"}} 300w,
-              {{img_url feature_image size="m"}} 600w,
-              {{img_url feature_image size="l"}} 1000w,
-              {{img_url feature_image size="xl"}} 2000w"
-      sizes="(max-width: 1000px) 400px, 800px"
-      src="{{img_url feature_image size="m"}}"
-      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      loading="lazy"
-    />
-  </div>
-{{/if}}
-        <p>{{excerpt words="70"}}</p>
-        <footer class="post-card-meta">
-          <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-          <span class="post-card-meta-length">{{reading_time}}</span>
-          {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-        </footer>
-      </div>
-    </header>
-  </a>
-</article>
-      {{/foreach}}
-    </div>
-  </div>
-  {{/get}}
-</section>
-
-{{!-- === DAILY + DATA === --}}
-<section id="daily-data" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily + Data</h2>
-  {{#get "posts" filter="tag:daily-data" limit="9" order="published_at desc"}}
-    <div class="inner posts">
-  <div class="post-feed">
-    {{#foreach posts}}
-    <article class="post-card {{post_class}}
-  {{#match @custom.feed_layout "Classic"}}
-    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-  {{/match}}
-  {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-  {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
-
-  
-
-  {{#if feature_image}}
-    <a class="post-card-image-link" href="{{url}}">
-      <img class="post-card-image"
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(max-width: 1000px) 400px, 800px"
-        src="{{img_url feature_image size="m"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-        loading="lazy"
-      />
-    </a>
-  {{/if}}
-  <div class="post-card-labels">
-    {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-    {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-    {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-    {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
-  </div>
-  <a class="post-card-content-link" href="{{url}}">
-    <header class="post-card-header">
-      <div class="post-card-content">
-                                        <h2 class="post-card-title">{{title}}</h2>
-{{#if feature_image}}
-  <div class="post-card-image-inline">
-    <img
-      srcset="{{img_url feature_image size="s"}} 300w,
-              {{img_url feature_image size="m"}} 600w,
-              {{img_url feature_image size="l"}} 1000w,
-              {{img_url feature_image size="xl"}} 2000w"
-      sizes="(max-width: 1000px) 400px, 800px"
-      src="{{img_url feature_image size="m"}}"
-      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      loading="lazy"
-    />
-  </div>
-{{/if}}
-        <p>{{excerpt words="70"}}</p>
-        <footer class="post-card-meta">
-          <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-          <span class="post-card-meta-length">{{reading_time}}</span>
-          {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-        </footer>
-      </div>
-    </header>
-  </a>
-</article>
+        {{#match @custom.feed_layout "Classic"}}
+          {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
+        {{/match}}
+        {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
+        {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
+        <div class="post-card-labels">
+          {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
+          {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
+          {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
+          {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
+        </div>
+        <a class="post-card-content-link" href="{{url}}">
+          <header class="post-card-header">
+            <div class="post-card-content">
+              <h2 class="post-card-title">{{title}}</h2>
+              {{#if feature_image}}
+              <div class="post-card-image-inline">
+                <img
+                  srcset="{{img_url feature_image size=\"s\"}} 300w,
+                          {{img_url feature_image size=\"m\"}} 600w,
+                          {{img_url feature_image size=\"l\"}} 1000w,
+                          {{img_url feature_image size=\"xl\"}} 2000w"
+                  sizes="(max-width: 1000px) 400px, 800px"
+                  src="{{img_url feature_image size=\"m\"}}"
+                  alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                  loading="lazy"
+                />
+              </div>
+              {{/if}}
+              <p>{{excerpt words="70"}}</p>
+              <footer class="post-card-meta">
+                <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
+                <span class="post-card-meta-length">{{reading_time}}</span>
+                {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
+              </footer>
+            </div>
+          </header>
+        </a>
+      </article>
     {{/foreach}}
   </div>
 </div>
+{{/inline}}
+
+{{#*inline "post-section"}}
+<section id="{{slug}}" class="section-feed">
+  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">{{title}}</h2>
+  {{#get "posts" filter=filter limit=limit order="published_at desc"}}
+    {{> post-card-feed}}
   {{/get}}
 </section>
+{{/inline}}
 
-{{!-- === CYCLE UPDATE === --}}
-<section id="cycle-update" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Cycle update</h2>
-  {{#get "posts" filter="tag:cycle-update" limit="9" order="published_at desc"}}
-    <div class="inner posts">
-  <div class="post-feed">
-    {{#foreach posts}}
-    <article class="post-card {{post_class}}
-  {{#match @custom.feed_layout "Classic"}}
-    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-  {{/match}}
-  {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-  {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
+{{> post-section slug="daily" title="Daily" filter="tag:daily" limit="9"}}
+{{> post-section slug="daily-data" title="Daily + Data" filter="tag:daily-data" limit="9"}}
+{{> post-section slug="cycle-update" title="Cycle update" filter="tag:cycle-update" limit="9"}}
+{{> post-section slug="taking-stock" title="Taking stock" filter="tag:taking-stock" limit="9"}}
+{{> post-section slug="thematic" title="Thematic" filter="slug:[cn-cny-aug-25,region-plaza-ii,taiwan-how-to-dispose-of-usd100bn]+visibility:public"}}
 
-  
-
-  {{#if feature_image}}
-    <a class="post-card-image-link" href="{{url}}">
-      <img class="post-card-image"
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(max-width: 1000px) 400px, 800px"
-        src="{{img_url feature_image size="m"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-        loading="lazy"
-      />
-    </a>
-  {{/if}}
-  <div class="post-card-labels">
-    {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-    {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-    {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-    {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
-  </div>
-  <a class="post-card-content-link" href="{{url}}">
-    <header class="post-card-header">
-      <div class="post-card-content">
-                                        <h2 class="post-card-title">{{title}}</h2>
-{{#if feature_image}}
-  <div class="post-card-image-inline">
-    <img
-      srcset="{{img_url feature_image size="s"}} 300w,
-              {{img_url feature_image size="m"}} 600w,
-              {{img_url feature_image size="l"}} 1000w,
-              {{img_url feature_image size="xl"}} 2000w"
-      sizes="(max-width: 1000px) 400px, 800px"
-      src="{{img_url feature_image size="m"}}"
-      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      loading="lazy"
-    />
-  </div>
-{{/if}}
-        <p>{{excerpt words="70"}}</p>
-        <footer class="post-card-meta">
-          <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-          <span class="post-card-meta-length">{{reading_time}}</span>
-          {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-        </footer>
-      </div>
-    </header>
-  </a>
-</article>
-    {{/foreach}}
-  </div>
-</div>
-  {{/get}}
-</section>
-
-{{!-- === TAKING STOCK === --}}
-<section id="taking-stock" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
-  {{#get "posts" filter="tag:taking-stock" limit="9" order="published_at desc"}}
-    <div class="inner posts">
-  <div class="post-feed">
-    {{#foreach posts}}
-    <article class="post-card {{post_class}}
-  {{#match @custom.feed_layout "Classic"}}
-    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-  {{/match}}
-  {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-  {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
-
-  
-
-  {{#if feature_image}}
-    <a class="post-card-image-link" href="{{url}}">
-      <img class="post-card-image"
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(max-width: 1000px) 400px, 800px"
-        src="{{img_url feature_image size="m"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-        loading="lazy"
-      />
-    </a>
-  {{/if}}
-  <div class="post-card-labels">
-    {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-    {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-    {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-    {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
-  </div>
-  <a class="post-card-content-link" href="{{url}}">
-    <header class="post-card-header">
-      <div class="post-card-content">
-                                        <h2 class="post-card-title">{{title}}</h2>
-{{#if feature_image}}
-  <div class="post-card-image-inline">
-    <img
-      srcset="{{img_url feature_image size="s"}} 300w,
-              {{img_url feature_image size="m"}} 600w,
-              {{img_url feature_image size="l"}} 1000w,
-              {{img_url feature_image size="xl"}} 2000w"
-      sizes="(max-width: 1000px) 400px, 800px"
-      src="{{img_url feature_image size="m"}}"
-      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      loading="lazy"
-    />
-  </div>
-{{/if}}
-        <p>{{excerpt words="70"}}</p>
-        <footer class="post-card-meta">
-          <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-          <span class="post-card-meta-length">{{reading_time}}</span>
-          {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-        </footer>
-      </div>
-    </header>
-  </a>
-</article>
-    {{/foreach}}
-  </div>
-</div>
-  {{/get}}
-</section>
-
-{{!-- === THEMATIC === --}}
-<section id="thematic" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Thematic</h2>
-  {{#get "posts" filter="slug:[cn-cny-aug-25,region-plaza-ii,taiwan-how-to-dispose-of-usd100bn]+visibility:public"}}
-    <div class="inner posts">
-  <div class="post-feed">
-    {{#foreach posts}}
-    <article class="post-card {{post_class}}
-  {{#match @custom.feed_layout "Classic"}}
-    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-  {{/match}}
-  {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-  {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
-
-  
-
-  {{#if feature_image}}
-    <a class="post-card-image-link" href="{{url}}">
-      <img class="post-card-image"
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(max-width: 1000px) 400px, 800px"
-        src="{{img_url feature_image size="m"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-        loading="lazy"
-      />
-    </a>
-  {{/if}}
-  <div class="post-card-labels">
-    {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-    {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-    {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-    {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
-  </div>
-  <a class="post-card-content-link" href="{{url}}">
-    <header class="post-card-header">
-      <div class="post-card-content">
-                                        <h2 class="post-card-title">{{title}}</h2>
-{{#if feature_image}}
-  <div class="post-card-image-inline">
-    <img
-      srcset="{{img_url feature_image size="s"}} 300w,
-              {{img_url feature_image size="m"}} 600w,
-              {{img_url feature_image size="l"}} 1000w,
-              {{img_url feature_image size="xl"}} 2000w"
-      sizes="(max-width: 1000px) 400px, 800px"
-      src="{{img_url feature_image size="m"}}"
-      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      loading="lazy"
-    />
-  </div>
-{{/if}}
-        <p>{{excerpt words="70"}}</p>
-        <footer class="post-card-meta">
-          <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-          <span class="post-card-meta-length">{{reading_time}}</span>
-          {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-        </footer>
-      </div>
-    </header>
-  </a>
-</article>
-    {{/foreach}}
-  </div>
-</div>
-  {{/get}}
-</section>
 <style>
-/* Green pill label inside content, left-aligned */
-.post-card .post-label{
-  display:inline-block;
-  padding:5px 10px;
-  font-size:14px;
-  font-weight:bold;
-  background-color:#fff;
-  border:2px solid #104b1f;
-  border-radius:5px;
-  color:#104b1f;
-  text-align:left;
-  margin:0 0 8px 0;
-}
-/* Hide any legacy labels placed directly under .post-card (above the image) */
-
-/* Hide the original image so we can place it inline under the title */
-.post-card > .post-card-image-link{ display:none; }
-/* Inline image styling */
-.post-card .post-card-image-inline img{ width:100%; height:auto; display:block; margin:8px 0 12px; border-radius:4px; }
 .post-card-labels{ text-align:left; margin:0 0 8px 0; }
-.post-card-labels .post-label{ display:inline-block; width:auto; max-width:100%; }
+.post-card-labels .post-label{ display:inline-block; padding:5px 10px; font-size:14px; font-weight:bold; background-color:#fff; border:2px solid #104b1f; border-radius:5px; color:#104b1f; text-align:left; margin:0 0 8px 0; width:auto; max-width:100%; }
+.post-card .post-card-image-inline img{ width:100%; height:auto; display:block; margin:8px 0 12px; border-radius:4px; }
 </style>
-
