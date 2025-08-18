@@ -68,7 +68,7 @@ into the {body} tag of the default.hbs template --}}
         <!-- from post.hbs -->
 
         <!-- get the list of posts -->
-{{#get "posts" filter="tag:hash-kr" limit="9"}}
+{{#get "posts" #get "posts" filter="slug:[east-asia-today-16, east-asia-today-9, east-asia-today-4] limit="9"}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
