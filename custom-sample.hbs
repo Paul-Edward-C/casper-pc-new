@@ -221,72 +221,76 @@
   <div class="inner posts">
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
   </div>
-  {{#get "posts" filter="slug:[cn-taking-stock-jul-25, japan-stock-apr-25,korea-taking-stock-apr-25]+visibility:public"}}
+
+  {{#get "posts" filter="slug:[cn-taking-stock-jul-25,japan-stock-apr-25,korea-taking-stock-apr-25]+visibility:public"}}
     <div class="inner posts">
-  <div class="post-feed">
-    {{#foreach posts}}
-    <article class="post-card {{post_class}}
-  {{#match @custom.feed_layout "Classic"}}
-    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-  {{/match}}
-  {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-  {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
+      <div class="post-feed">
+        {{#foreach posts}}
+        <article class="post-card {{post_class}}
+          {{#match @custom.feed_layout "Classic"}}
+            {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
+          {{/match}}
+          {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
+          {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-  
+          {{#if feature_image}}
+            <a class="post-card-image-link" href="{{url}}">
+              <img class="post-card-image"
+                srcset="{{img_url feature_image size="s"}} 300w,
+                        {{img_url feature_image size="m"}} 600w,
+                        {{img_url feature_image size="l"}} 1000w,
+                        {{img_url feature_image size="xl"}} 2000w"
+                sizes="(max-width: 1000px) 400px, 800px"
+                src="{{img_url feature_image size="m"}}"
+                alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                loading="lazy"
+              />
+            </a>
+          {{/if}}
 
-  {{#if feature_image}}
-    <a class="post-card-image-link" href="{{url}}">
-      <img class="post-card-image"
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(max-width: 1000px) 400px, 800px"
-        src="{{img_url feature_image size="m"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-        loading="lazy"
-      />
-    </a>
-  {{/if}}
-  <div class="post-card-labels">
-    {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-    {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-    {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-    {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
-  </div>
-  <a class="post-card-content-link" href="{{url}}">
-    <header class="post-card-header">
-      <div class="post-card-content">
-                                        <h2 class="post-card-title">{{title}}</h2>
-{{#if feature_image}}
-  <div class="post-card-image-inline">
-    <img
-      srcset="{{img_url feature_image size="s"}} 300w,
-              {{img_url feature_image size="m"}} 600w,
-              {{img_url feature_image size="l"}} 1000w,
-              {{img_url feature_image size="xl"}} 2000w"
-      sizes="(max-width: 1000px) 400px, 800px"
-      src="{{img_url feature_image size="m"}}"
-      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      loading="lazy"
-    />
-  </div>
-{{/if}}
-        <p>{{excerpt words="70"}}</p>
-        <footer class="post-card-meta">
-          <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-          <span class="post-card-meta-length">{{reading_time}}</span>
-          {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-        </footer>
+          <div class="post-card-labels">
+            {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
+            {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
+            {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
+            {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
+          </div>
+
+          <a class="post-card-content-link" href="{{url}}">
+            <header class="post-card-header">
+              <div class="post-card-content">
+                <h2 class="post-card-title">{{title}}</h2>
+
+                {{#if feature_image}}
+                  <div class="post-card-image-inline">
+                    <img
+                      srcset="{{img_url feature_image size="s"}} 300w,
+                              {{img_url feature_image size="m"}} 600w,
+                              {{img_url feature_image size="l"}} 1000w,
+                              {{img_url feature_image size="xl"}} 2000w"
+                      sizes="(max-width: 1000px) 400px, 800px"
+                      src="{{img_url feature_image size="m"}}"
+                      alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                      loading="lazy"
+                    />
+                  </div>
+                {{/if}}
+
+                <p>{{excerpt words="70"}}</p>
+                <footer class="post-card-meta">
+                  <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
+                  <span class="post-card-meta-length">{{reading_time}}</span>
+                  {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
+                </footer>
+              </div>
+            </header>
+          </a>
+        </article>
+        {{/foreach}}
       </div>
-    </header>
-  </a>
-</article>
-    {{/foreach}}
-  </div>
-</div>
+    </div>
   {{/get}}
 </section>
+
 
 {{!-- === THEMATIC === --}}
 <section id="thematic" class="section-feed">
