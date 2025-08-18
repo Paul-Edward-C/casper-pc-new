@@ -221,7 +221,7 @@
   <div class="inner posts">
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
   </div>
-  {{#get "posts" filter='[cn-taking-stock-jul-25, japan-stock-apr-25,korea-taking-stock-apr-25]'}}
+  {{#get "posts" filter="slug:[cn-taking-stock-jul-25, japan-stock-apr-25,korea-taking-stock-apr-25]+visibility:public"}}
     <div class="inner posts">
   <div class="post-feed">
     {{#foreach posts}}
