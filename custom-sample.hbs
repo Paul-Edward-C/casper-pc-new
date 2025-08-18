@@ -1,106 +1,93 @@
  {{!< default}}
 {{!-- No extra <div id="site-main"> or <main id="site-main"> here --}}
 
-{{#match @custom.publication_cover_style "!=" "None"}}
-  <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
-    {{#if @site.cover_image}}
-      <img class="site-header-cover"
-        srcset="{{img_url @site.cover_image size="s"}} 300w,
-                {{img_url @site.cover_image size="m"}} 600w,
-                {{img_url @site.cover_image size="l"}} 1000w,
-                {{img_url @site.cover_image size="xl"}} 2000w"
-        sizes="100vw"
-        src="{{img_url @site.cover_image size="s"}}"
-        alt=""
-      />
-    {{/if}}
-    <h1 class="site-title">
-      {{#if @site.logo}}
-        <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
-      {{else}}Korea{{/if}}
-    </h1>
-  </div>
-{{/match}}
+{{!-- === DAILY === --}}
+<section id="daily" class="section-feed">
+  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily</h2>
+  {{#get "posts" filter="tag:daily" limit="9" order="published_at desc"}}
+  <div class="inner posts">
+    <div class="post-feed">
+      {{#foreach posts}}
+      <article class="post-card {{post_class}}
+        {{#match @custom.feed_layout "Classic"}}
+          {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
+        {{/match}}
+        {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
+        {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
 
-<header class="article-header gh-canvas">
-  {{#if feature_image}}
-    <figure class="article-image">
-      <img
-        srcset="{{img_url feature_image size="s"}} 300w,
-                {{img_url feature_image size="m"}} 600w,
-                {{img_url feature_image size="l"}} 1000w,
-                {{img_url feature_image size="xl"}} 2000w"
-        sizes="(min-width: 1400px) 1400px, 92vw"
-        src="{{img_url feature_image size="xl"}}"
-        alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-      />
-      {{#if feature_image_caption}}<figcaption>{{feature_image_caption}}</figcaption>{{/if}}
-    </figure>
-  {{/if}}
-</header>
+        {{#if feature_image}}
+          <a class="post-card-image-link" href="{{url}}">
+            <img class="post-card-image"
+              srcset="{{img_url feature_image size="s"}} 300w,
+                      {{img_url feature_image size="m"}} 600w,
+                      {{img_url feature_image size="l"}} 1000w,
+                      {{img_url feature_image size="xl"}} 2000w"
+              sizes="(max-width: 1000px) 400px, 800px"
+              src="{{img_url feature_image size="m"}}"
+              alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+              loading="lazy"
+            />
+          </a>
+        {{/if}}
 
-<div class="outer">
-  {{#page}}
-    <article class="post-full {{post_class}} no-image">
-      <section class="post-full-content">
-        <div class="post-content">
-          <br>
-          <h1 class="post-title" style="font-weight: bold">Articles</h1>
-        <div class="post-feed section-feed">
-        {{#get "posts" filter="slug:[east-asia-today-16,east-asia-today-9,east-asia-today-4]" limit="9"}}
-        <div class="inner posts">
-            <div class="post-feed">
-            {{#foreach posts}}
-                <article class="post-card {{post_class}}
-                {{#match @custom.feed_layout "Classic"}}
-                    {{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}
-                {{/match}}
-                {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
-                {{#match @custom.feed_layout "List"}} {{#is "home, paged"}} post-card-large{{/is}} {{/match}}">
-                <a class="post-card-content-link" href="{{url}}">
-                    <header class="post-card-header">
-                    <div class="post-card-content">
-                        {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
-                        {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
-                        {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
-                        {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
+        <a class="post-card-content-link" href="{{url}}">
+          <header class="post-card-header">
+            <div class="post-card-content">
+              {{#has visibility="public"}}<span class="post-label">Public Post</span>{{/has}}
+              {{#has visibility="members"}}<span class="post-label">Members Only</span>{{/has}}
+              {{#has visibility="paid"}}<span class="post-label">Paid Member Post</span>{{/has}}
+              {{#has visibility="tiers"}}<span class="post-label">Subscribers Only</span>{{/has}}
 
-                        <h2 class="post-card-title">{{title}}</h2>
+              <h2 class="post-card-title">{{title}}</h2>
+              <p>{{excerpt words="70"}}</p>
 
-                        {{#if feature_image}}
-                        <a class="post-card-image-link" href="{{url}}">
-                            <img class="post-card-image"
-                            srcset="{{img_url feature_image size="s"}} 300w,
-                                    {{img_url feature_image size="m"}} 600w,
-                                    {{img_url feature_image size="l"}} 1000w,
-                                    {{img_url feature_image size="xl"}} 2000w"
-                            sizes="(max-width: 1000px) 400px, 800px"
-                            src="{{img_url feature_image size="m"}}"
-                            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-                            loading="lazy"
-                            />
-                        </a>
-                        {{/if}}
-
-                        <p>{{excerpt words="70"}}</p>
-
-                        <footer class="post-card-meta">
-                        <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
-                        <span class="post-card-meta-length">{{reading_time}}</span>
-                        {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
-                        </footer>
-                    </div>
-                    </header>
-                </a>
-                </article>
-            {{/foreach}}
+              <footer class="post-card-meta">
+                <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">{{date}}</time>
+                <span class="post-card-meta-length">{{reading_time}}</span>
+                {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
+              </footer>
             </div>
-        </div>
-        {{/get}}
-        </div>
-      </section>
-    </article>
-  {{/page}}
+          </header>
+        </a>
+      </article>
+      {{/foreach}}
+    </div>
+  </div>
+  {{/get}}
+</section>
+
+{{!-- === DAILY + DATA === --}}
+<section id="daily-data" class="section-feed">
+  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily + Data</h2>
+  {{#get "posts" filter="tag:daily-data" limit="9" order="published_at desc"}}
+    {{> "sections/post-feed"}}
+  {{/get}}
+</section>
+
+{{!-- === CYCLE UPDATE === --}}
+<section id="cycle-update" class="section-feed">
+  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Cycle update</h2>
+  {{#get "posts" filter="tag:cycle-update" limit="9" order="published_at desc"}}
+    {{> "sections/post-feed"}}
+  {{/get}}
+</section>
+
+{{!-- === TAKING STOCK === --}}
+<section id="taking-stock" class="section-feed">
+  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
+  {{#get "posts" filter="tag:taking-stock" limit="9" order="published_at desc"}}
+    {{> "sections/post-feed"}}
+  {{/get}}
+</section>
+
+{{!-- === THEMATIC === --}}
+<section id="thematic" class="section-feed">
+  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Thematic</h2>
+  {{#get "posts" filter="tag:thematic" limit="9" order="published_at desc"}}
+    {{> "sections/post-feed"}}
+  {{/get}}
+</section>
+
 
 <style>
 /* consolidate duplicate blocks */
