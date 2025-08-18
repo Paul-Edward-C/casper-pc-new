@@ -1,7 +1,10 @@
 {{!< default}}
+
 {{!-- === DAILY === --}}
 <section id="daily" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily</h2>
+  <div class="inner posts">
+    <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily</h2>
+  </div>
   {{#get "posts" filter="slug:[east-asia-today-16, east-asia-today-9, east-asia-today-4]+visibility:public"}}
   <div class="inner posts">
     <div class="post-feed">
@@ -71,7 +74,9 @@
 
 {{!-- === DAILY + DATA === --}}
 <section id="daily-data" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily + Data</h2>
+  <div class="inner posts">
+    <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily + Data</h2>
+  </div>
   {{#get "posts" filter="tag:daily-data" limit="9" order="published_at desc"}}
     <div class="inner posts">
   <div class="post-feed">
@@ -141,7 +146,9 @@
 
 {{!-- === CYCLE UPDATE === --}}
 <section id="cycle-update" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Cycle update</h2>
+  <div class="inner posts">
+    <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Cycle update</h2>
+  </div>
   {{#get "posts" filter="slug:[cn-activity-aug-25, jp-boj-outlook-jul-25,korea-bsi-mar-25]+visibility:public"}}
     <div class="inner posts">
   <div class="post-feed">
@@ -211,7 +218,9 @@
 
 {{!-- === TAKING STOCK === --}}
 <section id="taking-stock" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
+  <div class="inner posts">
+    <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
+  </div>
   {{#get "posts" filter="tag:taking-stock" limit="9" order="published_at desc"}}
     <div class="inner posts">
   <div class="post-feed">
@@ -281,7 +290,9 @@
 
 {{!-- === THEMATIC === --}}
 <section id="thematic" class="section-feed">
-  <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Thematic</h2>
+  <div class="inner posts">
+    <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Thematic</h2>
+  </div>
   {{#get "posts" filter="slug:[cn-cny-aug-25,region-plaza-ii,taiwan-how-to-dispose-of-usd100bn]+visibility:public"}}
     <div class="inner posts">
   <div class="post-feed">
@@ -371,4 +382,3 @@
 .post-card-labels{ text-align:left; margin:0 0 8px 0; }
 .post-card-labels .post-label{ display:inline-block; width:auto; max-width:100%; }
 </style>
-
