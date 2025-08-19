@@ -78,13 +78,10 @@
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily + Data</h2>
   </div>
 
-  
-
-     <div style="display: flex; justify-content: center;">
-        <a href="https://www.eastasiaecon.com/#charts" class="menu-item">Charts</a>
-        <a href="https://www.eastasiaecon.com/data" class="menu-item">Data</a>
-    </div>
-
+  <div style="display: flex; justify-content: center;">
+    <a href="https://www.eastasiaecon.com/#charts" class="menu-item">Charts</a>
+    <a href="https://www.eastasiaecon.com/data" class="menu-item">Data</a>
+  </div>
 </section>
 
 {{!-- === CYCLE UPDATE === --}}
@@ -328,4 +325,24 @@
 .post-card .post-card-image-inline img{ width:100%; height:auto; display:block; margin:8px 0 12px; border-radius:4px; }
 .post-card-labels{ text-align:left; margin:0 0 8px 0; }
 .post-card-labels .post-label{ display:inline-block; width:auto; max-width:100%; }
+.menu-item {
+    display: inline-block;
+    margin: 10px 5px;
+    font-size: 16px;
+    color: #ffffff;             /* white text */
+    text-decoration: none;
+    padding: 2px 15px;
+    border-radius: 5px;
+    font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen",
+                 "Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+    background-color: #104b1f;  /* green background */
+    transition: background-color 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+    width: 150px;               /* fixed button width */
+}
+
+.menu-item:hover {
+    background-color: rgba(16, 75, 31, 0.7); /* hover effect */
+}
 </style>
