@@ -465,12 +465,12 @@
   border-radius: 2px;
 }
 
-#daily .daily-blurb { margin: 0 0 8px; }
-#daily .daily-blurb p { margin: 0; }
+#daily .daily-blurb { margin: 0 0 1em; }   /* 1 line-height of spacing */
+#daily .daily-blurb p { margin: 0; }       /* avoid extra paragraph gap */
 
-/* kill theme spacing above the cards */
+/* keep the cards tight to the blurb */
 #daily .post-feed.compact { margin-top: 0 !important; padding-top: 0 !important; }
-#daily .post-feed.compact::before { display: none !important; content: none !important; }
+#daily .post-feed.compact::before { display: none !important; }
 
 /* just in case wrapper adds space in your variant */
 #daily .inner.posts { padding-bottom: 0; margin-bottom: 0; }
