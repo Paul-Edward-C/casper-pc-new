@@ -35,6 +35,10 @@
 <section id="daily" class="section-feed">
   <div class="inner posts">
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily</h2>
+
+    <div class="daily-blurb gh-content">
+      <p>Short summary and charts of latest data releases, and links to fuller notes that day. Published around 6pm Taiwan.</p>
+    </div>
   </div>
   {{#get "posts" filter="slug:[east-asia-today-16, east-asia-today-9, east-asia-today-4]+visibility:public"}}
   <div class="inner posts">
@@ -109,6 +113,10 @@
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Daily + Data</h2>
   </div>
 
+    <div class="daily-blurb gh-content">
+      <p>East Asia Today, together with access to all interactive charts and data download app.</p>
+    </div>
+
   <div style="display: flex; justify-content: center;">
     <a href="https://www.eastasiaecon.com/#charts" class="menu-item">Charts</a>
     <a href="https://www.eastasiaecon.com/data" class="menu-item">Data</a>
@@ -120,6 +128,10 @@
   <div class="inner posts">
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Cycle update</h2>
   </div>
+
+    <div class="daily-blurb gh-content">
+      <p>Analysis of all data releases. Short, unless there is more to say</p>
+    </div>
   {{#get "posts" filter="slug:[cn-activity-aug-25, jp-boj-outlook-jul-25,korea-bsi-mar-25]+visibility:public"}}
     <div class="inner posts">
   <div class="post-feed">
@@ -191,6 +203,10 @@
 <section id="taking-stock" class="section-feed">
   <div class="inner posts">
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Taking stock</h2>
+  </div>
+
+  <div class="daily-blurb gh-content">
+      <p>Stepping back from the daily noise to summarise positioning in the cycle and market implications</p>
   </div>
 
   {{#get "posts" filter="slug:[cn-taking-stock-jul-25,japan-stock-apr-25,korea-taking-stock-apr-25]+visibility:public"}}
@@ -267,6 +283,10 @@
 <section id="thematic" class="section-feed">
   <div class="inner posts">
     <h2 class="post-title" style="font-weight:bold;margin:1.5rem 0">Thematic</h2>
+  </div>
+
+  <div class="daily-blurb gh-content">
+    <p>Longer pieces thinking about thematic and structural issues</p>
   </div>
   {{#get "posts" filter="slug:[cn-cny-aug-25,region-plaza-ii,taiwan-how-to-dispose-of-usd100bn]+visibility:public"}}
     <div class="inner posts">
