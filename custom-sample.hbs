@@ -41,7 +41,7 @@
     </div>
 
     {{#get "posts" filter='slug:[east-asia-today-16, east-asia-today-9, east-asia-today-4]+visibility:public'}}
-      <div class="post-feed">
+      <div class="post-feed compact">
         {{#foreach posts}}
           <article class="post-card {{post_class}}
             {{#match @custom.feed_layout "Classic"}}{{#is "home"}}{{#has index="0"}} post-card-large{{/has}}{{#has index="1,2"}} dynamic{{/has}}{{/is}}{{/match}}
@@ -103,6 +103,7 @@
     {{/get}}
   </div>
 </section>
+
 <hr class="ea-divider">
 
 
@@ -463,6 +464,16 @@
   background: linear-gradient(to right, transparent, rgba(16,75,31,.45), transparent);
   border-radius: 2px;
 }
+
+#daily .daily-blurb { margin: 0 0 8px; }
+#daily .daily-blurb p { margin: 0; }
+
+/* kill theme spacing above the cards */
+#daily .post-feed.compact { margin-top: 0 !important; padding-top: 0 !important; }
+#daily .post-feed.compact::before { display: none !important; content: none !important; }
+
+/* just in case wrapper adds space in your variant */
+#daily .inner.posts { padding-bottom: 0; margin-bottom: 0; }
 </style>
 
 
