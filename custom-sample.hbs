@@ -7,7 +7,7 @@
         {{!-- Put your photo at assets/images/paul.jpg (see CSS note) --}}
         <img
           class="about-photo"
-          src="{{asset "images/paul.jpg"}}"
+          src="{{asset "images/paul.jpeg"}}"
           alt="Paul Cavey"
           loading="lazy"
         />
@@ -390,11 +390,10 @@
 }
 
 .about-photo {
-  width: 180px;             /* adjust as you like */
-  max-width: 40vw;          /* keep sane on mobile */
-  aspect-ratio: 1 / 1;      /* square crop */
+  width: clamp(200px, 24vw, 320px); /* bigger, scales with viewport */
+  aspect-ratio: 1 / 1;
   object-fit: cover;
-  border-radius: 12px;      /* rounded corners; use 9999px for a circle */
+  border-radius: 12px;              /* use 50% if you want a circle */
   box-shadow: 0 4px 14px rgba(0,0,0,.08);
 }
 
