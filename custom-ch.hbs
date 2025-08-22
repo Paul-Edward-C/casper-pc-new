@@ -221,8 +221,24 @@ into the {body} tag of the default.hbs template --}}
             margin-top: 20px; /* Adjust the value as needed to control the amount of space */
           }
 
-        .site-header-content { max-width: 960px; margin: 0 auto; }
-        .site-header-cover { width: 100%; height: auto; }
+        .site-header-cover {
+        display: block;
+        width: 100%;
+        height: 160px;           /* <- adjust to taste */
+        object-fit: cover;       /* fills width, trims excess height */
+        object-position: center; /* change to 'top' or 'bottom' if needed */
+        }
+
+        /* Optional: a bit shorter on phones */
+        @media (max-width: 640px) {
+        .site-header-cover { height: 120px; }
+        }
+
+        /* If your theme forces a “Large” header height, neutralize it */
+        .site-header-content.large {
+        min-height: 0 !important;
+        padding-top: 0; padding-bottom: 0; /* trim extra white space if any */
+        }
     </style>
 
 </main>
