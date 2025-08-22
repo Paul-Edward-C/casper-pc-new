@@ -533,28 +533,33 @@
 #daily-data .daily-blurb,
 #cycle-update .daily-blurb,
 #taking-stock .daily-blurb,
-#thematic .daily-blurb { margin: 0 0 1em; }
+#thematic .daily-blurb,
+#weekly .daily-blurb { margin: 0 0 1em; }
 #daily .daily-blurb p,
 #daily-data .daily-blurb p,
 #cycle-update .daily-blurb p,
 #taking-stock .daily-blurb p,
-#thematic .daily-blurb p { margin: 0; }
+#thematic .daily-blurb p,
+#weekly .daily-blurb p { margin: 0; }
 
 /* kill theme spacing above the card grids (use .compact on those feeds) */
 #daily .post-feed.compact,
 #cycle-update .post-feed.compact,
 #taking-stock .post-feed.compact,
-#thematic .post-feed.compact { margin-top: 0 !important; padding-top: 0 !important; }
+#thematic .post-feed.compact,
+#weekly .post-feed.compact { margin-top: 0 !important; padding-top: 0 !important; }
 #daily .post-feed.compact::before,
 #cycle-update .post-feed.compact::before,
 #taking-stock .post-feed.compact::before,
-#thematic .post-feed.compact::before { display: none !important; content: none !important; }
+#thematic .post-feed.compact::before,
+#weekly .post-feed.compact::before { display: none !important; content: none !important; }
 
 /* optional: collapse any extra wrapper spacing */
 #daily .inner.posts,
 #cycle-update .inner.posts,
 #taking-stock .inner.posts,
-#thematic .inner.posts { padding-bottom: 0; margin-bottom: 0; }
+#thematic .inner.posts,
+#weekly .inner.posts { padding-bottom: 0; margin-bottom: 0; }
 
 /* Daily + Data buttons row, centered with one-line gap */
 #daily-data .menu-row {
