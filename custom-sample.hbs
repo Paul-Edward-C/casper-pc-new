@@ -526,6 +526,36 @@
   background:linear-gradient(to right, transparent, var(--ea-green-45), transparent);
 }
 
+#intro .about-cta{
+  display:flex;                     /* lay out the two buttons */
+  justify-content:center;
+  gap:12px;
+  margin:.5em 0 0;                  /* small space above, none below */
+  padding:0;
+}
+
+#intro .btn-pill{
+  font-size:1.1rem;                 /* bigger text */
+  line-height:1.2;
+  padding:.75em 22px;               /* taller/wider button */
+  min-height:44px;
+  min-width:170px;                  /* consistent “box” width */
+}
+
+/* --- Remove the extra green space at the bottom of the intro box --- */
+#intro .about-box{
+  padding-bottom:6x !important;      /* no bottom padding */
+}
+
+#intro .about-box > :last-child{
+  margin-bottom:0 !important;       /* the CTA paragraph adds no bottom margin */
+}
+
+/* In case your theme adds spacing to gh-content descendants */
+#intro .about-box.gh-content > *:last-child{
+  margin-bottom:0 !important;
+}
+
 /* =======================
    Blurb spacing (one line)
    ======================= */
