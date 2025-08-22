@@ -1,35 +1,6 @@
 {{!< default}}
 
-<section id="intro" class="section-feed">
-  <div class="inner posts">
-    <div class="about-wrap">
-      <figure class="about-figure">
-        <img
-          class="about-photo"
-          src='{{asset "images/paul.jpeg"}}'   {{!-- ensure the file exists in assets/images --}}
-          alt="Paul Cavey"
-          loading="lazy"
-        />
-      </figure>
 
-      <div class="about-box gh-content">
-        <p>Hi, I’m Paul Cavey, and I founded East Asia Econ in 2022.</p>
-        <p>Before that, I’d been chief China economist at the EIU, head of China economics at Macquarie Securities, and a macro strategist in the global bond team at Wellington Management, where I led the firm’s macro forecasting and research for China, Japan, and Korea.</p>
-        <p>As an undergraduate I studied at Bristol University, and then finished a master’s in Chinese studies at SOAS in London. Since then, I’ve completed over two years intensive Chinese language study at National Taiwan University.</p>
-        <p>My first visit to China was teaching English for a year in Henan in the mid-1990s. I moved to Asia in 2000, and have been here almost continuously since then, living in Taiwan, Hong Kong, Beijing and Tokyo. I now live in Taipei with my wife and parrot.</p>
-        <p>East Asia Econ is based on a very strong data infrastructure that enables a close analysis of economic cycles and lays the foundation for thinking about deeper structural and thematic issues. My market focus is fixed income and currencies, but the work has relevance for other investors, and anyone generally interested in the Asia element of global macro.</p>
-        <p>Covering all the data, there can be several cycle update emails in a day. They are summarized in an East Asia Today note that I aim to publish at 6pm Taiwan time. All the charts are available interactively on this website. I also publish a weekly, as well as periodic “Taking stock” notes to summarise my cycle view, and a thematic piece at least every couple of weeks.</p>
-        <p>Samples of all these can be seen below. Financial institutions that subscribe to my service receive everything. If you are interested, contact me for details. Individuals can sign up via the portal to receive East Asia Today and access the interactive data.</p>
-
-      <p class="about-cta" style="text-align:center;">
-        <a href="mailto:paul@eastasiaecon.com" class="btn-pill">Contact Us</a>
-        <a href="#/portal/signup" class="btn-pill">Sign Up</a>
-      </p>
-
-      </div>
-    </div>
-  </div>
-</section>
 
 {{!-- === DAILY === --}}
 <section id="daily" class="section-feed">
@@ -424,45 +395,60 @@
 
 
 <style>
-/* Labels */
+/* =======================
+   Tokens / theme helpers
+   ======================= */
+:root{
+  --ea-green: #104b1f;
+  --ea-green-70: rgba(16,75,31,.70);
+  --ea-green-45: rgba(16,75,31,.45);
+  --ea-accent-bg: rgba(52,183,67,.12);
+  --ea-serif: Georgia, serif;
+  --ea-sans: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+}
+
+/* =======================
+   Post labels
+   ======================= */
 .post-card .post-label,
 .post-card-labels .post-label{
   display:inline-block;
   padding:5px 10px;
-  font: bold 14px/1 Georgia, serif;
+  font: bold 14px/1 var(--ea-serif);
   background:#fff;
-  border:2px solid #104b1f;
+  border:2px solid var(--ea-green);
   border-radius:5px;
-  color:#104b1f;
+  color:var(--ea-green);
   margin:0 0 8px;
 }
 .post-card-labels{ text-align:left; margin:0 0 8px; }
 
-/* Card image: hide legacy link, use inline image */
+/* Hide legacy image link; use inline image */
 .post-card > .post-card-image-link{ display:none; }
 .post-card .post-card-image-inline img{
   width:100%; height:auto; display:block; margin:8px 0 12px; border-radius:4px;
 }
 
-/* Menu buttons */
+/* =======================
+   Menu buttons
+   ======================= */
 .menu-item{
   display:inline-block;
   margin:10px 5px;
-  font-size:16px;
-  color:#fff;
-  text-decoration:none;
+  font: bold 16px/1 var(--ea-sans);
+  color:#fff; text-decoration:none;
   padding:2px 15px;
   border-radius:5px;
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-  background:#104b1f;
+  background:var(--ea-green);
   transition:background-color .3s ease;
-  font-weight:bold;
   text-align:center;
   width:150px;
 }
-.menu-item:hover{ background:rgba(16,75,31,.7); }
+.menu-item:hover{ background:var(--ea-green-70); }
 
-/* Intro section */
+/* =======================
+   Intro (photo + text box)
+   ======================= */
 .about-wrap{ display:flex; gap:28px; align-items:flex-start; flex-wrap:wrap; }
 .about-figure{ margin:0; flex:0 0 auto; }
 .about-photo{
@@ -472,99 +458,94 @@
   border-radius:12px;
   box-shadow:0 4px 14px rgba(0,0,0,.08);
 }
+
+/* Tightened bottom padding to reduce green space under buttons */
 .about-box{
   flex:1 1 520px;
-  background:rgba(52,183,67,.12);
+  background:var(--ea-accent-bg);
   border:2px solid #000;
-  font-family:Georgia, serif;
-  padding:min(2rem,5vw);
+  font-family:var(--ea-serif);
+  padding: min(2rem,5vw) min(2rem,5vw) min(.5rem,1.25vw); /* top / sides / bottom */
   margin:0 auto;
 }
 .about-box p{ margin:0 0 .8rem; }
 
+/* Buttons row inside the intro box */
+.about-cta{ margin:.5em 0 0; }        /* a little space above, none below */
+.about-box > :last-child{ margin-bottom:0; }  /* trim any trailing gap */
+
+/* Pill buttons (Contact / Sign Up) */
 .btn-pill{
-  display:inline-flex;           /* reliable centering */
-  align-items:center;
-  justify-content:center;
-  background:#104b1f;
-  color:#fff !important;         /* beat theme link colors */
-  font:600 1rem/1.2 Georgia, serif;  /* ensure non-zero font-size */
-  text-decoration:none !important;
-  border-radius:6px;
-  padding:.65em 20px;
-  margin:0 10px;
-  min-height:40px;               /* avoid cramped vertical */
-  white-space:nowrap;
-  border:0;
+  display:inline-flex; align-items:center; justify-content:center;
+  background:var(--ea-green);
+  color:#fff !important; text-decoration:none !important;
+  font:600 1rem/1.2 var(--ea-serif);
+  border-radius:6px; padding:.65em 20px; margin:0 10px;
+  min-height:40px; white-space:nowrap; border:0;
 }
 .btn-pill:hover{ background:rgba(16,75,31,.85); }
 
-/* In case a parent zeroes font-size or hides link text */
-.about-cta, .about-cta *{
-  font-size:inherit;
-  text-indent:0;
-  overflow:visible;
-}
-/* Mobile tweaks */
-@media (max-width:900px){
-  .about-photo{ width:clamp(220px,50vw,340px); margin-inline:auto; }
-  .about-box{ width:100%; }
-}
+/* Space above the whole intro block */
+#intro .about-wrap{ margin-top: clamp(24px, 6vh, 96px); }  /* ~24–96px */
 
-/* space above the intro (photo + text) */
-#intro .about-wrap{
-  margin-top: clamp(24px, 6vh, 96px);  /* ~24–96px depending on viewport */
-}
-
-@media (max-width: 900px){
-  #intro .about-wrap{ margin-top: 20px; } /* a bit tighter on mobile */
-}
-
+/* =======================
+   Section dividers
+   ======================= */
 .ea-divider{
-  width: min(1100px, 92%);
-  margin: 24px auto 48px;        /* space above/below */
-  border: 0;
-  height: 2px;
-  background: linear-gradient(to right, transparent, rgba(16,75,31,.45), transparent);
-  border-radius: 2px;
+  width:min(1100px, 92%);
+  margin:24px auto 48px;
+  border:0; height:2px; border-radius:2px;
+  background:linear-gradient(to right, transparent, var(--ea-green-45), transparent);
 }
 
+/* =======================
+   Blurb spacing (one line)
+   ======================= */
 #daily .daily-blurb,
 #daily-data .daily-blurb,
 #cycle-update .daily-blurb,
 #taking-stock .daily-blurb,
 #thematic .daily-blurb,
-#weekly .daily-blurb { margin: 0 0 1em; }
+#weekly .daily-blurb { margin:0 0 1em; }
 #daily .daily-blurb p,
 #daily-data .daily-blurb p,
 #cycle-update .daily-blurb p,
 #taking-stock .daily-blurb p,
 #thematic .daily-blurb p,
-#weekly .daily-blurb p { margin: 0; }
+#weekly .daily-blurb p { margin:0; }
 
-/* kill theme spacing above the card grids (use .compact on those feeds) */
+/* Remove theme’s top gap above card grids (use .compact on those feeds) */
 #daily .post-feed.compact,
 #cycle-update .post-feed.compact,
 #taking-stock .post-feed.compact,
 #thematic .post-feed.compact,
-#weekly .post-feed.compact { margin-top: 0 !important; padding-top: 0 !important; }
+#weekly .post-feed.compact { margin-top:0 !important; padding-top:0 !important; }
 #daily .post-feed.compact::before,
 #cycle-update .post-feed.compact::before,
 #taking-stock .post-feed.compact::before,
 #thematic .post-feed.compact::before,
-#weekly .post-feed.compact::before { display: none !important; content: none !important; }
+#weekly .post-feed.compact::before { display:none !important; content:none !important; }
 
-/* optional: collapse any extra wrapper spacing */
+/* Optional: collapse any extra wrapper spacing */
 #daily .inner.posts,
 #cycle-update .inner.posts,
 #taking-stock .inner.posts,
 #thematic .inner.posts,
-#weekly .inner.posts { padding-bottom: 0; margin-bottom: 0; }
+#weekly .inner.posts { padding-bottom:0; margin-bottom:0; }
 
 /* Daily + Data buttons row, centered with one-line gap */
-#daily-data .menu-row {
-  display: flex; justify-content: center; gap: 12px;
-  margin: 1em 0 0;
+#daily-data .menu-row{
+  display:flex; justify-content:center; gap:12px;
+  margin:1em 0 0;
+}
+
+/* =======================
+   Responsive tweaks
+   ======================= */
+@media (max-width:900px){
+  .about-photo{ width:clamp(220px,50vw,340px); margin-inline:auto; }
+  .about-box{ width:100%; }
+  #intro .about-wrap{ margin-top:20px; }  /* tighter on mobile */
 }
 </style>
 
