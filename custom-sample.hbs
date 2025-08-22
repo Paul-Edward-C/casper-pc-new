@@ -535,11 +535,11 @@
 }
 
 #intro .btn-pill{
-  font-size:1.1rem;                 /* bigger text */
-  line-height:1.2;
-  padding:.75em 22px;               /* taller/wider button */
-  min-height:44px;
-  min-width:170px;                  /* consistent “box” width */
+  font-size: clamp(18px, 1.1rem + 0.5vw, 22px) !important; /* scales up on larger screens */
+  line-height: 1.2 !important;
+  padding: .8em 24px !important;   /* keep the box proportionate */
+  min-height: 48px !important;
+  min-width: 170px;                 /* consistent width */
 }
 
 /* --- Remove the extra green space at the bottom of the intro box --- */
