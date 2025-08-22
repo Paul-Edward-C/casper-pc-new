@@ -221,24 +221,46 @@ into the {body} tag of the default.hbs template --}}
             margin-top: 20px; /* Adjust the value as needed to control the amount of space */
           }
 
-        .site-header-cover {
-        display: block;
-        width: 100%;
-        height: 160px;           /* <- adjust to taste */
-        object-fit: cover;       /* fills width, trims excess height */
-        object-position: center; /* change to 'top' or 'bottom' if needed */
-        }
+.site-header-content,
+.site-header-content.large {
+  position: relative;
+  height: 160px;          /* <- make it thinner here */
+  max-height: 160px;
+  padding: 0;             /* some themes add big vertical padding */
+  background: transparent !important;  /* stop the green background */
+  overflow: hidden;
+}
 
-        /* Optional: a bit shorter on phones */
-        @media (max-width: 640px) {
-        .site-header-cover { height: 120px; }
-        }
+/* Many Ghost themes add a gradient/scrim via pseudo-elements */
+.site-header-content::before,
+.site-header-content::after {
+  content: none !important;
+}
 
-        /* If your theme forces a “Large” header height, neutralize it */
-        .site-header-content.large {
-        min-height: 0 !important;
-        padding-top: 0; padding-bottom: 0; /* trim extra white space if any */
-        }
+/* 2) Make the image fill that fixed height cleanly */
+.site-header-cover {
+  display: block;
+  width: 100%;
+  height: 100%;           /* match container */
+  object-fit: cover;      /* keep width, crop vertically */
+  object-position: center;
+}
+
+/* 3) Prevent the title from increasing the container height */
+.site-title {
+  position: absolute;     /* overlay on the image */
+  left: 16px;
+  bottom: 12px;
+  margin: 0;
+  /* Optional: readable on photos */
+  /* background: rgba(0,0,0,.35); color:#fff; padding:.25rem .5rem; border-radius:.25rem; */
+}
+
+/* Optional: a bit shorter on phones */
+@media (max-width: 640px) {
+  .site-header-content,
+  .site-header-content.large { height: 120px; max-height: 120px; }
+}
     </style>
 
 </main>
