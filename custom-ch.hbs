@@ -53,7 +53,7 @@ into the {body} tag of the default.hbs template --}}
             </figure>
             {{/if}}
         </header>
-
+{{!--
   <div class="outer">
     {{#page}}
     <article class="post-full {{post_class}} no-image">
@@ -66,11 +66,11 @@ into the {body} tag of the default.hbs template --}}
     </article>
     {{/page}}
   </div>
-
+ --}}
     <!-- from post.hbs -->
     
     <!-- get the list of posts -->
- {{#get "posts" filter="tag:hash-charts" limit="30"}}
+ {{#get "posts" filter="tag:hash-charts" limit="12"}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
@@ -220,6 +220,9 @@ into the {body} tag of the default.hbs template --}}
           .myBTNdiv {
             margin-top: 20px; /* Adjust the value as needed to control the amount of space */
           }
+
+        .site-header-content { max-width: 960px; margin: 0 auto; }
+        .site-header-cover { width: 100%; height: auto; }
     </style>
 
 </main>
