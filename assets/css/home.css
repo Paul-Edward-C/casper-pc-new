@@ -11,35 +11,40 @@
   margin-bottom: 0.5em; /* Add spacing between paragraphs (adjust as needed) */
 }
 
-/* Make the home hero thinner & keep text centered */
-.home-template.has-cover .site-header-content {
-  /* thinner hero */
-  min-height: 280px;              /* was 560px in theme */
-  padding-top: calc(8vmin + 44px);/* was 19vmin + 44px */
-  padding-bottom: 8vmin;          /* was 19vmin */
-  text-align: center;
-  justify-content: center;        /* center content vertically within flex */
-}
-
-/* Ensure the inner wrapper stacks and centers title + subtitle */
-.home-template .site-header-inner {
+/* 1) Force centering even if `.left-aligned` is present */
+.home-template.has-cover .site-header-content .site-header-inner {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: column;   /* stack title above subtitle */
+  align-items: center;      /* center horizontally */
+  text-align: center;
 }
 
-/* Optional: adjust crop focus of the bamboo image */
-.home-template .site-header-cover {
-  object-position: center 30%; /* nudge the focal point if needed */
+/* If the theme adds `.left-aligned`, override it on home only */
+.home-template.has-cover .site-header-content.left-aligned .site-header-inner {
+  align-items: center !important;
 }
 
-/* Tweak type sizes only on home if you want a smaller look */
-.home-template .site-title {
-  font-size: 4rem; /* theme default is larger; adjust to taste */
-}
-.home-template .site-description {
+/* 2) Make subtitle sit BELOW the title (not beside it) */
+.home-template.has-cover .site-description {
+  display: block !important;        /* override inline-block from theme */
   margin-top: 12px;
-  font-size: 1.8rem;
-  color: var(--color-secondary-text);
   max-width: 720px;
+  color: var(--color-secondary-text);
 }
+
+/* 3) Make the hero thinner */
+.home-template.has-cover .site-header-content {
+  min-height: 260px;                /* thinner banner */
+  padding-top: calc(8vmin + 44px);  /* reduce big default padding */
+  padding-bottom: 8vmin;
+}
+
+/* Optional: nudge crop of the bamboo photo if needed */
+.home-template.has-cover .site-header-cover {
+  object-fit: cover;
+  object-position: center 30%;
+}
+
+/* Optional: scale type down a touch */
+.home-template.has-cover .site-title { font-size: 4rem; }
+.home-template.has-cover :is(.site-logo, .site-title) + .site-description { font-size: 2rem; }
