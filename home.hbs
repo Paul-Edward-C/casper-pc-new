@@ -32,7 +32,7 @@
  --}}
 
 {{#match @custom.publication_cover_style "!=" "None"}}
-    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
+    <div class="site-header-content{{#match @custom.publication_cover_style "Medium"}} medium{{/match}}">
         {{#if @site.cover_image}}
             {{!-- This is a responsive image, it loads different sizes depending on device
             https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
@@ -56,7 +56,7 @@
     </div>
 {{/match}}
 
-#<h1>Latest</h1>
+<h1>Latest</h1>
 {{!--#<section class="p-outer">
 #            <div style="background-color: rgba(52, 183, 67, 0.12); width: 80%; padding: 20px; margin: 0 auto; border: 2px solid black; font-family: 'Georgia', serif;">
 #                <p style="margin-bottom: 0.5em;">Welcome to <strong>EAST ASIA ECON</strong>, a research service run from Taipei by Paul Cavey, and specializing in the markets and macro of China, Japan, Korea, and Taiwan.</p>
