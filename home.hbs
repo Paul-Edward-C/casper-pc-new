@@ -47,17 +47,16 @@
             />
         {{/if}}
         <h1 class="site-title">
-        {{#if @site.logo}}
-        <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
-        {{else}}
-        {{@site.title}}
-        {{/if}}
+            {{#if @site.logo}}
+                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+            {{else}}
+                {{@site.title}}
+            {{/if}}
         </h1>
 
-    <p class="site-subtitle">
-    {{@site.description}}
-</p>
-    </div>
+        <p class="site-subtitle">
+            {{@site.description}}
+        </p>
 {{/match}}
 
 <h1>Latest</h1>
