@@ -48,3 +48,4 @@
 /* Optional: scale type down a touch */
 .home-template.has-cover .site-title { font-size: 4rem; }
 .home-template.has-cover :is(.site-logo, .site-title) + .site-description { font-size: 2rem; }
+
