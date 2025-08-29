@@ -48,15 +48,12 @@
         {{/if}}
         <h1 class="site-title">
         {{#if @site.logo}}
-        <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+            <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
         {{else}}
-        {{@site.title}}
+            {{@site.title}}
         {{/if}}
         </h1>
-
-<p class="site-subtitle">
-    {{@site.description}}
-</p>
+        <p class="site-description">{{@site.description}}</p>
     </div>
 {{/match}}
 

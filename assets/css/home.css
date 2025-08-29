@@ -10,3 +10,36 @@
 .green-box p {
   margin-bottom: 0.5em; /* Add spacing between paragraphs (adjust as needed) */
 }
+
+/* Make the home hero thinner & keep text centered */
+.home-template.has-cover .site-header-content {
+  /* thinner hero */
+  min-height: 280px;              /* was 560px in theme */
+  padding-top: calc(8vmin + 44px);/* was 19vmin + 44px */
+  padding-bottom: 8vmin;          /* was 19vmin */
+  text-align: center;
+  justify-content: center;        /* center content vertically within flex */
+}
+
+/* Ensure the inner wrapper stacks and centers title + subtitle */
+.home-template .site-header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Optional: adjust crop focus of the bamboo image */
+.home-template .site-header-cover {
+  object-position: center 30%; /* nudge the focal point if needed */
+}
+
+/* Tweak type sizes only on home if you want a smaller look */
+.home-template .site-title {
+  font-size: 4rem; /* theme default is larger; adjust to taste */
+}
+.home-template .site-description {
+  margin-top: 12px;
+  font-size: 1.8rem;
+  color: var(--color-secondary-text);
+  max-width: 720px;
+}
