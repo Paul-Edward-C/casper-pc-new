@@ -1,6 +1,4 @@
 {{!< default}}
-{{!-- The tag above means: insert everything in this file
-into the {body} tag of the default.hbs template --}}
 
 <style>
 .dashboard-cards {
@@ -59,11 +57,60 @@ into the {body} tag of the default.hbs template --}}
   font-size: 2rem;
 }
 
-/* Responsive iframe for charts */
 .responsive-iframe {
   width: 100%;
-  min-height: 600px;
+  min-height: 1000px;
+  height: auto;
   border: none;
+}
+
+.menu-item, .myButton {
+  display: inline-block;
+  margin: 10px 5px;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 2px 15px;
+  border-radius: 5px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  background-color: #104b1f;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-align: center;
+  width: 150px;
+}
+
+.menu-item:hover, .myButton:hover {
+  background-color: rgba(16, 75, 31, 0.7);
+}
+
+body {
+  overflow-x: auto;
+}
+
+.myBTNdiv {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-label {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #ffffff;
+  border: 2px solid #104b1f;
+  border-radius: 5px;
+  color: #104b1f;
+  text-align: center;
+  margin: 5px 0;
+}
+
+#charts {
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>
 
@@ -97,14 +144,20 @@ into the {body} tag of the default.hbs template --}}
 
 <div id="charts">
   <a href="#charts"></a><br>
-  <h1>Charts</h1>
+  <h1>Chart packs</h1>
+</div>
+
+<div style="display: flex; justify-content: center;">
+  <a href="https://www.eastasiaecon.com/cn/#charts" class="menu-item">China</a>
+  <a href="https://www.eastasiaecon.com/jp/#charts" class="menu-item">Japan</a>
+  <a href="https://www.eastasiaecon.com/kr/#charts" class="menu-item">Korea</a>
+  <a href="https://www.eastasiaecon.com/tw/#charts" class="menu-item">Taiwan</a>
+  <a href="https://www.eastasiaecon.com/region/#charts" class="menu-item">Region</a>
 </div>
 
 <div id="region_export_charts">
-  <h2>Exports</h2>
+  <h2>Region, Exports</h2>
   <figure class="kg-image-card kg-width-full">
-    <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_exports"
-            class="responsive-iframe"
-            loading="lazy"></iframe>
+    <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_exports" class="responsive-iframe" loading="lazy"></iframe>
   </figure>
 </div>
