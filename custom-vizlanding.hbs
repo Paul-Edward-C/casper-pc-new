@@ -1,8 +1,6 @@
-
 {{!< default}}
 {{!-- The tag above means: insert everything in this file
 into the {body} tag of the default.hbs template --}}
-
 
 <style>
 .dashboard-cards {
@@ -60,10 +58,16 @@ into the {body} tag of the default.hbs template --}}
   color: #666;
   font-size: 2rem;
 }
+
+/* Responsive iframe for charts */
+.responsive-iframe {
+  width: 100%;
+  min-height: 600px;
+  border: none;
+}
 </style>
 
 <div class="dashboard-cards">
-  
   <a href="https://www.eastasiaecon.com/data/" class="dashboard-card">
     <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-37-51-ECON-DB-1.png" alt="Dashboard 1">
     <div class="dashboard-card-content">
@@ -71,7 +75,6 @@ into the {body} tag of the default.hbs template --}}
       <p>Chart and download regional economic indicators</p>
     </div>
   </a>
-
   <a href="https://www.eastasiaecon.com/tools/" class="dashboard-card">
     <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-14-49-35-China-----Trade-Snapshot---Series-1.png" alt="Dashboard 2">
     <div class="dashboard-card-content">
@@ -79,32 +82,29 @@ into the {body} tag of the default.hbs template --}}
       <p>Map, chart and download foreign trade indicators</p>
     </div>
   </a>
-
   <a href="https://cn-region-df188a89a9d2.herokuapp.com/app" class="dashboard-card">
-    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-32-10-China-Provinces-----Investment-Data-3.png" alt="China provincial ">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-32-10-China-Provinces-----Investment-Data-3.png" alt="China provincial">
     <div class="dashboard-card-content">
       <h3>China provincial dashboard</h3>
       <p>Map, chart and download provincial data</p>
     </div>
   </a>
+</div>
 
+<div id="site-main" class="site-main outer">
+    <!-- Your site content here -->
 </div>
 
 <div id="charts">
-    <a href="#charts"></a><br>
-    <h1>Charts</h1>
-
+  <a href="#charts"></a><br>
+  <h1>Charts</h1>
 </div>
-
 
 <div id="region_export_charts">
-    <h2>Exports</h2>
-    <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_exports"  class="responsive-iframe" loading="lazy"></iframe>
-    </figure>
+  <h2>Exports</h2>
+  <figure class="kg-image-card kg-width-full">
+    <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_exports"
+            class="responsive-iframe"
+            loading="lazy"></iframe>
+  </figure>
 </div>
-
-
-</body>
-</html>
-
