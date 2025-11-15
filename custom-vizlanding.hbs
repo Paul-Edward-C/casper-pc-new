@@ -1,0 +1,110 @@
+
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} tag of the default.hbs template --}}
+
+
+<style>
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 2rem auto;
+  width: 90vw;
+  max-width: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dashboard-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.dashboard-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dashboard-card-content {
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+.dashboard-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 3rem;
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: #666;
+  font-size: 2rem;
+}
+</style>
+
+<div class="dashboard-cards">
+  
+  <a href="https://www.eastasiaecon.com/data/" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-37-51-ECON-DB-1.png" alt="Dashboard 1">
+    <div class="dashboard-card-content">
+      <h3>Asia macro explorer</h3>
+      <p>Chart and download regional economic indicators</p>
+    </div>
+  </a>
+
+  <a href="https://www.eastasiaecon.com/tools/" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-14-49-35-China-----Trade-Snapshot---Series-1.png" alt="Dashboard 2">
+    <div class="dashboard-card-content">
+      <h3>China trade mapper</h3>
+      <p>Map, chart and download foreign trade indicators</p>
+    </div>
+  </a>
+
+  <a href="https://cn-region-df188a89a9d2.herokuapp.com/app" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-32-10-China-Provinces-----Investment-Data-3.png" alt="China provincial ">
+    <div class="dashboard-card-content">
+      <h3>China provincial dashboard</h3>
+      <p>Map, chart and download provincial data</p>
+    </div>
+  </a>
+
+</div>
+
+<div id="charts">
+    <a href="#charts"></a><br>
+    <h1>Charts</h1>
+
+</div>
+
+
+<div id="region_export_charts">
+    <h2>Exports</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_exports"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+
+</body>
+</html>
+
