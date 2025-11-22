@@ -1,13 +1,19 @@
-
 {{!< default}}
 {{!-- The tag above means: insert everything in this file
 into the {body} of the default.hbs template --}}
 
+{{!-- 
+NO CONFIGURATION NEEDED!
+This template automatically detects the country from the page slug.
+Your page slugs should be: jp, cn, kr, tw, hk, sg, or all
+
+To add categories for a country, just edit the sections below for that country code.
+--}}
+
+{{!-- Header with country name over feature image --}}
 {{#match @custom.publication_cover_style "!=" "None"}}
     <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
         {{#if feature_image}}
-            {{!-- This is a responsive image, it loads different sizes depending on device
-            https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
             <img class="site-header-cover"
                 srcset="{{img_url feature_image size="s"}} 300w,
                         {{img_url feature_image size="m"}} 600w,
@@ -15,27 +21,30 @@ into the {body} of the default.hbs template --}}
                         {{img_url feature_image size="xl"}} 2000w"
                 sizes="100vw"
                 src="{{img_url feature_image size="xl"}}"
-                alt="{{custom.country_name}}"
+                alt="{{title}}"
             />
         {{/if}}
         <h1 class="site-title">
             {{#if @site.logo}}
                 <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
             {{else}}
-                {{custom.country_name}}
+                {{#match slug "jp"}}Japan{{/match}}
+                {{#match slug "cn"}}China{{/match}}
+                {{#match slug "kr"}}South Korea{{/match}}
+                {{#match slug "tw"}}Taiwan{{/match}}
+                {{#match slug "hk"}}Hong Kong{{/match}}
+                {{#match slug "sg"}}Singapore{{/match}}
+                {{#match slug "all"}}East Asia{{/match}}
             {{/if}}
         </h1>
     </div>
 {{/match}}
 
 <div id="site-main" class="site-main outer">
-    {{!-- Everything inside the #post block pulls data from the post --}}
     <main id="site-main" class="site-main outer">
         <header class="article-header gh-canvas">
             {{#if feature_image}}
             <figure class="article-image">
-                {{!-- This is a responsive image, it loads different sizes depending on device
-                https://medium.freecodecamp.org/a-guide-to-responsive-images-with-ready-to-use-templates-c400bd65c433 --}}
                 <img
                     srcset="{{img_url feature_image size="s"}} 300w,
                             {{img_url feature_image size="m"}} 600w,
@@ -65,10 +74,7 @@ into the {body} of the default.hbs template --}}
             {{/page}}
         </div>
 
-        <!-- from post.hbs -->
-
-        <!-- get the list of posts for {{custom.country_name}} -->
-{{#get "posts" filter="tag:hash-{{custom.country_code}}" limit="9"}}
+{{#get "posts" filter="tag:hash-{{slug}}" limit="9"}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
@@ -87,22 +93,15 @@ into the {body} of the default.hbs template --}}
                     <a class="post-card-content-link" href="{{url}}">
                         <header class="post-card-header">
                             <div class="post-card-content">
-                                <!-- Label for Public Post -->
                                 {{#has visibility="public"}}
                                     <span class="post-label">Public Post</span>
                                 {{/has}}
-
-                                <!-- Label for Members Only -->
                                 {{#has visibility="members"}}
                                     <span class="post-label">Members Only</span>
                                 {{/has}}
-
-                                <!-- Label for Paid Members Only -->
                                 {{#has visibility="paid"}}
                                     <span class="post-label">Paid Member Post</span>
                                 {{/has}}
-
-                                <!-- Label for Specific Tier(s) -->
                                 {{#has visibility="tiers"}}
                                     <span class="post-label">Subscribers Only</span>
                                 {{/has}}
@@ -148,57 +147,49 @@ into the {body} of the default.hbs template --}}
             display: inline-block;
             margin: 10px 5px;
             font-size: 16px;
-            color: #ffffff; /* Adjust text color */
+            color: #ffffff;
             text-decoration: none;
             padding: 2px 15px;
             border-radius: 5px;
             font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-            background-color: #104b1f; /* Adjust background color */
+            background-color: #104b1f;
             transition: background-color 0.3s ease;
             font-weight: bold;
             text-align: center;
-            width: 150px; /* Standard width for all boxes */
+            width: 150px;
         }
 
-        /* Hover effect */
         .menu-item:hover, .myButton:hover {
-            background-color: rgba(16, 75, 31, 0.7); /* Adjust hover background color */
+            background-color: rgba(16, 75, 31, 0.7);
         }
         
         body {
-            overflow-x: auto; /* Enable horizontal scrolling */
+            overflow-x: auto;
         }
 
         .responsive-iframe {
-            width: 100%; /* Occupy full width */
-            height: auto; /* Auto adjust height */
-            min-height: 1000px; /* Minimum height */
+            width: 100%;
+            height: auto;
+            min-height: 1000px;
         }
 
-        /* Add space above the .myBTNdiv */
         .myBTNdiv {
-            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
+            margin-top: 20px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
         .menu-item {
-            margin: 0 10px; /* Add space between menu items */
+            margin: 0 10px;
         }
         #charts {
-            text-align: center; /* Center align the chart navigation */
-            margin-bottom: 20px; /* Add some space below the navigation */
-        }
-        .myBTNdiv {
-            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         .myButton {
-        width: 200px; /* Adjust the width as needed */
+        width: 200px;
         }
 
         .post-label {
@@ -206,18 +197,13 @@ into the {body} of the default.hbs template --}}
         padding: 5px 10px;
         font-size: 14px;
         font-weight: bold;
-        background-color: #ffffff; /* White background */
-        border: 2px solid #104b1f; /* Green border */
+        background-color: #ffffff;
+        border: 2px solid #104b1f;
         border-radius: 5px;
-        color: #104b1f; /* Green text color */
+        color: #104b1f;
         text-align: center;
-        margin: 5px 0; /* Space between the labels */
+        margin: 5px 0;
         }
-
-          /* Add space above the .myBTNdiv */
-          .myBTNdiv {
-            margin-top: 20px; /* Adjust the value as needed to control the amount of space */
-          }
     </style>
 
 
@@ -228,15 +214,11 @@ into the {body} of the default.hbs template --}}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
-
-
 </head>
 <body>
 
 <div id="site-main" class="site-main outer">
-    <!-- Your site content here -->
 </div>
-
 
 <div class="myBTNdiv">
     <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
@@ -247,112 +229,365 @@ into the {body} of the default.hbs template --}}
     <h1>Charts</h1>
 
     <div style="display: flex; justify-content: center; flex-wrap: wrap;">
-        {{#if custom.has_consumer}}
-        <a href="#{{custom.country_code}}_consumer_charts_anchor" class="menu-item">Consumer</a>
-        {{/if}}
-        {{#if custom.has_export}}
-        <a href="#{{custom.country_code}}_export_charts_anchor" class="menu-item">Export</a>
-        {{/if}}
-        {{#if custom.has_flows}}
-        <a href="#{{custom.country_code}}_flows_charts_anchor" class="menu-item">Flows</a>
-        {{/if}}
-        {{#if custom.has_industry}}
-        <a href="#{{custom.country_code}}_industry_charts_anchor" class="menu-item">Industry</a>
-        {{/if}}
-        {{#if custom.has_labour}}
-        <a href="#{{custom.country_code}}_labour_charts_anchor" class="menu-item">Labour</a>
-        {{/if}}
-        {{#if custom.has_macro}}
-        <a href="#{{custom.country_code}}_macro_charts_anchor" class="menu-item">Macro</a>
-        {{/if}}
-        {{#if custom.has_money}}
-        <a href="#{{custom.country_code}}_money_charts_anchor" class="menu-item">Money</a>
-        {{/if}}
-        {{#if custom.has_prices}}
-        <a href="#{{custom.country_code}}_prices_charts_anchor" class="menu-item">Prices</a>
-        {{/if}}
+        {{#match slug "jp"}}
+        <a href="#jp_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#jp_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#jp_flows_charts_anchor" class="menu-item">Flows</a>
+        <a href="#jp_industry_charts_anchor" class="menu-item">Industry</a>
+        <a href="#jp_labour_charts_anchor" class="menu-item">Labour</a>
+        <a href="#jp_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#jp_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#jp_prices_charts_anchor" class="menu-item">Prices</a>
+        {{/match}}
+
+        {{#match slug "cn"}}
+        <a href="#cn_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#cn_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#cn_flows_charts_anchor" class="menu-item">Flows</a>
+        <a href="#cn_industry_charts_anchor" class="menu-item">Industry</a>
+        <a href="#cn_labour_charts_anchor" class="menu-item">Labour</a>
+        <a href="#cn_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#cn_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#cn_prices_charts_anchor" class="menu-item">Prices</a>
+        {{/match}}
+
+        {{#match slug "kr"}}
+        <a href="#kr_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#kr_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#kr_flows_charts_anchor" class="menu-item">Flows</a>
+        <a href="#kr_industry_charts_anchor" class="menu-item">Industry</a>
+        <a href="#kr_labour_charts_anchor" class="menu-item">Labour</a>
+        <a href="#kr_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#kr_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#kr_prices_charts_anchor" class="menu-item">Prices</a>
+        {{/match}}
+
+        {{#match slug "tw"}}
+        <a href="#tw_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#tw_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#tw_flows_charts_anchor" class="menu-item">Flows</a>
+        <a href="#tw_industry_charts_anchor" class="menu-item">Industry</a>
+        <a href="#tw_labour_charts_anchor" class="menu-item">Labour</a>
+        <a href="#tw_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#tw_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#tw_prices_charts_anchor" class="menu-item">Prices</a>
+        {{/match}}
+
+        {{#match slug "hk"}}
+        <a href="#hk_consumer_charts_anchor" class="menu-item">Consumer</a>
+        <a href="#hk_export_charts_anchor" class="menu-item">Export</a>
+        <a href="#hk_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#hk_money_charts_anchor" class="menu-item">Money</a>
+        <a href="#hk_prices_charts_anchor" class="menu-item">Prices</a>
+        {{/match}}
     </div>
 </div>
 
-{{#if custom.has_consumer}}
-<div id="{{custom.country_code}}_consumer_charts">
-    <a id="{{custom.country_code}}_consumer_charts_anchor"></a>
+{{#match slug "jp"}}
+<div id="jp_consumer_charts">
+    <a id="jp_consumer_charts_anchor"></a>
     <h2>Consumer</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_consumer"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_consumer"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_export}}
-<div id="{{custom.country_code}}_export_charts">
-    <a id="{{custom.country_code}}_export_charts_anchor"></a>
+<div id="jp_export_charts">
+    <a id="jp_export_charts_anchor"></a>
     <h2>Foreign trade</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_exports"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_exports"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_flows}}
-<div id="{{custom.country_code}}_flows_charts">
-    <a id="{{custom.country_code}}_flows_charts_anchor"></a>
+<div id="jp_flows_charts">
+    <a id="jp_flows_charts_anchor"></a>
     <h2>Flows</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_flows"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_flows"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_industry}}
-<div id="{{custom.country_code}}_industry_charts">
-    <a id="{{custom.country_code}}_industry_charts_anchor"></a>
+<div id="jp_industry_charts">
+    <a id="jp_industry_charts_anchor"></a>
     <h2>Industry</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_industry"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_industry"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_labour}}
-<div id="{{custom.country_code}}_labour_charts">
-    <a id="{{custom.country_code}}_labour_charts_anchor"></a>
+<div id="jp_labour_charts">
+    <a id="jp_labour_charts_anchor"></a>
     <h2>Labour</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_labour"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_labour"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_macro}}
-<div id="{{custom.country_code}}_macro_charts">
-    <a id="{{custom.country_code}}_macro_charts_anchor"></a>
+<div id="jp_macro_charts">
+    <a id="jp_macro_charts_anchor"></a>
     <h2>Macro</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_macro"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_macro"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_money}}
-<div id="{{custom.country_code}}_money_charts">
-    <a id="{{custom.country_code}}_money_charts_anchor"></a>
+<div id="jp_money_charts">
+    <a id="jp_money_charts_anchor"></a>
     <h2>Money</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_money"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_money"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
 
-{{#if custom.has_prices}}
-<div id="{{custom.country_code}}_prices_charts">
-    <a id="{{custom.country_code}}_prices_charts_anchor"></a>
+<div id="jp_prices_charts">
+    <a id="jp_prices_charts_anchor"></a>
     <h2>Prices</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/{{custom.country_code}}/{{custom.country_code}}_prices"  class="responsive-iframe" loading="lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/jp/jp_prices"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
-{{/if}}
+{{/match}}
+
+{{#match slug "cn"}}
+<div id="cn_consumer_charts">
+    <a id="cn_consumer_charts_anchor"></a>
+    <h2>Consumer</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_consumer"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_export_charts">
+    <a id="cn_export_charts_anchor"></a>
+    <h2>Foreign trade</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_exports"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_flows_charts">
+    <a id="cn_flows_charts_anchor"></a>
+    <h2>Flows</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_flows"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_industry_charts">
+    <a id="cn_industry_charts_anchor"></a>
+    <h2>Industry</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_industry"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_labour_charts">
+    <a id="cn_labour_charts_anchor"></a>
+    <h2>Labour</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_labour"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_macro_charts">
+    <a id="cn_macro_charts_anchor"></a>
+    <h2>Macro</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_macro"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_money_charts">
+    <a id="cn_money_charts_anchor"></a>
+    <h2>Money</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_money"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="cn_prices_charts">
+    <a id="cn_prices_charts_anchor"></a>
+    <h2>Prices</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/cn/cn_prices"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+{{/match}}
+
+{{#match slug "kr"}}
+<div id="kr_consumer_charts">
+    <a id="kr_consumer_charts_anchor"></a>
+    <h2>Consumer</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_consumer"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_export_charts">
+    <a id="kr_export_charts_anchor"></a>
+    <h2>Foreign trade</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_exports"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_flows_charts">
+    <a id="kr_flows_charts_anchor"></a>
+    <h2>Flows</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_flows"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_industry_charts">
+    <a id="kr_industry_charts_anchor"></a>
+    <h2>Industry</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_industry"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_labour_charts">
+    <a id="kr_labour_charts_anchor"></a>
+    <h2>Labour</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_labour"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_macro_charts">
+    <a id="kr_macro_charts_anchor"></a>
+    <h2>Macro</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_macro"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_money_charts">
+    <a id="kr_money_charts_anchor"></a>
+    <h2>Money</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_money"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_prices_charts">
+    <a id="kr_prices_charts_anchor"></a>
+    <h2>Prices</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_prices"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+{{/match}}
+
+{{#match slug "tw"}}
+<div id="tw_consumer_charts">
+    <a id="tw_consumer_charts_anchor"></a>
+    <h2>Consumer</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_consumer"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_export_charts">
+    <a id="tw_export_charts_anchor"></a>
+    <h2>Foreign trade</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_exports"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_flows_charts">
+    <a id="tw_flows_charts_anchor"></a>
+    <h2>Flows</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_flows"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_industry_charts">
+    <a id="tw_industry_charts_anchor"></a>
+    <h2>Industry</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_industry"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_labour_charts">
+    <a id="tw_labour_charts_anchor"></a>
+    <h2>Labour</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_labour"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_macro_charts">
+    <a id="tw_macro_charts_anchor"></a>
+    <h2>Macro</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_macro"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_money_charts">
+    <a id="tw_money_charts_anchor"></a>
+    <h2>Money</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_money"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="tw_prices_charts">
+    <a id="tw_prices_charts_anchor"></a>
+    <h2>Prices</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/tw/tw_prices"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+{{/match}}
+
+{{#match slug "hk"}}
+<div id="hk_consumer_charts">
+    <a id="hk_consumer_charts_anchor"></a>
+    <h2>Consumer</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/hk/hk_consumer"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="hk_export_charts">
+    <a id="hk_export_charts_anchor"></a>
+    <h2>Foreign trade</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/hk/hk_exports"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="hk_macro_charts">
+    <a id="hk_macro_charts_anchor"></a>
+    <h2>Macro</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/hk/hk_macro"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="hk_money_charts">
+    <a id="hk_money_charts_anchor"></a>
+    <h2>Money</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/hk/hk_money"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="hk_prices_charts">
+    <a id="hk_prices_charts_anchor"></a>
+    <h2>Prices</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/hk/hk_prices"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+{{/match}}
 
 </body>
 </html>
