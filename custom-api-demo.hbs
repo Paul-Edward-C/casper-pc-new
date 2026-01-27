@@ -310,6 +310,13 @@ into the {body} tag of the default.hbs template --}}
     const isMember = {{#if @member}}true{{else}}false{{/if}};
     const memberEmail = {{#if @member}}'{{@member.email}}'{{else}}null{{/if}};
 
+    // API key for authenticated members only
+    {{#if @member}}
+    const API_KEY = 'ghost-member-access-2024';
+    {{else}}
+    const API_KEY = null;
+    {{/if}}
+
     // Color palette matching Bokeh theme
     const COLORS = [
         '#556B2F', // dark olive green
@@ -392,7 +399,11 @@ into the {body} tag of the default.hbs template --}}
             '<p class="chart-placeholder">Loading data...</p>';
 
         try {
-            const response = await fetch(url);
+            const fetchOptions = {};
+            if (API_KEY) {
+                fetchOptions.headers = { 'X-API-Key': API_KEY };
+            }
+            const response = await fetch(url, fetchOptions);
             const data = await response.json();
 
             if (data.data && data.data.length > 0) {
