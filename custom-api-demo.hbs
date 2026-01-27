@@ -388,12 +388,12 @@ into the {body} tag of the default.hbs template --}}
         document.getElementById('selected-series').textContent = name;
 
         // Show API call
-        const apiCall = `GET /series?name=${encodeURIComponent(name)}&freq=${freq}`;
+        const apiCall = `GET /series?columns=${encodeURIComponent(name)}&freq=${freq}`;
         document.getElementById('data-api-call').textContent = apiCall;
         document.getElementById('data-api-call').style.display = 'block';
 
         // Fetch data
-        const url = `${API_BASE}/series?name=${encodeURIComponent(name)}&freq=${freq}`;
+        const url = `${API_BASE}/series?columns=${encodeURIComponent(name)}&freq=${freq}`;
 
         document.getElementById('chart-container').innerHTML =
             '<p class="chart-placeholder">Loading data...</p>';
