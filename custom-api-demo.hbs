@@ -479,10 +479,11 @@ into the {body} tag of the default.hbs template --}}
             return;
         }
 
-        const x = validData.map(d => d.date);
+        // Convert dates to timestamps for BokehJS
+        const x = validData.map(d => d.date.getTime());
         const y = validData.map(d => d.value);
 
-        console.log('X range:', x[0], 'to', x[x.length-1]);
+        console.log('X range (timestamps):', x[0], 'to', x[x.length-1]);
         console.log('Y range:', Math.min(...y), 'to', Math.max(...y));
 
         // Create data source
@@ -491,15 +492,29 @@ into the {body} tag of the default.hbs template --}}
         });
 
         // Create figure with theme styling
+        const chartWidth = Math.max(container.offsetWidth - 40, 600);
+        const yMin = Math.min(...y);
+        const yMax = Math.max(...y);
+        const yPadding = (yMax - yMin) * 0.1;
+
+        console.log('Chart width:', chartWidth);
+        console.log('Y padding:', yPadding, 'yMin:', yMin, 'yMax:', yMax);
+
         const plot = Bokeh.Plotting.figure({
             title: seriesName,
             x_axis_type: 'datetime',
-            width: container.offsetWidth - 40,
+            width: chartWidth,
             height: 400,
             background_fill_color: '#228B22',
             background_fill_alpha: 0.05,
             tools: 'pan,wheel_zoom,box_zoom,reset,save'
         });
+
+        // Set ranges explicitly after creation
+        plot.x_range.start = x[0];
+        plot.x_range.end = x[x.length-1];
+        plot.y_range.start = yMin - yPadding;
+        plot.y_range.end = yMax + yPadding;
 
         // Style the plot
         plot.title.text_font = 'Georgia';
