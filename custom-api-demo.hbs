@@ -458,21 +458,13 @@ into the {body} tag of the default.hbs template --}}
         const container = document.getElementById('chart-container');
         container.innerHTML = '';
 
-        console.log('plotChart called with:', seriesName);
-        console.log('Data sample:', data[0]);
-        console.log('Keys in first data row:', Object.keys(data[0]));
-
         // Parse dates and values
         const dates = data.map(d => new Date(d.Date));
         const values = data.map(d => d[seriesName]);
 
-        console.log('First 5 values:', values.slice(0, 5));
-
         // Filter out nulls
         const validData = dates.map((d, i) => ({date: d, value: values[i]}))
                                .filter(d => d.value !== null && d.value !== undefined && !isNaN(d.value));
-
-        console.log('Valid data points:', validData.length);
 
         if (validData.length === 0) {
             container.innerHTML = '<p class="chart-placeholder">No valid data points</p>';
@@ -482,9 +474,6 @@ into the {body} tag of the default.hbs template --}}
         // Convert dates to timestamps for BokehJS
         const x = validData.map(d => d.date.getTime());
         const y = validData.map(d => d.value);
-
-        console.log('X range (timestamps):', x[0], 'to', x[x.length-1]);
-        console.log('Y range:', Math.min(...y), 'to', Math.max(...y));
 
         // Create data source
         const source = new Bokeh.ColumnDataSource({
@@ -496,9 +485,6 @@ into the {body} tag of the default.hbs template --}}
         const yMin = Math.min(...y);
         const yMax = Math.max(...y);
         const yPadding = (yMax - yMin) * 0.1;
-
-        console.log('Chart width:', chartWidth);
-        console.log('Y padding:', yPadding, 'yMin:', yMin, 'yMax:', yMax);
 
         const plot = Bokeh.Plotting.figure({
             title: seriesName,
@@ -516,23 +502,24 @@ into the {body} tag of the default.hbs template --}}
         plot.y_range.start = yMin - yPadding;
         plot.y_range.end = yMax + yPadding;
 
-        // Style the plot
+        // Style the plot - matching cn_auto_exports theme
         plot.title.text_font = 'Georgia';
         plot.title.text_font_style = 'bold';
         plot.title.text_font_size = '18px';
 
+        // Axis styling
+        plot.xaxis.axis_label_text_font = 'Georgia';
+        plot.xaxis.major_label_text_font = 'Georgia';
+        plot.yaxis.axis_label_text_font = 'Georgia';
+        plot.yaxis.major_label_text_font = 'Georgia';
+
         try {
-            // Add line
+            // Add line only (no circle markers, matching reference app)
             plot.line({ x: { field: 'x' }, y: { field: 'y' }, source: source,
                        line_color: COLORS[0], line_width: 2 });
 
-            // Add circle markers
-            plot.circle({ x: { field: 'x' }, y: { field: 'y' }, source: source,
-                         fill_color: COLORS[0], line_color: COLORS[0], size: 4 });
-
             // Show the plot
             Bokeh.Plotting.show(plot, container);
-            console.log('Chart rendered successfully');
         } catch (e) {
             console.error('Bokeh error:', e);
             container.innerHTML = `<p class="chart-placeholder" style="color:#B7410E;">Chart error: ${e.message}</p>`;
