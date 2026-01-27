@@ -205,11 +205,8 @@ into the {body} tag of the default.hbs template --}}
     }
 
     .chart-container {
-        margin: 0;
-        min-height: 260px;
-        background: transparent;
-        border-radius: 0;
-        padding: 0;
+        margin: 20px 0;
+        min-height: 400px;
     }
 
     .chart-placeholder {
@@ -480,7 +477,8 @@ into the {body} tag of the default.hbs template --}}
             data: { x: x, y: y }
         });
 
-        // Create figure with theme styling (matching cn_auto_exports: 980x260)
+        // Create figure with theme styling
+        const chartWidth = Math.max(container.offsetWidth - 40, 600);
         const yMin = Math.min(...y);
         const yMax = Math.max(...y);
         const yPadding = (yMax - yMin) * 0.1;
@@ -488,8 +486,8 @@ into the {body} tag of the default.hbs template --}}
         const plot = Bokeh.Plotting.figure({
             title: seriesName,
             x_axis_type: 'datetime',
-            width: 980,
-            height: 260,
+            width: chartWidth,
+            height: 400,
             background_fill_color: '#228B22',
             background_fill_alpha: 0.05,
             tools: 'pan,wheel_zoom,box_zoom,reset,save'
