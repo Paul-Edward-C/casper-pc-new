@@ -306,6 +306,10 @@ into the {body} tag of the default.hbs template --}}
     // Configuration
     const API_BASE = 'https://data-api-production-74e0.up.railway.app';
 
+    // Member status from Ghost
+    const isMember = {{#if @member}}true{{else}}false{{/if}};
+    const memberEmail = {{#if @member}}'{{@member.email}}'{{else}}null{{/if}};
+
     // Color palette matching Bokeh theme
     const COLORS = [
         '#556B2F', // dark olive green
@@ -395,17 +399,33 @@ into the {body} tag of the default.hbs template --}}
                 plotChart(name, data.data);
                 displayDataTable(name, data.data);
             } else if (data.detail && data.detail.includes('Authentication')) {
-                document.getElementById('chart-container').innerHTML = `
-                    <div class="subscription-message">
-                        <h3>Subscription Required</h3>
-                        <p>
-                            Data access requires an active subscription.
-                            Subscribe to get full access to all economic data series.
-                        </p>
-                        <a href="#/portal/signup" class="api-button">
-                            Subscribe Now
-                        </a>
-                    </div>`;
+                if (isMember) {
+                    // Logged-in member - direct to data app
+                    document.getElementById('chart-container').innerHTML = `
+                        <div class="subscription-message">
+                            <h3>Access Full Data</h3>
+                            <p>
+                                As a subscriber, you have full access to download data.
+                                Use the Data Explorer for interactive charts and downloads.
+                            </p>
+                            <a href="https://eae-data.fly.dev" target="_blank" class="api-button">
+                                Open Data Explorer
+                            </a>
+                        </div>`;
+                } else {
+                    // Not logged in
+                    document.getElementById('chart-container').innerHTML = `
+                        <div class="subscription-message">
+                            <h3>Subscription Required</h3>
+                            <p>
+                                Data access requires an active subscription.
+                                Subscribe to get full access to all economic data series.
+                            </p>
+                            <a href="#/portal/signup" class="api-button">
+                                Subscribe Now
+                            </a>
+                        </div>`;
+                }
                 document.getElementById('data-table-container').innerHTML = '';
             } else if (data.error) {
                 document.getElementById('chart-container').innerHTML =
