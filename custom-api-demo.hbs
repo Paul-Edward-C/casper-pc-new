@@ -81,19 +81,14 @@ into the {body} tag of the default.hbs template --}}
                 <p><em>Enter a search term and click Search to find data series.</em></p>
             </div>
 
-            <h2 class="api-section-title">Chart: <span id="selected-series">Select a series above</span></h2>
+            <h2 class="api-section-title">Data: <span id="selected-series">Select a series above</span></h2>
 
             <div class="api-call" id="data-api-call" style="display:none;">
-                GET /series?name=...&freq=m
+                GET /series?columns=...&freq=m
             </div>
 
-            <div class="chart-container" id="chart-container">
-                <p class="chart-placeholder">
-                    Click on a search result to view the chart
-                </p>
-            </div>
+            <div id="chart-container"></div>
 
-            <h2 class="api-section-title">Recent Data</h2>
             <div id="data-table-container">
                 <p><em>Data will appear here when you select a series.</em></p>
             </div>
@@ -102,9 +97,6 @@ into the {body} tag of the default.hbs template --}}
     </main>
 </div>
 
-<!-- BokehJS -->
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-3.3.4.min.js"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-api-3.3.4.min.js"></script>
 
 <style>
     .api-demo-container {
@@ -204,16 +196,6 @@ into the {body} tag of the default.hbs template --}}
         border-left-color: #B7410E;
     }
 
-    .chart-container {
-        margin: 20px 0;
-        min-height: 400px;
-    }
-
-    .chart-placeholder {
-        text-align: center;
-        color: #666;
-        padding-top: 150px;
-    }
 
     .api-call {
         background: #2d2d2d;
@@ -314,20 +296,6 @@ into the {body} tag of the default.hbs template --}}
     const API_KEY = null;
     {{/if}}
 
-    // Color palette matching Bokeh theme
-    const COLORS = [
-        '#556B2F', // dark olive green
-        '#B7410E', // rust
-        '#4682B4', // steel blue
-        '#FF7F50', // coral
-        '#228B22', // forest green
-        '#FFBF00', // amber
-        '#87CEEB', // sky blue
-        '#FFDB58'  // mustard
-    ];
-
-    let currentPlot = null;
-
     // Search for series
     async function searchSeries() {
         const query = document.getElementById('search-input').value;
@@ -406,7 +374,7 @@ into the {body} tag of the default.hbs template --}}
             if (data.data && data.data.length > 0) {
                 // Use column name from API response (avoids encoding issues)
                 const colName = data.columns ? data.columns[0] : name;
-                plotChart(colName, data.data);
+                document.getElementById('chart-container').innerHTML = '';
                 displayDataTable(colName, data.data);
             } else if (data.detail && data.detail.includes('Authentication')) {
                 if (isMember) {
@@ -447,79 +415,6 @@ into the {body} tag of the default.hbs template --}}
         } catch (error) {
             document.getElementById('chart-container').innerHTML =
                 `<p class="chart-placeholder" style="color:#B7410E;">Error: ${error.message}</p>`;
-        }
-    }
-
-    // Plot chart using BokehJS
-    function plotChart(seriesName, data) {
-        const container = document.getElementById('chart-container');
-        container.innerHTML = '';
-
-        // Parse dates and values
-        const dates = data.map(d => new Date(d.Date));
-        const values = data.map(d => d[seriesName]);
-
-        // Filter out nulls
-        const validData = dates.map((d, i) => ({date: d, value: values[i]}))
-                               .filter(d => d.value !== null && d.value !== undefined && !isNaN(d.value));
-
-        if (validData.length === 0) {
-            container.innerHTML = '<p class="chart-placeholder">No valid data points</p>';
-            return;
-        }
-
-        // Convert dates to timestamps for BokehJS
-        const x = validData.map(d => d.date.getTime());
-        const y = validData.map(d => d.value);
-
-        // Create data source
-        const source = new Bokeh.ColumnDataSource({
-            data: { x: x, y: y }
-        });
-
-        // Create figure with theme styling
-        const chartWidth = Math.max(container.offsetWidth - 40, 600);
-        const yMin = Math.min(...y);
-        const yMax = Math.max(...y);
-        const yPadding = (yMax - yMin) * 0.1;
-
-        const plot = Bokeh.Plotting.figure({
-            title: seriesName,
-            x_axis_type: 'datetime',
-            width: chartWidth,
-            height: 400,
-            background_fill_color: '#228B22',
-            background_fill_alpha: 0.05,
-            tools: 'pan,wheel_zoom,box_zoom,reset,save'
-        });
-
-        // Set ranges explicitly after creation
-        plot.x_range.start = x[0];
-        plot.x_range.end = x[x.length-1];
-        plot.y_range.start = yMin - yPadding;
-        plot.y_range.end = yMax + yPadding;
-
-        // Style the plot - matching cn_auto_exports theme
-        plot.title.text_font = 'Georgia';
-        plot.title.text_font_style = 'bold';
-        plot.title.text_font_size = '18px';
-
-        // Axis styling
-        plot.xaxis.axis_label_text_font = 'Georgia';
-        plot.xaxis.major_label_text_font = 'Georgia';
-        plot.yaxis.axis_label_text_font = 'Georgia';
-        plot.yaxis.major_label_text_font = 'Georgia';
-
-        try {
-            // Add line only (no circle markers, matching reference app)
-            plot.line({ x: { field: 'x' }, y: { field: 'y' }, source: source,
-                       line_color: COLORS[0], line_width: 2 });
-
-            // Show the plot
-            Bokeh.Plotting.show(plot, container);
-        } catch (e) {
-            console.error('Bokeh error:', e);
-            container.innerHTML = `<p class="chart-placeholder" style="color:#B7410E;">Chart error: ${e.message}</p>`;
         }
     }
 
