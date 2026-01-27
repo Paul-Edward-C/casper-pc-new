@@ -407,8 +407,10 @@ into the {body} tag of the default.hbs template --}}
             const data = await response.json();
 
             if (data.data && data.data.length > 0) {
-                plotChart(name, data.data);
-                displayDataTable(name, data.data);
+                // Use column name from API response (avoids encoding issues)
+                const colName = data.columns ? data.columns[0] : name;
+                plotChart(colName, data.data);
+                displayDataTable(colName, data.data);
             } else if (data.detail && data.detail.includes('Authentication')) {
                 if (isMember) {
                     // Logged-in member - direct to data app
