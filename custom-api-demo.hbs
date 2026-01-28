@@ -310,11 +310,9 @@ into the {body} tag of the default.hbs template --}}
         margin: 50px;
     }
 
-    /* Chart toolbar - right side of plot area like Bokeh */
+    /* Chart toolbar - positioned dynamically via JS to right of plot area */
     .chart-toolbar {
         position: absolute;
-        top: 60px;
-        right: 25px;
         z-index: 10;
         display: flex;
         flex-direction: column;
@@ -410,53 +408,30 @@ into the {body} tag of the default.hbs template --}}
         }
     };
 
-    // Custom legend plugin - draws legend inside chart area at top_left (like Bokeh)
-    const inChartLegendPlugin = {
-        id: 'inChartLegend',
-        afterDraw: (chart) => {
+    // Plugin to draw horizontal line at zero (like Bokeh Span)
+    const zeroLinePlugin = {
+        id: 'zeroLine',
+        beforeDraw: (chart) => {
             const ctx = chart.ctx;
             const chartArea = chart.chartArea;
-            if (!chartArea || !chart.data.datasets.length) return;
+            const yScale = chart.scales.y;
+            if (!chartArea || !yScale) return;
 
-            const dataset = chart.data.datasets[0];
-            const legendText = dataset.label || '';
-            const lineColor = dataset.borderColor || '#556B2F';
+            // Only draw if zero is within the visible range
+            const yMin = yScale.min;
+            const yMax = yScale.max;
+            if (yMin > 0 || yMax < 0) return;
+
+            const yPixel = yScale.getPixelForValue(0);
 
             ctx.save();
-
-            // Position: top-left inside chart area with small padding
-            const x = chartArea.left + 10;
-            const y = chartArea.top + 15;
-
-            // Draw legend background box
-            ctx.font = '12px Georgia, serif';
-            const textWidth = ctx.measureText(legendText).width;
-            const boxPadding = 6;
-            const lineLength = 20;
-            const totalWidth = lineLength + 6 + textWidth + boxPadding * 2;
-            const boxHeight = 20;
-
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
-            ctx.strokeStyle = '#ccc';
+            ctx.strokeStyle = '#333';
             ctx.lineWidth = 1;
+            ctx.setLineDash([]);
             ctx.beginPath();
-            ctx.roundRect(x, y - boxHeight/2 - 2, totalWidth, boxHeight, 3);
-            ctx.fill();
+            ctx.moveTo(chartArea.left, yPixel);
+            ctx.lineTo(chartArea.right, yPixel);
             ctx.stroke();
-
-            // Draw line sample
-            ctx.strokeStyle = lineColor;
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(x + boxPadding, y);
-            ctx.lineTo(x + boxPadding + lineLength, y);
-            ctx.stroke();
-
-            // Draw text
-            ctx.fillStyle = '#333';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(legendText, x + boxPadding + lineLength + 6, y);
-
             ctx.restore();
         }
     };
@@ -646,7 +621,7 @@ into the {body} tag of the default.hbs template --}}
 
         dataChart = new Chart(ctx, {
             type: 'line',
-            plugins: [chartAreaBgPlugin, inChartLegendPlugin],
+            plugins: [chartAreaBgPlugin, zeroLinePlugin],
             data: {
                 labels: labels,
                 datasets: [{
@@ -668,7 +643,7 @@ into the {body} tag of the default.hbs template --}}
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
-                        display: false  // Using custom in-chart legend plugin
+                        display: false  // Not needed for single series
                     },
                     title: {
                         display: false
@@ -807,6 +782,23 @@ into the {body} tag of the default.hbs template --}}
                 }
             }
         });
+
+        // Position toolbar to right of plot area
+        positionToolbar();
+    }
+
+    // Position toolbar inside chart area on the right
+    function positionToolbar() {
+        if (!dataChart) return;
+        const chartArea = dataChart.chartArea;
+        if (!chartArea) return;
+
+        const toolbar = document.querySelector('.chart-toolbar');
+        if (!toolbar) return;
+
+        // Position toolbar just inside the right edge of chartArea
+        toolbar.style.top = (chartArea.top + 5) + 'px';
+        toolbar.style.right = (document.getElementById('chart-container').offsetWidth - chartArea.right + 5) + 'px';
     }
 
     // Display data table (v3 format: {Date, value})
