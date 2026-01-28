@@ -287,24 +287,7 @@ into the {body} tag of the default.hbs template --}}
         padding: 20px;
         border-radius: 4px;
         position: relative;
-        /* Green background fill like Bokeh (5% alpha) */
-        background-color: rgba(34, 139, 34, 0.05);
-    }
-
-    /* Background image overlay at 12% opacity like Bokeh */
-    #chart-container::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-image: url('https://www.eastasiaecon.com/content/images/size/w2400/2023/04/Image-29-4-2023-at-7.34-PM.jpeg');
-        background-size: cover;
-        background-position: center;
-        opacity: 0.12;
-        border-radius: 4px;
-        pointer-events: none;
+        background-color: #fff;
     }
 
     #data-chart {
@@ -327,30 +310,52 @@ into the {body} tag of the default.hbs template --}}
         margin: 50px;
     }
 
-    /* Chart toolbar */
+    /* Chart toolbar - left side like Bokeh */
     .chart-toolbar {
         position: absolute;
-        top: 10px;
+        top: 50%;
         right: 10px;
+        transform: translateY(-50%);
         z-index: 10;
         display: flex;
-        gap: 5px;
+        flex-direction: column;
+        gap: 4px;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 6px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
     }
 
     .chart-toolbar button {
-        background: rgba(255, 255, 255, 0.9);
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        padding: 5px 10px;
-        font-family: Georgia, serif;
-        font-size: 12px;
+        background: transparent;
+        border: none;
+        padding: 6px;
         cursor: pointer;
-        color: #333;
+        color: #666;
+        font-size: 16px;
+        line-height: 1;
+        border-radius: 3px;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
     .chart-toolbar button:hover {
-        background: #fff;
-        border-color: #556B2F;
+        background: rgba(85, 107, 47, 0.15);
+        color: #556B2F;
+    }
+
+    .chart-toolbar button.active {
+        background: rgba(85, 107, 47, 0.2);
+        color: #556B2F;
+    }
+
+    .chart-toolbar button svg {
+        width: 16px;
+        height: 16px;
+        fill: currentColor;
     }
 </style>
 
@@ -375,6 +380,56 @@ into the {body} tag of the default.hbs template --}}
 
     // Chart instance
     let dataChart = null;
+    let currentTool = 'pan';
+
+    // Background image for chart area (loaded once)
+    const bgImage = new Image();
+    bgImage.src = 'https://www.eastasiaecon.com/content/images/size/w2400/2023/04/Image-29-4-2023-at-7.34-PM.jpeg';
+
+    // Chart.js plugin to draw background in chart area only
+    const chartAreaBgPlugin = {
+        id: 'chartAreaBg',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            if (!chartArea) return;
+
+            ctx.save();
+
+            // Draw green background fill (5% alpha like Bokeh)
+            ctx.fillStyle = 'rgba(34, 139, 34, 0.05)';
+            ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height);
+
+            // Draw background image at 12% opacity (like Bokeh)
+            if (bgImage.complete) {
+                ctx.globalAlpha = 0.12;
+                ctx.drawImage(bgImage, chartArea.left, chartArea.top, chartArea.width, chartArea.height);
+                ctx.globalAlpha = 1;
+            }
+
+            ctx.restore();
+        }
+    };
+
+    // Tool switching for chart
+    function setChartTool(tool) {
+        currentTool = tool;
+        // Update button states
+        document.querySelectorAll('.chart-toolbar button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        const activeBtn = document.getElementById('tool-' + tool);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // Update chart zoom/pan settings
+        if (dataChart) {
+            const zoomEnabled = (tool === 'zoom');
+            const panEnabled = (tool === 'pan');
+            dataChart.options.plugins.zoom.zoom.wheel.enabled = zoomEnabled;
+            dataChart.options.plugins.zoom.pan.enabled = panEnabled;
+            dataChart.update('none');
+        }
+    }
 
     // Search for series (using fast v3 endpoint)
     async function searchSeries() {
@@ -467,8 +522,18 @@ into the {body} tag of the default.hbs template --}}
             if (data.data && data.data.length > 0) {
                 document.getElementById('chart-container').innerHTML = `
                     <div class="chart-toolbar">
-                        <button onclick="resetChartZoom()" title="Reset zoom">Reset</button>
-                        <button onclick="downloadChart()" title="Save as image">Save</button>
+                        <button onclick="setChartTool('pan')" id="tool-pan" title="Pan" class="active">
+                            <svg viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>
+                        </button>
+                        <button onclick="setChartTool('zoom')" id="tool-zoom" title="Wheel Zoom">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </button>
+                        <button onclick="resetChartZoom()" title="Reset">
+                            <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                        </button>
+                        <button onclick="downloadChart()" title="Save">
+                            <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>
+                        </button>
                     </div>
                     <canvas id="data-chart"></canvas>`;
                 renderChart(data.series_name || name, data.data);
@@ -531,6 +596,7 @@ into the {body} tag of the default.hbs template --}}
 
         dataChart = new Chart(ctx, {
             type: 'line',
+            plugins: [chartAreaBgPlugin],
             data: {
                 labels: labels,
                 datasets: [{
@@ -550,6 +616,11 @@ into the {body} tag of the default.hbs template --}}
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
+                layout: {
+                    padding: {
+                        top: 30  // Space for legend inside chart
+                    }
+                },
                 plugins: {
                     legend: {
                         display: true,
@@ -558,13 +629,25 @@ into the {body} tag of the default.hbs template --}}
                         labels: {
                             font: {
                                 family: 'Georgia, serif',
-                                size: 14
+                                size: 12
                             },
                             color: '#333',
-                            padding: 8,
+                            padding: 4,
                             usePointStyle: false,
-                            boxWidth: 30,
-                            boxHeight: 3
+                            boxWidth: 25,
+                            boxHeight: 2,
+                            // Add background styling
+                            generateLabels: function(chart) {
+                                const datasets = chart.data.datasets;
+                                return datasets.map((dataset, i) => ({
+                                    text: dataset.label,
+                                    fillStyle: dataset.borderColor,
+                                    strokeStyle: dataset.borderColor,
+                                    lineWidth: 2,
+                                    hidden: !chart.isDatasetVisible(i),
+                                    index: i
+                                }));
+                            }
                         }
                     },
                     title: {
