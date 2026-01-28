@@ -83,7 +83,9 @@ into the {body} tag of the default.hbs template --}}
                 GET /v3/series/{series_name}
             </div>
 
-            <div id="chart-container"></div>
+            <div id="chart-container">
+                <canvas id="data-chart"></canvas>
+            </div>
 
             <div id="data-table-container">
                 <p><em>Data will appear here when you select a series.</em></p>
@@ -275,7 +277,28 @@ into the {body} tag of the default.hbs template --}}
         margin-top: 20px;
         text-decoration: none;
     }
+
+    #chart-container {
+        width: 100%;
+        height: 400px;
+        margin: 20px 0;
+    }
+
+    #data-chart {
+        width: 100% !important;
+        height: 100% !important;
+    }
+
+    .chart-placeholder {
+        text-align: center;
+        padding: 50px;
+        color: #666;
+        font-style: italic;
+    }
 </style>
+
+<!-- Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <script>
     // Configuration
@@ -291,6 +314,9 @@ into the {body} tag of the default.hbs template --}}
     {{else}}
     const API_KEY = null;
     {{/if}}
+
+    // Chart instance
+    let dataChart = null;
 
     // Search for series (using fast v3 endpoint)
     async function searchSeries() {
@@ -364,6 +390,11 @@ into the {body} tag of the default.hbs template --}}
         // Fetch data - v3 endpoint with path parameter
         const url = `${API_BASE}/v3/series/${encodeURIComponent(name)}`;
 
+        // Clear chart and show loading
+        if (dataChart) {
+            dataChart.destroy();
+            dataChart = null;
+        }
         document.getElementById('chart-container').innerHTML =
             '<p class="chart-placeholder">Loading data...</p>';
 
@@ -376,7 +407,8 @@ into the {body} tag of the default.hbs template --}}
             const data = await response.json();
 
             if (data.data && data.data.length > 0) {
-                document.getElementById('chart-container').innerHTML = '';
+                document.getElementById('chart-container').innerHTML = '<canvas id="data-chart"></canvas>';
+                renderChart(data.series_name || name, data.data);
                 displayDataTable(data.series_name || name, data.data);
             } else if (data.detail && data.detail.includes('Authentication')) {
                 if (isMember) {
@@ -418,6 +450,97 @@ into the {body} tag of the default.hbs template --}}
             document.getElementById('chart-container').innerHTML =
                 `<p class="chart-placeholder" style="color:#B7410E;">Error: ${error.message}</p>`;
         }
+    }
+
+    // Render chart using Chart.js
+    function renderChart(seriesName, data) {
+        // Destroy existing chart if any
+        if (dataChart) {
+            dataChart.destroy();
+        }
+
+        const ctx = document.getElementById('data-chart').getContext('2d');
+
+        // Prepare data - use last 120 data points (10 years of monthly data)
+        const chartData = data.slice(-120);
+        const labels = chartData.map(d => d.Date);
+        const values = chartData.map(d => d.value);
+
+        dataChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: seriesName,
+                    data: values,
+                    borderColor: '#104b1f',
+                    backgroundColor: 'rgba(16, 75, 31, 0.1)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.1,
+                    pointRadius: 0,
+                    pointHoverRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top',
+                        labels: {
+                            font: {
+                                family: "'Georgia', serif",
+                                size: 12
+                            }
+                        }
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            label: function(context) {
+                                return context.parsed.y.toLocaleString(undefined, {maximumFractionDigits: 2});
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 10,
+                            font: {
+                                family: "'Georgia', serif"
+                            }
+                        }
+                    },
+                    y: {
+                        display: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)'
+                        },
+                        ticks: {
+                            font: {
+                                family: "'Georgia', serif"
+                            },
+                            callback: function(value) {
+                                return value.toLocaleString();
+                            }
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                }
+            }
+        });
     }
 
     // Display data table (v3 format: {Date, value})
