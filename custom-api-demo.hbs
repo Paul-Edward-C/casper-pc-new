@@ -45,7 +45,7 @@ into the {body} tag of the default.hbs template --}}
             <div class="info-box">
                 <strong>API Endpoint:</strong> <code>https://data-api-production-74e0.up.railway.app</code><br>
                 <strong>Coverage:</strong> China, Japan, Korea, Taiwan + Regional data<br>
-                <strong>Frequencies:</strong> Daily, Weekly, Monthly, Quarterly, Annual<br>
+                <strong>Series:</strong> 246,000+ monthly economic indicators<br>
                 <strong>Access:</strong> Search is free. Data download requires <a href="#/portal/signup" class="api-link">subscription</a>.
             </div>
 
@@ -55,10 +55,6 @@ into the {body} tag of the default.hbs template --}}
                 <input type="text" id="search-input" placeholder="Search (e.g., CPI, GDP, exports, inflation)..." value="CPI">
                 <select id="freq-select">
                     <option value="m">Monthly</option>
-                    <option value="q">Quarterly</option>
-                    <option value="a">Annual</option>
-                    <option value="d">Daily</option>
-                    <option value="w">Weekly</option>
                 </select>
                 <select id="country-select">
                     <option value="">All Countries</option>
@@ -72,7 +68,7 @@ into the {body} tag of the default.hbs template --}}
             </div>
 
             <div class="api-call" id="search-api-call">
-                GET /search?q=CPI&freq=m&limit=15
+                GET /v3/search?q=CPI&freq=m&limit=15
             </div>
 
             <div id="search-status" class="status" style="display:none;"></div>
@@ -84,7 +80,7 @@ into the {body} tag of the default.hbs template --}}
             <h2 class="api-section-title">Data: <span id="selected-series">Select a series above</span></h2>
 
             <div class="api-call" id="data-api-call" style="display:none;">
-                GET /series?columns=...&freq=m
+                GET /v3/series/{series_name}
             </div>
 
             <div id="chart-container"></div>
@@ -296,7 +292,7 @@ into the {body} tag of the default.hbs template --}}
     const API_KEY = null;
     {{/if}}
 
-    // Search for series
+    // Search for series (using fast v3 endpoint)
     async function searchSeries() {
         const query = document.getElementById('search-input').value;
         const freq = document.getElementById('freq-select').value;
@@ -307,15 +303,15 @@ into the {body} tag of the default.hbs template --}}
             return;
         }
 
-        // Build URL
-        let url = `${API_BASE}/search?q=${encodeURIComponent(query)}&freq=${freq}&limit=15`;
+        // Build URL - use v3 endpoint
+        let url = `${API_BASE}/v3/search?q=${encodeURIComponent(query)}&freq=${freq}&limit=15`;
         if (country) {
             url += `&country=${country}`;
         }
 
         // Show API call
         document.getElementById('search-api-call').textContent =
-            `GET /search?q=${query}&freq=${freq}${country ? '&country=' + country : ''}&limit=15`;
+            `GET /v3/search?q=${query}&freq=${freq}${country ? '&country=' + country : ''}&limit=15`;
 
         showStatus('search-status', 'Searching...', 'loading');
 
@@ -324,7 +320,7 @@ into the {body} tag of the default.hbs template --}}
             const data = await response.json();
 
             if (data.results && data.results.length > 0) {
-                displayResults(data.results, freq);
+                displayResults(data.results);
                 showStatus('search-status', `Found ${data.count} series`, 'success');
             } else {
                 document.getElementById('results-container').innerHTML =
@@ -336,29 +332,37 @@ into the {body} tag of the default.hbs template --}}
         }
     }
 
-    // Display search results
-    function displayResults(results, freq) {
+    // Display search results (v3 returns objects with metadata)
+    function displayResults(results) {
         const container = document.getElementById('results-container');
-        container.innerHTML = results.map((name, i) =>
-            `<div class="result-item" onclick="selectSeries('${escapeHtml(name)}', '${freq}')">${name}</div>`
-        ).join('');
+        container.innerHTML = results.map(item => {
+            const name = item.name;
+            const country = item.country ? item.country.toUpperCase() : '';
+            const count = item.count || '';
+            const dateRange = item.min_date && item.max_date ?
+                `${item.min_date.slice(0,7)} to ${item.max_date.slice(0,7)}` : '';
+            return `<div class="result-item" onclick="selectSeries('${escapeHtml(name)}')">
+                <strong>${name}</strong>
+                <span style="float:right;color:#666;font-size:12px;">${country} | ${count} obs | ${dateRange}</span>
+            </div>`;
+        }).join('');
     }
 
-    // Select a series and load data
-    async function selectSeries(name, freq) {
+    // Select a series and load data (using fast v3 endpoint)
+    async function selectSeries(name) {
         // Highlight selected
         document.querySelectorAll('.result-item').forEach(el => el.classList.remove('selected'));
-        event.target.classList.add('selected');
+        event.target.closest('.result-item').classList.add('selected');
 
         document.getElementById('selected-series').textContent = name;
 
-        // Show API call
-        const apiCall = `GET /series?columns=${encodeURIComponent(name)}&freq=${freq}`;
+        // Show API call - v3 uses path parameter
+        const apiCall = `GET /v3/series/${encodeURIComponent(name)}`;
         document.getElementById('data-api-call').textContent = apiCall;
         document.getElementById('data-api-call').style.display = 'block';
 
-        // Fetch data
-        const url = `${API_BASE}/series?columns=${encodeURIComponent(name)}&freq=${freq}`;
+        // Fetch data - v3 endpoint with path parameter
+        const url = `${API_BASE}/v3/series/${encodeURIComponent(name)}`;
 
         document.getElementById('chart-container').innerHTML =
             '<p class="chart-placeholder">Loading data...</p>';
@@ -372,10 +376,8 @@ into the {body} tag of the default.hbs template --}}
             const data = await response.json();
 
             if (data.data && data.data.length > 0) {
-                // Use column name from API response (avoids encoding issues)
-                const colName = data.columns ? data.columns[0] : name;
                 document.getElementById('chart-container').innerHTML = '';
-                displayDataTable(colName, data.data);
+                displayDataTable(data.series_name || name, data.data);
             } else if (data.detail && data.detail.includes('Authentication')) {
                 if (isMember) {
                     // Logged-in member - direct to data app
@@ -405,9 +407,9 @@ into the {body} tag of the default.hbs template --}}
                         </div>`;
                 }
                 document.getElementById('data-table-container').innerHTML = '';
-            } else if (data.error) {
+            } else if (data.detail) {
                 document.getElementById('chart-container').innerHTML =
-                    `<p class="chart-placeholder" style="color:#B7410E;">${data.error}</p>`;
+                    `<p class="chart-placeholder" style="color:#B7410E;">${data.detail}</p>`;
             } else {
                 document.getElementById('chart-container').innerHTML =
                     '<p class="chart-placeholder">No data available</p>';
@@ -418,7 +420,7 @@ into the {body} tag of the default.hbs template --}}
         }
     }
 
-    // Display data table
+    // Display data table (v3 format: {Date, value})
     function displayDataTable(seriesName, data) {
         const container = document.getElementById('data-table-container');
 
@@ -430,22 +432,22 @@ into the {body} tag of the default.hbs template --}}
                 <thead>
                     <tr>
                         <th>Date</th>
-                        <th>${seriesName}</th>
+                        <th>Value</th>
                     </tr>
                 </thead>
                 <tbody>
         `;
 
         recentData.forEach(row => {
-            const value = row[seriesName];
+            const value = row.value;
             const formattedValue = value !== null && value !== undefined
-                ? (typeof value === 'number' ? value.toFixed(2) : value)
+                ? (typeof value === 'number' ? value.toLocaleString(undefined, {maximumFractionDigits: 2}) : value)
                 : '-';
             html += `<tr><td>${row.Date}</td><td>${formattedValue}</td></tr>`;
         });
 
         html += '</tbody></table>';
-        html += `<p><em>Showing most recent 20 observations of ${data.length} total.</em></p>`;
+        html += `<p><em>Showing most recent 20 of ${data.length} observations for: ${seriesName}</em></p>`;
 
         container.innerHTML = html;
     }
