@@ -713,20 +713,37 @@ into the {body} tag of the default.hbs template --}}
                             display: false
                         },
                         ticks: {
-                            maxTicksLimit: 8,
+                            maxTicksLimit: 10,
                             font: {
                                 family: 'Georgia, serif',
-                                size: 14  // Larger like Bokeh (20px scaled down for web)
+                                size: 14
                             },
                             color: '#333',
                             callback: function(value, index, ticks) {
-                                // Format date as "Jan 2024" like Bokeh
+                                // Format dates like my_functions.py line_chart:
+                                // >= 84 months: show years only ("2020")
+                                // < 84 months: show "Jan-24" format
                                 const label = this.getLabelForValue(value);
                                 if (label) {
                                     const date = new Date(label);
                                     if (!isNaN(date)) {
-                                        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                                        return months[date.getMonth()] + ' ' + date.getFullYear();
+                                        // Check total data span
+                                        const firstLabel = this.getLabelForValue(0);
+                                        const lastLabel = this.getLabelForValue(ticks.length - 1);
+                                        const firstDate = new Date(firstLabel);
+                                        const lastDate = new Date(lastLabel);
+                                        const monthSpan = (lastDate.getFullYear() - firstDate.getFullYear()) * 12 +
+                                                         (lastDate.getMonth() - firstDate.getMonth());
+
+                                        if (monthSpan >= 84) {
+                                            // Year mode: show just year
+                                            return date.getFullYear().toString();
+                                        } else {
+                                            // Month mode: show "Jan-24" format
+                                            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                            const year = date.getFullYear().toString().slice(-2);
+                                            return months[date.getMonth()] + '-' + year;
+                                        }
                                     }
                                 }
                                 return label;
