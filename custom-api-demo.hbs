@@ -282,18 +282,16 @@ into the {body} tag of the default.hbs template --}}
 
     #chart-container {
         width: 100%;
-        height: 350px;
+        height: 400px;
         margin: 20px 0;
-        padding: 15px;
+        padding: 20px;
         border-radius: 4px;
         position: relative;
-        /* Background image like Bokeh app */
-        background-image: url('https://www.eastasiaecon.com/content/images/size/w2400/2023/04/Image-29-4-2023-at-7.34-PM.jpeg');
-        background-size: cover;
-        background-position: center;
+        /* Green background fill like Bokeh (5% alpha) */
+        background-color: rgba(34, 139, 34, 0.05);
     }
 
-    /* Green overlay on top of background image */
+    /* Background image overlay at 12% opacity like Bokeh */
     #chart-container::before {
         content: '';
         position: absolute;
@@ -301,7 +299,10 @@ into the {body} tag of the default.hbs template --}}
         left: 0;
         right: 0;
         bottom: 0;
-        background-color: rgba(34, 139, 34, 0.05);
+        background-image: url('https://www.eastasiaecon.com/content/images/size/w2400/2023/04/Image-29-4-2023-at-7.34-PM.jpeg');
+        background-size: cover;
+        background-position: center;
+        opacity: 0.12;
         border-radius: 4px;
         pointer-events: none;
     }
@@ -536,12 +537,12 @@ into the {body} tag of the default.hbs template --}}
                     label: seriesName,
                     data: values,
                     borderColor: '#556B2F',  // Dark olive green - matches Bokeh app
-                    backgroundColor: 'transparent',  // Transparent so background image shows
-                    borderWidth: 2,
+                    backgroundColor: 'transparent',
+                    borderWidth: 3,  // Matches Bokeh line_width=3
                     fill: false,
-                    tension: 0,  // No smoothing - straight lines between points
-                    pointRadius: 0,  // No points by default
-                    pointHoverRadius: 5,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
                     pointHoverBackgroundColor: '#556B2F',
                     pointHoverBorderColor: '#556B2F'
                 }]
@@ -563,7 +564,7 @@ into the {body} tag of the default.hbs template --}}
                             padding: 8,
                             usePointStyle: false,
                             boxWidth: 30,
-                            boxHeight: 2
+                            boxHeight: 3
                         }
                     },
                     title: {
@@ -579,17 +580,17 @@ into the {body} tag of the default.hbs template --}}
                         borderWidth: 0.5,
                         titleFont: {
                             family: 'Georgia, serif',
-                            size: 13,
+                            size: 14,
                             weight: 'bold'
                         },
                         bodyFont: {
                             family: 'Georgia, serif',
-                            size: 13
+                            size: 14
                         },
-                        padding: 8,
+                        padding: 10,
                         callbacks: {
                             title: function(tooltipItems) {
-                                // Format date as "MMM YYYY" like Bokeh app
+                                // Format date as "Jan 2024" like Bokeh app
                                 const label = tooltipItems[0].label;
                                 if (label) {
                                     const date = new Date(label);
@@ -601,7 +602,8 @@ into the {body} tag of the default.hbs template --}}
                                 return label;
                             },
                             label: function(context) {
-                                return context.parsed.y.toLocaleString(undefined, {maximumFractionDigits: 2});
+                                // Format as "0,0.0" like Bokeh (1 decimal place)
+                                return context.parsed.y.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
                             }
                         }
                     },
@@ -625,51 +627,51 @@ into the {body} tag of the default.hbs template --}}
                     x: {
                         display: true,
                         grid: {
-                            display: false  // No vertical grid lines - matches Bokeh app
+                            display: false
                         },
                         ticks: {
-                            maxTicksLimit: 10,
+                            maxTicksLimit: 8,
                             font: {
                                 family: 'Georgia, serif',
-                                size: 12
+                                size: 14  // Larger like Bokeh (20px scaled down for web)
                             },
                             color: '#333',
                             callback: function(value, index, ticks) {
-                                // Format date as "MMM-YY" like Bokeh app
+                                // Format date as "Jan 2024" like Bokeh
                                 const label = this.getLabelForValue(value);
                                 if (label) {
                                     const date = new Date(label);
                                     if (!isNaN(date)) {
                                         const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-                                        const year = date.getFullYear().toString().slice(-2);
-                                        return months[date.getMonth()] + '-' + year;
+                                        return months[date.getMonth()] + ' ' + date.getFullYear();
                                     }
                                 }
                                 return label;
                             }
                         },
                         border: {
-                            color: '#ccc'
+                            color: '#999'
                         }
                     },
                     y: {
                         display: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.08)',
+                            color: 'rgba(0, 0, 0, 0.1)',
                             lineWidth: 1
                         },
                         ticks: {
                             font: {
                                 family: 'Georgia, serif',
-                                size: 12
+                                size: 14  // Larger like Bokeh
                             },
                             color: '#333',
                             callback: function(value) {
-                                return value.toLocaleString();
+                                // Format as "0,0.0" like Bokeh
+                                return value.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
                             }
                         },
                         border: {
-                            color: '#ccc'
+                            color: '#999'
                         }
                     }
                 },
