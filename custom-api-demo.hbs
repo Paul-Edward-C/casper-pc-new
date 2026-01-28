@@ -280,8 +280,11 @@ into the {body} tag of the default.hbs template --}}
 
     #chart-container {
         width: 100%;
-        height: 400px;
+        height: 320px;
         margin: 20px 0;
+        padding: 15px;
+        background-color: rgba(34, 139, 34, 0.05);  /* Forest green 5% - matches Bokeh app */
+        border-radius: 4px;
     }
 
     #data-chart {
@@ -292,7 +295,8 @@ into the {body} tag of the default.hbs template --}}
     .chart-placeholder {
         text-align: center;
         padding: 50px;
-        color: #666;
+        color: #556B2F;
+        font-family: Georgia, serif;
         font-style: italic;
     }
 </style>
@@ -452,7 +456,7 @@ into the {body} tag of the default.hbs template --}}
         }
     }
 
-    // Render chart using Chart.js
+    // Render chart using Chart.js - styled to match cn_auto_exports Bokeh app
     function renderChart(seriesName, data) {
         // Destroy existing chart if any
         if (dataChart) {
@@ -473,13 +477,15 @@ into the {body} tag of the default.hbs template --}}
                 datasets: [{
                     label: seriesName,
                     data: values,
-                    borderColor: '#104b1f',
-                    backgroundColor: 'rgba(16, 75, 31, 0.1)',
+                    borderColor: '#556B2F',  // Dark olive green - matches Bokeh app
+                    backgroundColor: 'rgba(34, 139, 34, 0.05)',  // Forest green 5% - matches Bokeh background
                     borderWidth: 2,
                     fill: true,
-                    tension: 0.1,
-                    pointRadius: 0,
-                    pointHoverRadius: 4
+                    tension: 0,  // No smoothing - straight lines between points
+                    pointRadius: 0,  // No points by default
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: '#556B2F',
+                    pointHoverBorderColor: '#556B2F'
                 }]
             },
             options: {
@@ -489,16 +495,40 @@ into the {body} tag of the default.hbs template --}}
                     legend: {
                         display: true,
                         position: 'top',
+                        align: 'start',
                         labels: {
                             font: {
-                                family: "'Georgia', serif",
-                                size: 12
-                            }
+                                family: 'Georgia, serif',
+                                size: 14,
+                                weight: 'bold'
+                            },
+                            color: '#333',
+                            padding: 15,
+                            usePointStyle: false,
+                            boxWidth: 20
                         }
+                    },
+                    title: {
+                        display: false
                     },
                     tooltip: {
                         mode: 'index',
                         intersect: false,
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        titleColor: '#333',
+                        bodyColor: '#556B2F',
+                        borderColor: '#A9A9A9',
+                        borderWidth: 1,
+                        titleFont: {
+                            family: 'Georgia, serif',
+                            size: 12,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            family: 'Georgia, serif',
+                            size: 12
+                        },
+                        padding: 10,
                         callbacks: {
                             label: function(context) {
                                 return context.parsed.y.toLocaleString(undefined, {maximumFractionDigits: 2});
@@ -510,27 +540,38 @@ into the {body} tag of the default.hbs template --}}
                     x: {
                         display: true,
                         grid: {
-                            display: false
+                            display: false  // No vertical grid lines - matches Bokeh app
                         },
                         ticks: {
                             maxTicksLimit: 10,
                             font: {
-                                family: "'Georgia', serif"
-                            }
+                                family: 'Georgia, serif',
+                                size: 11
+                            },
+                            color: '#666'
+                        },
+                        border: {
+                            color: '#ccc'
                         }
                     },
                     y: {
                         display: true,
                         grid: {
-                            color: 'rgba(0, 0, 0, 0.1)'
+                            color: 'rgba(0, 0, 0, 0.08)',
+                            lineWidth: 1
                         },
                         ticks: {
                             font: {
-                                family: "'Georgia', serif"
+                                family: 'Georgia, serif',
+                                size: 11
                             },
+                            color: '#666',
                             callback: function(value) {
                                 return value.toLocaleString();
                             }
+                        },
+                        border: {
+                            color: '#ccc'
                         }
                     }
                 },
@@ -538,6 +579,11 @@ into the {body} tag of the default.hbs template --}}
                     mode: 'nearest',
                     axis: 'x',
                     intersect: false
+                },
+                elements: {
+                    line: {
+                        borderJoinStyle: 'round'
+                    }
                 }
             }
         });
