@@ -106,7 +106,9 @@ into the {body} tag of the default.hbs template --}}
     .api-section-title {
         color: #104b1f;
         margin-top: 30px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-family: Georgia, serif;
+        font-size: 20px;
+        font-weight: bold;
     }
 
     .info-box {
@@ -114,7 +116,7 @@ into the {body} tag of the default.hbs template --}}
         border-left: 4px solid #104b1f;
         padding: 15px;
         margin: 20px 0;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        font-family: Georgia, serif;
     }
 
     .info-box code {
@@ -140,7 +142,7 @@ into the {body} tag of the default.hbs template --}}
         min-width: 200px;
         padding: 12px 15px;
         font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+        font-family: Georgia, serif;
         border: 2px solid #104b1f;
         border-radius: 5px;
     }
@@ -148,7 +150,7 @@ into the {body} tag of the default.hbs template --}}
     .search-container select {
         padding: 12px 15px;
         font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+        font-family: Georgia, serif;
         border: 2px solid #104b1f;
         border-radius: 5px;
         background: white;
@@ -157,7 +159,7 @@ into the {body} tag of the default.hbs template --}}
     .api-button {
         padding: 12px 25px;
         font-size: 16px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+        font-family: Georgia, serif;
         background-color: #104b1f;
         color: white;
         border: none;
@@ -182,7 +184,7 @@ into the {body} tag of the default.hbs template --}}
         border-left: 4px solid #104b1f;
         cursor: pointer;
         transition: background-color 0.2s;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+        font-family: Georgia, serif;
     }
 
     .result-item:hover {
@@ -211,7 +213,7 @@ into the {body} tag of the default.hbs template --}}
         border-collapse: collapse;
         margin: 20px 0;
         font-size: 14px;
-        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+        font-family: Georgia, serif;
     }
 
     .data-table th {
@@ -499,13 +501,13 @@ into the {body} tag of the default.hbs template --}}
                         labels: {
                             font: {
                                 family: 'Georgia, serif',
-                                size: 14,
-                                weight: 'bold'
+                                size: 14
                             },
                             color: '#333',
-                            padding: 15,
+                            padding: 8,
                             usePointStyle: false,
-                            boxWidth: 20
+                            boxWidth: 30,
+                            boxHeight: 2
                         }
                     },
                     title: {
@@ -515,21 +517,33 @@ into the {body} tag of the default.hbs template --}}
                         mode: 'index',
                         intersect: false,
                         backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                        titleColor: '#333',
+                        titleColor: '#556B2F',
                         bodyColor: '#556B2F',
                         borderColor: '#A9A9A9',
-                        borderWidth: 1,
+                        borderWidth: 0.5,
                         titleFont: {
                             family: 'Georgia, serif',
-                            size: 12,
+                            size: 13,
                             weight: 'bold'
                         },
                         bodyFont: {
                             family: 'Georgia, serif',
-                            size: 12
+                            size: 13
                         },
-                        padding: 10,
+                        padding: 8,
                         callbacks: {
+                            title: function(tooltipItems) {
+                                // Format date as "MMM YYYY" like Bokeh app
+                                const label = tooltipItems[0].label;
+                                if (label) {
+                                    const date = new Date(label);
+                                    if (!isNaN(date)) {
+                                        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                        return months[date.getMonth()] + ' ' + date.getFullYear();
+                                    }
+                                }
+                                return label;
+                            },
                             label: function(context) {
                                 return context.parsed.y.toLocaleString(undefined, {maximumFractionDigits: 2});
                             }
@@ -546,9 +560,22 @@ into the {body} tag of the default.hbs template --}}
                             maxTicksLimit: 10,
                             font: {
                                 family: 'Georgia, serif',
-                                size: 11
+                                size: 12
                             },
-                            color: '#666'
+                            color: '#333',
+                            callback: function(value, index, ticks) {
+                                // Format date as "MMM-YY" like Bokeh app
+                                const label = this.getLabelForValue(value);
+                                if (label) {
+                                    const date = new Date(label);
+                                    if (!isNaN(date)) {
+                                        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                        const year = date.getFullYear().toString().slice(-2);
+                                        return months[date.getMonth()] + '-' + year;
+                                    }
+                                }
+                                return label;
+                            }
                         },
                         border: {
                             color: '#ccc'
@@ -563,9 +590,9 @@ into the {body} tag of the default.hbs template --}}
                         ticks: {
                             font: {
                                 family: 'Georgia, serif',
-                                size: 11
+                                size: 12
                             },
-                            color: '#666',
+                            color: '#333',
                             callback: function(value) {
                                 return value.toLocaleString();
                             }
