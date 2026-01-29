@@ -23,8 +23,6 @@ into the {body} tag of the default.hbs template --}}
                 <strong>Access:</strong> Search is free. Data download requires <a href="#/portal/signup" class="api-link">subscription</a>.
             </div>
 
-            <hr class="section-divider">
-
             <!-- Tab bar -->
             <div class="tab-bar">
                 <button class="tab-button active" onclick="switchTab('search')">Search</button>
@@ -61,8 +59,6 @@ into the {body} tag of the default.hbs template --}}
             <div class="results-container" id="results-container">
                 <p><em>Enter a search term and click Search to find data series.</em></p>
             </div>
-
-            <hr class="section-divider">
 
             <h2 class="api-section-title">Data: <span id="selected-series">Select a series above</span></h2>
 
@@ -125,8 +121,6 @@ into the {body} tag of the default.hbs template --}}
                 </div>
             </div>
 
-            <hr class="section-divider">
-
             <h2 class="api-section-title" id="rate-limits">Rate Limits</h2>
 
             <table class="docs-table">
@@ -161,8 +155,6 @@ into the {body} tag of the default.hbs template --}}
                 the <a href="/api-keys/" class="api-link">API Keys page</a> or via the
                 <code>GET /usage</code> endpoint.
             </p>
-
-            <hr class="section-divider">
 
             <h2 class="api-section-title" id="endpoints">API Endpoints</h2>
 
@@ -206,8 +198,6 @@ into the {body} tag of the default.hbs template --}}
             <p class="docs-text">
                 <strong>Base URL:</strong> <code>https://data-api-production-74e0.up.railway.app</code>
             </p>
-
-            <hr class="section-divider">
 
             <h2 class="api-section-title" id="python-example">Python Example</h2>
 
@@ -265,8 +255,6 @@ u = usage["usage"]
 print(f"\nUsage this month: {u['requests_used']} / {u['requests_limit'] or 'unlimited'}")</code></pre>
             </div>
 
-            <hr class="section-divider">
-
             <h2 class="api-section-title" id="authentication">Authentication</h2>
 
             <p class="docs-text">
@@ -289,8 +277,6 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
                 If your key is compromised, visit the <a href="/api-keys/" class="api-link">API Keys page</a>
                 and click <strong>Regenerate Key</strong>. Your old key will stop working immediately.
             </p>
-
-            <hr class="section-divider">
 
             <h2 class="api-section-title" id="response-format">Response Format</h2>
 
@@ -343,12 +329,6 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
         padding-bottom: 0;
     }
 
-    .section-divider {
-        border: none;
-        border-top: 1px solid #aaa;
-        margin: 30px 0;
-    }
-
     .api-demo-container {
         max-width: 1200px;
         margin: 0 auto;
@@ -395,6 +375,8 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
         font-family: Georgia, serif;
         font-size: 20px;
         font-weight: bold;
+        border-bottom: 2px solid #104b1f;
+        padding-bottom: 4px;
     }
 
     .info-box {
