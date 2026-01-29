@@ -49,6 +49,15 @@ into the {body} tag of the default.hbs template --}}
                 <strong>Access:</strong> Search is free. Data download requires <a href="#/portal/signup" class="api-link">subscription</a>.
             </div>
 
+            <!-- Tab bar -->
+            <div class="tab-bar">
+                <button class="tab-button active" onclick="switchTab('search')">Search</button>
+                <button class="tab-button" onclick="switchTab('docs')">Documentation</button>
+            </div>
+
+            <!-- Search tab (visible by default) -->
+            <div id="tab-search">
+
             <h2 class="api-section-title">Search for Data Series</h2>
 
             <div class="search-container">
@@ -91,12 +100,10 @@ into the {body} tag of the default.hbs template --}}
                 <p><em>Data will appear here when you select a series.</em></p>
             </div>
 
-        </div>
+            </div><!-- /tab-search -->
 
-        <!-- API Documentation Section -->
-        <div class="api-docs-container gh-canvas">
-
-            <hr class="docs-divider">
+            <!-- Documentation tab (hidden by default) -->
+            <div id="tab-docs" style="display:none;">
 
             <h2 class="api-section-title" id="getting-started">Getting Started</h2>
 
@@ -325,7 +332,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
     "month": "2026-01"
   }
 }</code></pre>
-            </div>
+            </div><!-- /tab-docs -->
 
         </div>
     </main>
@@ -337,6 +344,40 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
         max-width: 1200px;
         margin: 0 auto;
         padding: 20px;
+    }
+
+    .tab-bar {
+        display: flex;
+        gap: 0;
+        margin: 20px 0 0 0;
+        border-bottom: 2px solid #104b1f;
+    }
+
+    .tab-button {
+        padding: 12px 28px;
+        font-size: 16px;
+        font-family: Georgia, serif;
+        font-weight: bold;
+        background: transparent;
+        color: #666;
+        border: 2px solid transparent;
+        border-bottom: none;
+        border-radius: 5px 5px 0 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: -2px;
+    }
+
+    .tab-button:hover {
+        color: #104b1f;
+        background: rgba(16, 75, 31, 0.05);
+    }
+
+    .tab-button.active {
+        color: #104b1f;
+        background: white;
+        border-color: #104b1f;
+        border-bottom-color: white;
     }
 
     .api-section-title {
@@ -591,19 +632,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
         fill: currentColor;
     }
 
-    /* ── Documentation Section ── */
-
-    .api-docs-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-
-    .docs-divider {
-        border: none;
-        border-top: 2px solid rgba(16, 75, 31, 0.2);
-        margin: 50px 0 30px 0;
-    }
+    /* ── Documentation Tab ── */
 
     .docs-text {
         font-family: Georgia, serif;
@@ -1241,6 +1270,14 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
 
     function escapeHtml(text) {
         return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // Tab switching
+    function switchTab(tab) {
+        document.getElementById('tab-search').style.display = tab === 'search' ? 'block' : 'none';
+        document.getElementById('tab-docs').style.display = tab === 'docs' ? 'block' : 'none';
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
     }
 
     // Search on Enter key
