@@ -2,42 +2,16 @@
 {{!-- The tag above means: insert everything in this file
 into the {body} tag of the default.hbs template --}}
 
-{{#match @custom.publication_cover_style "!=" "None"}}
-    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
-        {{#if @site.cover_image}}
-            <img class="site-header-cover"
-                srcset="{{img_url @site.cover_image size="s"}} 300w,
-                        {{img_url @site.cover_image size="m"}} 600w,
-                        {{img_url @site.cover_image size="l"}} 1000w,
-                        {{img_url @site.cover_image size="xl"}} 2000w"
-                sizes="100vw"
-                src="{{img_url @site.cover_image size="s"}}"
-                alt=""
-            />
-        {{/if}}
-        <h1 class="site-title">
-            {{#if @site.logo}}
-                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
-            {{else}}
-                Data API
-            {{/if}}
-        </h1>
-    </div>
-{{/match}}
+<main id="site-main" class="site-main">
+<article class="article">
 
-<div id="site-main" class="site-main outer">
-    <main id="site-main" class="site-main outer">
-        <div class="outer">
-            {{#page}}
-            <article class="post-full {{post_class}} no-image">
-                <section class="post-full-content">
-                    <div class="post-content">
-                        {{{content}}}
-                    </div>
-                </section>
-            </article>
-            {{/page}}
-        </div>
+    <header class="article-header gh-canvas">
+        <h1 class="article-title">Data API</h1>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        {{#page}}{{{content}}}{{/page}}
+    </section>
 
         <!-- API Demo Section -->
         <div class="api-demo-container gh-canvas">
@@ -335,8 +309,9 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
             </div><!-- /tab-docs -->
 
         </div>
-    </main>
-</div>
+
+</article>
+</main>
 
 
 <style>
