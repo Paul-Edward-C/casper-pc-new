@@ -1,0 +1,396 @@
+{{!< default}}
+
+{{#match @custom.publication_cover_style "!=" "None"}}
+    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
+        {{#if @site.cover_image}}
+            <img class="site-header-cover"
+                srcset="{{img_url @site.cover_image size="s"}} 300w,
+                        {{img_url @site.cover_image size="m"}} 600w,
+                        {{img_url @site.cover_image size="l"}} 1000w,
+                        {{img_url @site.cover_image size="xl"}} 2000w"
+                sizes="100vw"
+                src="{{img_url @site.cover_image size="s"}}"
+                alt=""
+            />
+        {{/if}}
+        <h1 class="site-title">
+            {{#if @site.logo}}
+                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
+            {{else}}
+                API Keys
+            {{/if}}
+        </h1>
+    </div>
+{{/match}}
+
+<div id="site-main" class="site-main outer">
+    <main id="site-main" class="site-main outer">
+        <div class="outer">
+            {{#page}}
+            <article class="post-full {{post_class}} no-image">
+                <section class="post-full-content">
+                    <div class="post-content">
+                        {{{content}}}
+                    </div>
+                </section>
+            </article>
+            {{/page}}
+        </div>
+
+        <div class="api-keys-container gh-canvas">
+
+            {{#if @member}}
+            <!-- Authenticated member view -->
+            <div id="key-loading" class="info-box">
+                Loading your API key...
+            </div>
+
+            <div id="key-display" style="display:none;">
+                <div class="info-box">
+                    <strong>Your API Key</strong>
+                    <div class="key-row">
+                        <code id="api-key-value" class="api-key-code">loading...</code>
+                        <button onclick="copyKey()" class="api-button api-button-small" id="copy-btn">Copy</button>
+                    </div>
+                    <div class="key-meta">
+                        <span>Tier: <strong id="key-tier">—</strong></span>
+                        <span>Member: <strong id="key-email">—</strong></span>
+                    </div>
+                </div>
+
+                <h3 class="api-section-title">Monthly Usage</h3>
+                <div class="usage-container">
+                    <div class="usage-bar-bg">
+                        <div class="usage-bar-fill" id="usage-bar" style="width: 0%"></div>
+                    </div>
+                    <div class="usage-text" id="usage-text">0 / — requests this month</div>
+                </div>
+
+                <h3 class="api-section-title">Quick Start (Python)</h3>
+                <div class="code-block">
+                    <pre><code id="python-example">import requests
+
+API_KEY = "your_key_here"
+BASE = "https://data-api-production-74e0.up.railway.app"
+
+# Search for series
+results = requests.get(f"{BASE}/v3/search", params={"q": "CPI", "freq": "m"}).json()
+print(f"Found {results['count']} series")
+
+# Get data for a series
+series = results["results"][0]["name"]
+data = requests.get(
+    f"{BASE}/v3/series/{series}",
+    headers={"X-API-Key": API_KEY}
+).json()
+
+print(f"{series}: {data['count']} observations")
+for row in data["data"][-5:]:
+    print(f"  {row['Date']}: {row['value']}")</code></pre>
+                </div>
+
+                <h3 class="api-section-title">Regenerate Key</h3>
+                <p>If your key has been compromised, you can generate a new one. Your old key will stop working immediately.</p>
+                <button onclick="regenerateKey()" class="api-button api-button-danger" id="regen-btn">Regenerate Key</button>
+            </div>
+
+            <div id="key-error" class="error-box" style="display:none;">
+                <strong>Error:</strong> <span id="key-error-msg"></span>
+            </div>
+
+            {{else}}
+            <!-- Not logged in -->
+            <div class="info-box" style="text-align:center; padding: 40px 20px;">
+                <h3>Sign in to view your API key</h3>
+                <p>You need to be a member to access the Data API.</p>
+                <a href="#/portal/signin" data-portal="signin" class="api-button" style="display:inline-block; margin-top:15px; text-decoration:none;">
+                    Sign In
+                </a>
+                <p style="margin-top:15px;">
+                    Not a member? <a href="#/portal/signup" data-portal="signup" class="api-link">Subscribe here</a>
+                </p>
+            </div>
+            {{/if}}
+
+        </div>
+    </main>
+</div>
+
+<style>
+    .api-keys-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .api-section-title {
+        color: #104b1f;
+        margin-top: 30px;
+        font-family: Georgia, serif;
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .info-box {
+        background: rgba(16, 75, 31, 0.1);
+        border-left: 4px solid #104b1f;
+        padding: 20px;
+        margin: 20px 0;
+        font-family: Georgia, serif;
+    }
+
+    .error-box {
+        background: #f8d7da;
+        border-left: 4px solid #721c24;
+        padding: 20px;
+        margin: 20px 0;
+        font-family: Georgia, serif;
+        color: #721c24;
+    }
+
+    .api-link {
+        color: #104b1f;
+        text-decoration: underline;
+    }
+
+    .key-row {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin: 12px 0 8px 0;
+    }
+
+    .api-key-code {
+        flex: 1;
+        background: #2d2d2d;
+        color: #98c379;
+        padding: 12px 15px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        font-size: 15px;
+        word-break: break-all;
+    }
+
+    .key-meta {
+        display: flex;
+        gap: 25px;
+        font-size: 14px;
+        color: #555;
+        margin-top: 4px;
+    }
+
+    .api-button {
+        padding: 12px 25px;
+        font-size: 16px;
+        font-family: Georgia, serif;
+        background-color: #104b1f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+    }
+
+    .api-button:hover {
+        background-color: rgba(16, 75, 31, 0.7);
+    }
+
+    .api-button-small {
+        padding: 10px 18px;
+        font-size: 14px;
+    }
+
+    .api-button-danger {
+        background-color: #B7410E;
+    }
+
+    .api-button-danger:hover {
+        background-color: rgba(183, 65, 14, 0.7);
+    }
+
+    .usage-container {
+        margin: 15px 0;
+    }
+
+    .usage-bar-bg {
+        width: 100%;
+        height: 24px;
+        background: #e0e0e0;
+        border-radius: 12px;
+        overflow: hidden;
+    }
+
+    .usage-bar-fill {
+        height: 100%;
+        background: #104b1f;
+        border-radius: 12px;
+        transition: width 0.5s ease;
+    }
+
+    .usage-bar-fill.warning {
+        background: #f0ad4e;
+    }
+
+    .usage-bar-fill.danger {
+        background: #B7410E;
+    }
+
+    .usage-text {
+        margin-top: 8px;
+        font-family: Georgia, serif;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .code-block {
+        background: #2d2d2d;
+        color: #abb2bf;
+        padding: 20px;
+        border-radius: 5px;
+        overflow-x: auto;
+        margin: 15px 0;
+    }
+
+    .code-block pre {
+        margin: 0;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .code-block code {
+        color: #abb2bf;
+    }
+</style>
+
+{{#if @member}}
+<script>
+    const API_BASE = 'https://data-api-production-74e0.up.railway.app';
+    const memberEmail = '{{@member.email}}';
+
+    async function loadKey() {
+        try {
+            const response = await fetch(
+                `${API_BASE}/keys/provision?email=${encodeURIComponent(memberEmail)}`,
+                { method: 'POST' }
+            );
+            const data = await response.json();
+
+            if (!response.ok) {
+                showError(data.detail || 'Failed to load API key');
+                return;
+            }
+
+            // Display key
+            document.getElementById('api-key-value').textContent = data.api_key;
+            document.getElementById('key-tier').textContent = data.tier;
+            document.getElementById('key-email').textContent = data.email;
+
+            // Update Python example with actual key
+            const example = document.getElementById('python-example').textContent;
+            document.getElementById('python-example').textContent =
+                example.replace('your_key_here', data.api_key);
+
+            // Update usage bar
+            updateUsage(data.usage);
+
+            // Show key display, hide loading
+            document.getElementById('key-loading').style.display = 'none';
+            document.getElementById('key-display').style.display = 'block';
+
+        } catch (err) {
+            showError('Could not connect to API server: ' + err.message);
+        }
+    }
+
+    function updateUsage(usage) {
+        const bar = document.getElementById('usage-bar');
+        const text = document.getElementById('usage-text');
+
+        if (usage.limit === null) {
+            // Unlimited
+            bar.style.width = '5%';
+            text.textContent = `${usage.used} requests this month (unlimited)`;
+        } else {
+            const pct = Math.min(100, (usage.used / usage.limit) * 100);
+            bar.style.width = pct + '%';
+
+            if (pct >= 90) bar.classList.add('danger');
+            else if (pct >= 70) bar.classList.add('warning');
+
+            const remaining = usage.remaining !== null ? usage.remaining : '?';
+            text.textContent = `${usage.used} / ${usage.limit} requests this month (${remaining} remaining)`;
+        }
+    }
+
+    function showError(msg) {
+        document.getElementById('key-loading').style.display = 'none';
+        document.getElementById('key-error-msg').textContent = msg;
+        document.getElementById('key-error').style.display = 'block';
+    }
+
+    async function copyKey() {
+        const key = document.getElementById('api-key-value').textContent;
+        try {
+            await navigator.clipboard.writeText(key);
+            const btn = document.getElementById('copy-btn');
+            btn.textContent = 'Copied';
+            setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        } catch (err) {
+            // Fallback for older browsers
+            const el = document.createElement('textarea');
+            el.value = key;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            const btn = document.getElementById('copy-btn');
+            btn.textContent = 'Copied';
+            setTimeout(() => { btn.textContent = 'Copy'; }, 2000);
+        }
+    }
+
+    async function regenerateKey() {
+        if (!confirm('Are you sure? Your current key will stop working immediately.')) return;
+
+        const btn = document.getElementById('regen-btn');
+        btn.disabled = true;
+        btn.textContent = 'Regenerating...';
+
+        try {
+            const response = await fetch(
+                `${API_BASE}/keys/regenerate?email=${encodeURIComponent(memberEmail)}`,
+                { method: 'POST' }
+            );
+            const data = await response.json();
+
+            if (!response.ok) {
+                alert('Error: ' + (data.detail || 'Failed to regenerate key'));
+                btn.disabled = false;
+                btn.textContent = 'Regenerate Key';
+                return;
+            }
+
+            // Update displayed key
+            document.getElementById('api-key-value').textContent = data.api_key;
+
+            // Update Python example
+            const example = document.getElementById('python-example');
+            example.textContent = example.textContent.replace(/eae_[a-f0-9]{32}/, data.api_key);
+
+            btn.disabled = false;
+            btn.textContent = 'Regenerate Key';
+            alert('New key generated. Your old key has been deactivated.');
+
+        } catch (err) {
+            alert('Error: ' + err.message);
+            btn.disabled = false;
+            btn.textContent = 'Regenerate Key';
+        }
+    }
+
+    // Load key on page load
+    document.addEventListener('DOMContentLoaded', loadKey);
+</script>
+{{/if}}

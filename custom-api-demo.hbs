@@ -368,11 +368,25 @@ into the {body} tag of the default.hbs template --}}
     const isMember = {{#if @member}}true{{else}}false{{/if}};
     const memberEmail = {{#if @member}}'{{@member.email}}'{{else}}null{{/if}};
 
-    // API key for authenticated members only
+    // API key for authenticated members — fetched from /keys/provision
+    let API_KEY = null;
+
     {{#if @member}}
-    const API_KEY = 'ghost-member-access-2024';
-    {{else}}
-    const API_KEY = null;
+    // Provision per-user key on page load
+    (async function() {
+        try {
+            const resp = await fetch(
+                `${API_BASE}/keys/provision?email=${encodeURIComponent(memberEmail)}`,
+                { method: 'POST' }
+            );
+            if (resp.ok) {
+                const data = await resp.json();
+                API_KEY = data.api_key;
+            }
+        } catch (e) {
+            console.warn('Could not provision API key:', e);
+        }
+    })();
     {{/if}}
 
     // Chart instance
