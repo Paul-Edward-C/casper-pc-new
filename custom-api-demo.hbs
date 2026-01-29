@@ -92,6 +92,242 @@ into the {body} tag of the default.hbs template --}}
             </div>
 
         </div>
+
+        <!-- API Documentation Section -->
+        <div class="api-docs-container gh-canvas">
+
+            <hr class="docs-divider">
+
+            <h2 class="api-section-title" id="getting-started">Getting Started</h2>
+
+            <p class="docs-text">
+                The East Asia Econ Data API provides programmatic access to 246,000+ monthly economic indicators
+                covering China, Japan, Korea, Taiwan, and regional aggregates. Follow these three steps to start
+                pulling data into your own scripts and models.
+            </p>
+
+            <div class="docs-steps">
+                <div class="docs-step">
+                    <div class="docs-step-number">1</div>
+                    <div class="docs-step-content">
+                        <h3>Subscribe</h3>
+                        <p>
+                            <a href="#/portal/signup" data-portal="signup" class="api-link">Create a free account</a>
+                            or subscribe to a paid tier for higher limits. All members get an API key.
+                        </p>
+                    </div>
+                </div>
+                <div class="docs-step">
+                    <div class="docs-step-number">2</div>
+                    <div class="docs-step-content">
+                        <h3>Get Your API Key</h3>
+                        <p>
+                            Visit the <a href="/api-keys/" class="api-link">API Keys page</a> while signed in.
+                            Your personal key (starting with <code>eae_</code>) will be generated automatically.
+                            Copy it and keep it private.
+                        </p>
+                    </div>
+                </div>
+                <div class="docs-step">
+                    <div class="docs-step-number">3</div>
+                    <div class="docs-step-content">
+                        <h3>Make Requests</h3>
+                        <p>
+                            Pass your key in the <code>X-API-Key</code> header. Search is open to everyone;
+                            data download requires authentication.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="api-section-title" id="rate-limits">Rate Limits</h2>
+
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Membership Tier</th>
+                        <th>Monthly Limit</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Free</td>
+                        <td>10 series lookups</td>
+                        <td>Trying out the API</td>
+                    </tr>
+                    <tr>
+                        <td>Daily</td>
+                        <td>30 series lookups</td>
+                        <td>Regular monitoring</td>
+                    </tr>
+                    <tr>
+                        <td>Daily + Data / East Asia</td>
+                        <td>Unlimited</td>
+                        <td>Research and modelling</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="docs-text">
+                Usage resets on the 1st of each month (UTC). You can check your current usage on
+                the <a href="/api-keys/" class="api-link">API Keys page</a> or via the
+                <code>GET /usage</code> endpoint.
+            </p>
+
+            <h2 class="api-section-title" id="endpoints">API Endpoints</h2>
+
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Auth?</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>GET /v3/search?q=...&freq=m</code></td>
+                        <td>No</td>
+                        <td>Search for series by keyword. Returns name, country, date range, obs count.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /v3/series/{name}</code></td>
+                        <td>Yes</td>
+                        <td>Download data for a series. Optional <code>start</code> and <code>end</code> date filters.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /v3/info/{name}</code></td>
+                        <td>No</td>
+                        <td>Get metadata (date range, frequency, obs count) without downloading data.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /v3/stats</code></td>
+                        <td>No</td>
+                        <td>Summary statistics: total series, breakdowns by country and frequency.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /usage</code></td>
+                        <td>Yes</td>
+                        <td>Your current usage and rate limit status.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="docs-text">
+                <strong>Base URL:</strong> <code>https://data-api-production-74e0.up.railway.app</code>
+            </p>
+
+            <h2 class="api-section-title" id="python-example">Python Example</h2>
+
+            <p class="docs-text">
+                Copy the script below and replace <code>YOUR_KEY_HERE</code> with the key from
+                your <a href="/api-keys/" class="api-link">API Keys page</a>. Requires only the
+                <code>requests</code> library (<code>pip install requests</code>).
+            </p>
+
+            <div class="docs-code">
+<pre><code>import requests
+
+API_KEY = "YOUR_KEY_HERE"
+BASE    = "https://data-api-production-74e0.up.railway.app"
+
+# ── 1. Search for series ──────────────────────────────────
+results = requests.get(f"{BASE}/v3/search", params={
+    "q": "CPI",
+    "freq": "m",
+    "country": "jp",
+    "limit": 5
+}).json()
+
+print(f"Found {results['count']} series matching 'CPI' (Japan, monthly)\n")
+for s in results["results"]:
+    print(f"  {s['name']}  ({s['count']} obs, {s['min_date'][:7]} to {s['max_date'][:7]})")
+
+# ── 2. Download data for one series ───────────────────────
+series_name = results["results"][0]["name"]
+data = requests.get(
+    f"{BASE}/v3/series/{series_name}",
+    headers={"X-API-Key": API_KEY},
+    params={"start": "2020-01-01"}
+).json()
+
+print(f"\n{series_name}")
+print(f"{data['count']} observations from {data['min_date']} to {data['max_date']}\n")
+
+# ── 3. Convert to pandas DataFrame ───────────────────────
+import pandas as pd
+
+df = pd.DataFrame(data["data"])
+df["Date"] = pd.to_datetime(df["Date"])
+df = df.set_index("Date")
+
+print(df.tail(10))
+
+# ── 4. Check your usage ──────────────────────────────────
+usage = requests.get(
+    f"{BASE}/usage",
+    headers={"X-API-Key": API_KEY}
+).json()
+
+u = usage["usage"]
+print(f"\nUsage this month: {u['requests_used']} / {u['requests_limit'] or 'unlimited'}")</code></pre>
+            </div>
+
+            <h2 class="api-section-title" id="authentication">Authentication</h2>
+
+            <p class="docs-text">
+                Include your API key in the <code>X-API-Key</code> header on every request that
+                requires authentication:
+            </p>
+
+            <div class="docs-code">
+<pre><code># Python (requests)
+response = requests.get(url, headers={"X-API-Key": "eae_your_key_here"})
+
+# curl
+curl -H "X-API-Key: eae_your_key_here" "https://data-api-production-74e0.up.railway.app/v3/series/Japan,%20CPI,%20Crude%20oil,%20JPY"
+
+# JavaScript (fetch)
+fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
+            </div>
+
+            <p class="docs-text">
+                If your key is compromised, visit the <a href="/api-keys/" class="api-link">API Keys page</a>
+                and click <strong>Regenerate Key</strong>. Your old key will stop working immediately.
+            </p>
+
+            <h2 class="api-section-title" id="response-format">Response Format</h2>
+
+            <p class="docs-text">
+                All endpoints return JSON. A typical data response from <code>/v3/series/</code>:
+            </p>
+
+            <div class="docs-code">
+<pre><code>{
+  "series_name": "Japan, CPI, Crude oil, JPY",
+  "country": "jp",
+  "frequency": "m",
+  "count": 784,
+  "min_date": "1960-01-01",
+  "max_date": "2025-04-01",
+  "data": [
+    {"Date": "2024-01-01", "value": 12082.85},
+    {"Date": "2024-02-01", "value": 11934.33},
+    ...
+  ],
+  "rate_limit": {
+    "used": 3,
+    "limit": null,
+    "remaining": null,
+    "tier": "premium",
+    "period": "monthly",
+    "month": "2026-01"
+  }
+}</code></pre>
+            </div>
+
+        </div>
     </main>
 </div>
 
@@ -353,6 +589,138 @@ into the {body} tag of the default.hbs template --}}
         width: 14px;
         height: 14px;
         fill: currentColor;
+    }
+
+    /* ── Documentation Section ── */
+
+    .api-docs-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .docs-divider {
+        border: none;
+        border-top: 2px solid rgba(16, 75, 31, 0.2);
+        margin: 50px 0 30px 0;
+    }
+
+    .docs-text {
+        font-family: Georgia, serif;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #333;
+        margin: 12px 0;
+    }
+
+    .docs-text code {
+        background: rgba(16, 75, 31, 0.1);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 14px;
+    }
+
+    .docs-steps {
+        margin: 25px 0;
+    }
+
+    .docs-step {
+        display: flex;
+        gap: 18px;
+        margin: 20px 0;
+        align-items: flex-start;
+    }
+
+    .docs-step-number {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        background: #104b1f;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Georgia, serif;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 2px;
+    }
+
+    .docs-step-content h3 {
+        font-family: Georgia, serif;
+        font-size: 18px;
+        color: #104b1f;
+        margin: 0 0 4px 0;
+    }
+
+    .docs-step-content p {
+        font-family: Georgia, serif;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #444;
+        margin: 0;
+    }
+
+    .docs-step-content code {
+        background: rgba(16, 75, 31, 0.1);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 13px;
+    }
+
+    .docs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0 25px 0;
+        font-family: Georgia, serif;
+        font-size: 15px;
+    }
+
+    .docs-table th {
+        background: #104b1f;
+        color: white;
+        padding: 10px 14px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .docs-table td {
+        padding: 10px 14px;
+        border-bottom: 1px solid #ddd;
+        color: #333;
+    }
+
+    .docs-table td code {
+        background: rgba(16, 75, 31, 0.08);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .docs-table tr:nth-child(even) {
+        background: rgba(16, 75, 31, 0.04);
+    }
+
+    .docs-code {
+        background: #2d2d2d;
+        color: #abb2bf;
+        padding: 20px;
+        border-radius: 5px;
+        overflow-x: auto;
+        margin: 15px 0 25px 0;
+    }
+
+    .docs-code pre {
+        margin: 0;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    .docs-code code {
+        color: #abb2bf;
     }
 </style>
 
