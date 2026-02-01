@@ -54,7 +54,7 @@ into the {body} tag of the default.hbs template --}}
             </div>
 
             <div class="api-call" id="search-api-call">
-                GET /v2/search?q=CPI&limit=15
+                GET /v3/search?q=CPI&limit=15
             </div>
 
             <div id="search-status" class="status" style="display:none;"></div>
@@ -66,7 +66,7 @@ into the {body} tag of the default.hbs template --}}
             <h2 class="api-section-title">Data: <span id="selected-series">Select a series above</span></h2>
 
             <div class="api-call" id="data-api-call" style="display:none;">
-                GET /v3/series/{series_name}
+                GET /v3/series/{series_name}?freq=m
             </div>
 
             <div id="chart-container">
@@ -171,22 +171,22 @@ into the {body} tag of the default.hbs template --}}
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>GET /v2/search?q=...&freq=m</code></td>
+                        <td><code>GET /v3/search?q=...&freq=m</code></td>
                         <td>No</td>
                         <td>Search for series by keyword. Returns name, country, and available frequencies (m, q, a).</td>
                     </tr>
                     <tr>
-                        <td><code>GET /v2/series/{name}?freq=m</code></td>
+                        <td><code>GET /v3/series/{name}?freq=m</code></td>
                         <td>Yes</td>
                         <td>Download data for a series. Specify <code>freq</code> (m, q, a); defaults to monthly. Optional <code>start</code> and <code>end</code> date filters.</td>
                     </tr>
                     <tr>
-                        <td><code>GET /v2/info/{name}</code></td>
+                        <td><code>GET /v3/info/{name}</code></td>
                         <td>No</td>
                         <td>Get metadata (available frequencies, date ranges, obs counts) without downloading data.</td>
                     </tr>
                     <tr>
-                        <td><code>GET /v2/stats</code></td>
+                        <td><code>GET /v3/stats</code></td>
                         <td>No</td>
                         <td>Summary statistics: total series, breakdowns by country and frequency.</td>
                     </tr>
@@ -217,7 +217,7 @@ API_KEY = "YOUR_KEY_HERE"
 BASE    = "https://data-api-production-74e0.up.railway.app"
 
 # ── 1. Search for series ──────────────────────────────────
-results = requests.get(f"{BASE}/v2/search", params={
+results = requests.get(f"{BASE}/v3/search", params={
     "q": "CPI",
     "country": "jp",
     "limit": 5
@@ -231,7 +231,7 @@ for s in results["results"]:
 # ── 2. Download monthly data for one series ───────────────
 series_name = results["results"][0]["name"]
 data = requests.get(
-    f"{BASE}/v2/series/{series_name}",
+    f"{BASE}/v3/series/{series_name}",
     headers={"X-API-Key": API_KEY},
     params={"freq": "m", "start": "2020-01-01"}
 ).json()
@@ -270,7 +270,7 @@ print(f"\nUsage this month: {u['requests_used']} / {u['requests_limit'] or 'unli
 response = requests.get(url, headers={"X-API-Key": "eae_your_key_here"})
 
 # curl
-curl -H "X-API-Key: eae_your_key_here" "https://data-api-production-74e0.up.railway.app/v2/series/Japan,%20CPI,%20Crude%20oil,%20JPY?freq=m"
+curl -H "X-API-Key: eae_your_key_here" "https://data-api-production-74e0.up.railway.app/v3/series/Japan,%20CPI,%20Crude%20oil,%20JPY?freq=m"
 
 # JavaScript (fetch)
 fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
@@ -284,7 +284,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
             <h2 class="api-section-title" id="response-format">Response Format</h2>
 
             <p class="docs-text">
-                All endpoints return JSON. A typical data response from <code>/v2/series/</code>:
+                All endpoints return JSON. A typical data response from <code>/v3/series/</code>:
             </p>
 
             <div class="docs-code">
@@ -882,7 +882,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
         }
     }
 
-    // Search for series (using v2 endpoint with multi-frequency index)
+    // Search for series (using v3 SQLite endpoint)
     async function searchSeries() {
         const query = document.getElementById('search-input').value;
         const freq = document.getElementById('freq-select').value;
@@ -893,8 +893,8 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
             return;
         }
 
-        // Build URL - use v2 endpoint
-        let url = `${API_BASE}/v2/search?q=${encodeURIComponent(query)}&limit=15`;
+        // Build URL - use v3 endpoint
+        let url = `${API_BASE}/v3/search?q=${encodeURIComponent(query)}&limit=15`;
         if (freq) {
             url += `&freq=${freq}`;
         }
@@ -904,7 +904,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
 
         // Show API call
         document.getElementById('search-api-call').textContent =
-            `GET /v2/search?q=${query}${freq ? '&freq=' + freq : ''}${country ? '&country=' + country : ''}&limit=15`;
+            `GET /v3/search?q=${query}${freq ? '&freq=' + freq : ''}${country ? '&country=' + country : ''}&limit=15`;
 
         showStatus('search-status', 'Searching...', 'loading');
 
@@ -946,7 +946,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
         }).join('');
     }
 
-    // Select a series and load data (using v2 endpoint)
+    // Select a series and load data (using v3 SQLite endpoint)
     async function selectSeries(name, freq) {
         // Highlight selected
         document.querySelectorAll('.result-item').forEach(el => el.classList.remove('selected'));
@@ -954,14 +954,14 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
 
         document.getElementById('selected-series').textContent = name + (freq ? ` (${FREQ_LABELS[freq] || freq})` : '');
 
-        // Show API call - v2 uses path parameter + optional freq
+        // Show API call - v3 uses path parameter + optional freq
         const freqParam = freq ? `?freq=${freq}` : '';
-        const apiCall = `GET /v2/series/${encodeURIComponent(name)}${freqParam}`;
+        const apiCall = `GET /v3/series/${encodeURIComponent(name)}${freqParam}`;
         document.getElementById('data-api-call').textContent = apiCall;
         document.getElementById('data-api-call').style.display = 'block';
 
-        // Fetch data - v2 endpoint with path parameter
-        let url = `${API_BASE}/v2/series/${encodeURIComponent(name)}`;
+        // Fetch data - v3 endpoint with path parameter
+        let url = `${API_BASE}/v3/series/${encodeURIComponent(name)}`;
         if (freq) {
             url += `?freq=${freq}`;
         }
