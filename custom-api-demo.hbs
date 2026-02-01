@@ -935,11 +935,13 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
             const name = item.name;
             const country = item.country ? item.country.toUpperCase() : '';
             const freqs = (item.frequencies || []).map(f => FREQ_LABELS[f] || f).join(', ');
-            // Build frequency buttons
-            const freqButtons = (item.frequencies || []).map(f =>
+            // Build frequency buttons — first freq is the default when clicking the row
+            const availFreqs = item.frequencies || [];
+            const defaultFreq = availFreqs[0] || 'm';
+            const freqButtons = availFreqs.map(f =>
                 `<button class="freq-button" onclick="event.stopPropagation(); selectSeries('${escapeHtml(name)}', '${f}')">${f.toUpperCase()}</button>`
             ).join('');
-            return `<div class="result-item" onclick="selectSeries('${escapeHtml(name)}')">
+            return `<div class="result-item" onclick="selectSeries('${escapeHtml(name)}', '${defaultFreq}')">
                 <strong>${name}</strong>
                 <span style="float:right;color:#666;font-size:12px;">${country} &nbsp; ${freqButtons}</span>
             </div>`;
