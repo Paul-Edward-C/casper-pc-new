@@ -34,6 +34,14 @@ into the {body} tag of the default.hbs template --}}
 
             <h2 class="api-section-title">Search for Data Series</h2>
 
+            <div class="info-box" id="stats-box">
+                <strong><span id="stats-total">680,000+</span> economic data series</strong> covering
+                China, Japan, Korea, Taiwan, and regional aggregates.
+                Monthly, quarterly, and annual frequencies.<br>
+                Search by keyword — e.g. <em>CPI</em>, <em>GDP</em>, <em>exports</em>, <em>unemployment</em>.
+                Filter by country or frequency using the dropdowns below.
+            </div>
+
             <div class="search-container">
                 <input type="text" id="search-input" placeholder="Search (e.g., CPI, GDP, exports, inflation)..." value="CPI">
                 <select id="freq-select">
@@ -1313,4 +1321,16 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
     document.getElementById('search-input').addEventListener('keypress', function(e) {
         if (e.key === 'Enter') searchSeries();
     });
+
+    // Fetch live series count for stats box
+    (async function() {
+        try {
+            const resp = await fetch(`${API_BASE}/v3/stats`);
+            if (resp.ok) {
+                const stats = await resp.json();
+                document.getElementById('stats-total').textContent =
+                    stats.total_series.toLocaleString();
+            }
+        } catch (e) {}
+    })();
 </script>
