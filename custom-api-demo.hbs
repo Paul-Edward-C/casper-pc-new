@@ -17,7 +17,7 @@ into the {body} tag of the default.hbs template --}}
         <div class="api-demo-container gh-canvas">
 
  {{!--           <div class="info-box">
-                <strong>API Endpoint:</strong> <code>https://data-api-production-74e0.up.railway.app</code><br>
+                <strong>API Endpoint:</strong> <code>https://data-api.eastasiaecon.com</code><br>
                 <strong>Coverage:</strong> China, Japan, Korea, Taiwan + Regional data<br>
                 <strong>Series:</strong> 246,000+ monthly economic indicators<br>
                 <strong>Access:</strong> Search is free. Data download requires <a href="#/portal/signup" class="api-link">subscription</a>.
@@ -207,7 +207,7 @@ into the {body} tag of the default.hbs template --}}
             </table>
 
             <p class="docs-text">
-                <strong>Base URL:</strong> <code>https://data-api-production-74e0.up.railway.app</code>
+                <strong>Base URL:</strong> <code>https://data-api.eastasiaecon.com</code>
             </p>
 
             <h2 class="api-section-title" id="python-example">Python Example</h2>
@@ -222,7 +222,7 @@ into the {body} tag of the default.hbs template --}}
 <pre><code>import requests
 
 API_KEY = "YOUR_KEY_HERE"
-BASE    = "https://data-api-production-74e0.up.railway.app"
+BASE    = "https://data-api.eastasiaecon.com"
 
 # ── 1. Search for series ──────────────────────────────────
 results = requests.get(f"{BASE}/v3/search", params={
@@ -278,7 +278,7 @@ print(f"\nUsage this month: {u['requests_used']} / {u['requests_limit'] or 'unli
 response = requests.get(url, headers={"X-API-Key": "eae_your_key_here"})
 
 # curl
-curl -H "X-API-Key: eae_your_key_here" "https://data-api-production-74e0.up.railway.app/v3/series/Japan,%20CPI,%20Crude%20oil,%20JPY?freq=m"
+curl -H "X-API-Key: eae_your_key_here" "https://data-api.eastasiaecon.com/v3/series/Japan,%20CPI,%20Crude%20oil,%20JPY?freq=m"
 
 # JavaScript (fetch)
 fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
@@ -782,7 +782,7 @@ fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
 
 <script>
     // Configuration
-    const API_BASE = 'https://data-api-production-74e0.up.railway.app';
+    const API_BASE = 'https://data-api.eastasiaecon.com';
 
     // Member status from Ghost
     const isMember = {{#if @member}}true{{else}}false{{/if}};
