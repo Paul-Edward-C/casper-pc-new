@@ -1,0 +1,1336 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} tag of the default.hbs template --}}
+
+<main id="site-main" class="site-main">
+<article class="article">
+
+    <header class="article-header gh-canvas">
+        <h1 class="article-title">Data API</h1>
+    </header>
+
+    <section class="gh-content gh-canvas">
+        {{#page}}{{{content}}}{{/page}}
+    </section>
+
+        <!-- API Demo Section -->
+        <div class="api-demo-container gh-canvas">
+
+ {{!--           <div class="info-box">
+                <strong>API Endpoint:</strong> <code>https://data-api-production-74e0.up.railway.app</code><br>
+                <strong>Coverage:</strong> China, Japan, Korea, Taiwan + Regional data<br>
+                <strong>Series:</strong> 246,000+ monthly economic indicators<br>
+                <strong>Access:</strong> Search is free. Data download requires <a href="#/portal/signup" class="api-link">subscription</a>.
+            </div>--}}
+
+            <!-- Tab bar -->
+            <div class="tab-bar">
+                <button class="tab-button active" onclick="switchTab('search')">Search</button>
+                <button class="tab-button" onclick="switchTab('docs')">Documentation</button>
+            </div>
+
+            <!-- Search tab (visible by default) -->
+            <div id="tab-search">
+
+            <h2 class="api-section-title">Search for Data Series</h2>
+
+            <div class="info-box" id="stats-box">
+                <strong><span id="stats-total">680,000+</span> economic data series</strong> covering
+                China, Japan, Korea, Taiwan, and regional aggregates.
+                Monthly, quarterly, and annual frequencies.<br>
+                Search by keyword — e.g. <em>CPI</em>, <em>GDP</em>, <em>exports</em>, <em>unemployment</em>.
+                Filter by country or frequency using the dropdowns below.
+            </div>
+
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Search (e.g., CPI, GDP, exports, inflation)..." value="CPI">
+                <select id="freq-select">
+                    <option value="">All Frequencies</option>
+                    <option value="m">Monthly</option>
+                    <option value="q">Quarterly</option>
+                    <option value="a">Annual</option>
+                </select>
+                <select id="country-select">
+                    <option value="">All Countries</option>
+                    <option value="cn">China</option>
+                    <option value="jp">Japan</option>
+                    <option value="kr">Korea</option>
+                    <option value="tw">Taiwan</option>
+                    <option value="region">Regional</option>
+                </select>
+                <button onclick="searchSeries()" class="api-button">Search</button>
+            </div>
+
+            <div class="api-call" id="search-api-call">
+                GET /v3/search?q=CPI&limit=15
+            </div>
+
+            <div id="search-status" class="status" style="display:none;"></div>
+
+            <div class="results-container" id="results-container">
+                <p><em>Enter a search term and click Search to find data series.</em></p>
+            </div>
+
+            <h2 class="api-section-title">Data: <span id="selected-series">Select a series above</span></h2>
+
+            <div class="api-call" id="data-api-call" style="display:none;">
+                GET /v3/series/{series_name}?freq=m
+            </div>
+
+            <div id="chart-container">
+                <canvas id="data-chart"></canvas>
+            </div>
+
+            <div id="data-table-container">
+                <p><em>Data will appear here when you select a series.</em></p>
+            </div>
+
+            </div><!-- /tab-search -->
+
+            <!-- Documentation tab (hidden by default) -->
+            <div id="tab-docs" style="display:none;">
+
+            <h2 class="api-section-title" id="getting-started">Getting Started</h2>
+
+            <p class="docs-text">
+                The East Asia Econ Data API provides programmatic access to 680,000+ economic indicators
+                (monthly, quarterly, and annual) covering China, Japan, Korea, Taiwan, and regional aggregates.
+                Follow these three steps to start pulling data into your own scripts and models.
+            </p>
+
+            <div class="docs-steps">
+                <div class="docs-step">
+                    <div class="docs-step-number">1</div>
+                    <div class="docs-step-content">
+                        <h3>Subscribe</h3>
+                        <p>
+                            <a href="#/portal/signup" data-portal="signup" class="api-link">Create a free account</a>
+                            or subscribe to a paid tier for higher limits. All members get an API key.
+                        </p>
+                    </div>
+                </div>
+                <div class="docs-step">
+                    <div class="docs-step-number">2</div>
+                    <div class="docs-step-content">
+                        <h3>Get Your API Key</h3>
+                        <p>
+                            Visit the <a href="/api-keys/" class="api-link">API Keys page</a> while signed in.
+                            Your personal key (starting with <code>eae_</code>) will be generated automatically.
+                            Copy it and keep it private.
+                        </p>
+                    </div>
+                </div>
+                <div class="docs-step">
+                    <div class="docs-step-number">3</div>
+                    <div class="docs-step-content">
+                        <h3>Make Requests</h3>
+                        <p>
+                            Pass your key in the <code>X-API-Key</code> header. Search is open to everyone;
+                            data download requires authentication.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="api-section-title" id="rate-limits">Rate Limits</h2>
+
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Membership Tier</th>
+                        <th>Monthly Limit</th>
+                        <th>Best For</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Free</td>
+                        <td>10 series lookups</td>
+                        <td>Trying out the API</td>
+                    </tr>
+                    <tr>
+                        <td>Daily</td>
+                        <td>30 series lookups</td>
+                        <td>Regular monitoring</td>
+                    </tr>
+                    <tr>
+                        <td>Daily + Data / East Asia</td>
+                        <td>Unlimited</td>
+                        <td>Research and modelling</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="docs-text">
+                Usage resets on the 1st of each month (UTC). You can check your current usage on
+                the <a href="/api-keys/" class="api-link">API Keys page</a> or via the
+                <code>GET /usage</code> endpoint.
+            </p>
+
+            <h2 class="api-section-title" id="endpoints">API Endpoints</h2>
+
+            <table class="docs-table">
+                <thead>
+                    <tr>
+                        <th>Endpoint</th>
+                        <th>Auth?</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>GET /v3/search?q=...&freq=m</code></td>
+                        <td>No</td>
+                        <td>Search for series by keyword. Returns name, country, and available frequencies (m, q, a).</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /v3/series/{name}?freq=m</code></td>
+                        <td>Yes</td>
+                        <td>Download data for a series. Specify <code>freq</code> (m, q, a); defaults to monthly. Optional <code>start</code> and <code>end</code> date filters.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /v3/info/{name}</code></td>
+                        <td>No</td>
+                        <td>Get metadata (available frequencies, date ranges, obs counts) without downloading data.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /v3/stats</code></td>
+                        <td>No</td>
+                        <td>Summary statistics: total series, breakdowns by country and frequency.</td>
+                    </tr>
+                    <tr>
+                        <td><code>GET /usage</code></td>
+                        <td>Yes</td>
+                        <td>Your current usage and rate limit status.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p class="docs-text">
+                <strong>Base URL:</strong> <code>https://data-api-production-74e0.up.railway.app</code>
+            </p>
+
+            <h2 class="api-section-title" id="python-example">Python Example</h2>
+
+            <p class="docs-text">
+                Copy the script below and replace <code>YOUR_KEY_HERE</code> with the key from
+                your <a href="/api-keys/" class="api-link">API Keys page</a>. Requires only the
+                <code>requests</code> library (<code>pip install requests</code>).
+            </p>
+
+            <div class="docs-code">
+<pre><code>import requests
+
+API_KEY = "YOUR_KEY_HERE"
+BASE    = "https://data-api-production-74e0.up.railway.app"
+
+# ── 1. Search for series ──────────────────────────────────
+results = requests.get(f"{BASE}/v3/search", params={
+    "q": "CPI",
+    "country": "jp",
+    "limit": 5
+}).json()
+
+print(f"Found {results['count']} series matching 'CPI' (Japan)\n")
+for s in results["results"]:
+    freqs = ", ".join(s["frequencies"])
+    print(f"  {s['name']}  (available: {freqs})")
+
+# ── 2. Download monthly data for one series ───────────────
+series_name = results["results"][0]["name"]
+data = requests.get(
+    f"{BASE}/v3/series/{series_name}",
+    headers={"X-API-Key": API_KEY},
+    params={"freq": "m", "start": "2020-01-01"}
+).json()
+
+print(f"\n{series_name} (monthly)")
+print(f"{data['count']} observations from {data['min_date']} to {data['max_date']}\n")
+
+# ── 3. Convert to pandas DataFrame ───────────────────────
+import pandas as pd
+
+df = pd.DataFrame(data["data"])
+df["Date"] = pd.to_datetime(df["Date"])
+df = df.set_index("Date")
+
+print(df.tail(10))
+
+# ── 4. Check your usage ──────────────────────────────────
+usage = requests.get(
+    f"{BASE}/usage",
+    headers={"X-API-Key": API_KEY}
+).json()
+
+u = usage["usage"]
+print(f"\nUsage this month: {u['requests_used']} / {u['requests_limit'] or 'unlimited'}")</code></pre>
+            </div>
+
+            <h2 class="api-section-title" id="authentication">Authentication</h2>
+
+            <p class="docs-text">
+                Include your API key in the <code>X-API-Key</code> header on every request that
+                requires authentication:
+            </p>
+
+            <div class="docs-code">
+<pre><code># Python (requests)
+response = requests.get(url, headers={"X-API-Key": "eae_your_key_here"})
+
+# curl
+curl -H "X-API-Key: eae_your_key_here" "https://data-api-production-74e0.up.railway.app/v3/series/Japan,%20CPI,%20Crude%20oil,%20JPY?freq=m"
+
+# JavaScript (fetch)
+fetch(url, { headers: { "X-API-Key": "eae_your_key_here" } })</code></pre>
+            </div>
+
+            <p class="docs-text">
+                If your key is compromised, visit the <a href="/api-keys/" class="api-link">API Keys page</a>
+                and click <strong>Regenerate Key</strong>. Your old key will stop working immediately.
+            </p>
+
+            <h2 class="api-section-title" id="response-format">Response Format</h2>
+
+            <p class="docs-text">
+                All endpoints return JSON. A typical data response from <code>/v3/series/</code>:
+            </p>
+
+            <div class="docs-code">
+<pre><code>{
+  "series_name": "Japan, CPI, Crude oil, JPY",
+  "country": "jp",
+  "frequency": "m",
+  "count": 784,
+  "min_date": "1960-01-01",
+  "max_date": "2025-04-01",
+  "data": [
+    {"Date": "2024-01-01", "value": 12082.85},
+    {"Date": "2024-02-01", "value": 11934.33},
+    ...
+  ],
+  "rate_limit": {
+    "used": 3,
+    "limit": null,
+    "remaining": null,
+    "tier": "premium",
+    "period": "monthly",
+    "month": "2026-01"
+  }
+}</code></pre>
+            </div><!-- /tab-docs -->
+
+        </div>
+
+</article>
+</main>
+
+
+<style>
+    .article-title {
+        color: #104b1f;
+    }
+
+    .article-header {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .gh-content {
+        margin-top: 0 !important;
+        margin-bottom: 0;
+        padding-top: 0 !important;
+        padding-bottom: 0;
+    }
+
+    .api-demo-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .tab-bar {
+        display: flex;
+        gap: 0;
+        margin: 20px 0 0 0;
+        border-bottom: 2px solid #104b1f;
+    }
+
+    .tab-button {
+        padding: 12px 28px;
+        font-size: 16px;
+        font-family: Georgia, serif;
+        font-weight: bold;
+        background: transparent;
+        color: #666;
+        border: 2px solid transparent;
+        border-bottom: none;
+        border-radius: 5px 5px 0 0;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        margin-bottom: -2px;
+    }
+
+    .tab-button:hover {
+        color: #104b1f;
+        background: rgba(16, 75, 31, 0.05);
+    }
+
+    .tab-button.active {
+        color: #104b1f;
+        background: white;
+        border-color: #104b1f;
+        border-bottom-color: white;
+    }
+
+    .api-section-title {
+        color: #104b1f;
+        margin-top: 30px;
+        font-family: Georgia, serif;
+        font-size: 20px;
+        font-weight: bold;
+        border-bottom: 2px solid #104b1f;
+        padding-bottom: 4px;
+    }
+
+    .info-box {
+        background: rgba(16, 75, 31, 0.1);
+        border-left: 4px solid #104b1f;
+        padding: 15px;
+        margin: 10px 0 20px 0;
+        font-family: Georgia, serif;
+    }
+
+    .info-box code {
+        background: rgba(16, 75, 31, 0.15);
+        padding: 2px 6px;
+        border-radius: 3px;
+    }
+
+    .api-link {
+        color: #104b1f;
+        text-decoration: underline;
+    }
+
+    .search-container {
+        display: flex;
+        gap: 10px;
+        margin: 20px 0;
+        flex-wrap: wrap;
+    }
+
+    .search-container input[type="text"] {
+        flex: 1;
+        min-width: 200px;
+        padding: 12px 15px;
+        font-size: 16px;
+        font-family: Georgia, serif;
+        border: 2px solid #104b1f;
+        border-radius: 5px;
+    }
+
+    .search-container select {
+        padding: 12px 15px;
+        font-size: 16px;
+        font-family: Georgia, serif;
+        border: 2px solid #104b1f;
+        border-radius: 5px;
+        background: white;
+    }
+
+    .api-button {
+        padding: 12px 25px;
+        font-size: 16px;
+        font-family: Georgia, serif;
+        background-color: #104b1f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        font-weight: bold;
+    }
+
+    .api-button:hover {
+        background-color: rgba(16, 75, 31, 0.7);
+    }
+
+    .results-container {
+        margin: 20px 0;
+    }
+
+    .result-item {
+        padding: 12px 15px;
+        margin: 5px 0;
+        background: rgba(16, 75, 31, 0.05);
+        border-left: 4px solid #104b1f;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-family: Georgia, serif;
+    }
+
+    .result-item:hover {
+        background: rgba(16, 75, 31, 0.15);
+    }
+
+    .result-item.selected {
+        background: rgba(16, 75, 31, 0.2);
+        border-left-color: #B7410E;
+    }
+
+    .freq-button {
+        display: inline-block;
+        padding: 2px 8px;
+        margin-left: 4px;
+        font-size: 11px;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+        background: #104b1f;
+        color: white;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        vertical-align: middle;
+    }
+
+    .freq-button:hover {
+        background: #B7410E;
+    }
+
+
+    .api-call {
+        background: #2d2d2d;
+        color: #98c379;
+        padding: 15px;
+        border-radius: 5px;
+        font-family: 'Courier New', monospace;
+        font-size: 14px;
+        overflow-x: auto;
+        margin: 10px 0;
+    }
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        font-size: 14px;
+        font-family: Georgia, serif;
+    }
+
+    .data-table th {
+        background: #104b1f;
+        color: white;
+        padding: 10px;
+        text-align: left;
+    }
+
+    .data-table td {
+        padding: 8px 10px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .data-table tr:nth-child(even) {
+        background: rgba(16, 75, 31, 0.05);
+    }
+
+    .status {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 5px;
+    }
+
+    .status.loading {
+        background: #fff3cd;
+        color: #856404;
+    }
+
+    .status.error {
+        background: #f8d7da;
+        color: #721c24;
+    }
+
+    .status.success {
+        background: #d4edda;
+        color: #155724;
+    }
+
+    #selected-series {
+        font-weight: bold;
+        color: #B7410E;
+    }
+
+    .subscription-message {
+        text-align: center;
+        padding-top: 80px;
+    }
+
+    .subscription-message h3 {
+        color: #104b1f;
+        margin-bottom: 15px;
+    }
+
+    .subscription-message p {
+        color: #666;
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .subscription-message .api-button {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+    }
+
+    #chart-container {
+        width: 100%;
+        height: 400px;
+        margin: 20px 0;
+        padding: 20px;
+        border-radius: 4px;
+        position: relative;
+        background-color: #fff;
+    }
+
+    #data-chart {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative;
+        z-index: 1;
+    }
+
+    .chart-placeholder {
+        text-align: center;
+        padding: 50px;
+        color: #556B2F;
+        font-family: Georgia, serif;
+        font-style: italic;
+        position: relative;
+        z-index: 1;
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 4px;
+        margin: 50px;
+    }
+
+    /* Chart toolbar - positioned dynamically via JS to right of plot area */
+    .chart-toolbar {
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        background: rgba(245, 245, 245, 0.9);
+        padding: 4px;
+        border-radius: 2px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    }
+
+    .chart-toolbar button {
+        background: transparent;
+        border: none;
+        padding: 4px;
+        cursor: pointer;
+        color: #888;
+        font-size: 14px;
+        line-height: 1;
+        border-radius: 2px;
+        width: 24px;
+        height: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .chart-toolbar button:hover {
+        background: rgba(0, 0, 0, 0.1);
+        color: #333;
+    }
+
+    .chart-toolbar button.active {
+        background: rgba(0, 0, 0, 0.15);
+        color: #333;
+    }
+
+    .chart-toolbar button svg {
+        width: 14px;
+        height: 14px;
+        fill: currentColor;
+    }
+
+    /* ── Documentation Tab ── */
+
+    .docs-text {
+        font-family: Georgia, serif;
+        font-size: 16px;
+        line-height: 1.7;
+        color: #333;
+        margin: 12px 0;
+    }
+
+    .docs-text code {
+        background: rgba(16, 75, 31, 0.1);
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 14px;
+    }
+
+    .docs-steps {
+        margin: 25px 0;
+    }
+
+    .docs-step {
+        display: flex;
+        gap: 18px;
+        margin: 20px 0;
+        align-items: flex-start;
+    }
+
+    .docs-step-number {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        background: #104b1f;
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Georgia, serif;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 2px;
+    }
+
+    .docs-step-content h3 {
+        font-family: Georgia, serif;
+        font-size: 18px;
+        color: #104b1f;
+        margin: 0 0 4px 0;
+    }
+
+    .docs-step-content p {
+        font-family: Georgia, serif;
+        font-size: 15px;
+        line-height: 1.6;
+        color: #444;
+        margin: 0;
+    }
+
+    .docs-step-content code {
+        background: rgba(16, 75, 31, 0.1);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 13px;
+    }
+
+    .docs-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 15px 0 25px 0;
+        font-family: Georgia, serif;
+        font-size: 15px;
+    }
+
+    .docs-table th {
+        background: #104b1f;
+        color: white;
+        padding: 10px 14px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .docs-table td {
+        padding: 10px 14px;
+        border-bottom: 1px solid #ddd;
+        color: #333;
+    }
+
+    .docs-table td code {
+        background: rgba(16, 75, 31, 0.08);
+        padding: 2px 5px;
+        border-radius: 3px;
+        font-size: 13px;
+        white-space: nowrap;
+    }
+
+    .docs-table tr:nth-child(even) {
+        background: rgba(16, 75, 31, 0.04);
+    }
+
+    .docs-code {
+        background: #2d2d2d;
+        color: #abb2bf;
+        padding: 20px;
+        border-radius: 5px;
+        overflow-x: auto;
+        margin: 15px 0 25px 0;
+    }
+
+    .docs-code pre {
+        margin: 0;
+        font-family: 'Courier New', monospace;
+        font-size: 13px;
+        line-height: 1.55;
+    }
+
+    .docs-code code {
+        color: #abb2bf;
+    }
+</style>
+
+<!-- Chart.js library with zoom plugin -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom"></script>
+
+<script>
+    // Configuration
+    const API_BASE = 'https://data-api-production-74e0.up.railway.app';
+
+    // Member status from Ghost
+    const isMember = {{#if @member}}true{{else}}false{{/if}};
+    const memberEmail = {{#if @member}}'{{@member.email}}'{{else}}null{{/if}};
+
+    // API key for authenticated members — fetched from /keys/provision
+    let API_KEY = null;
+
+    {{#if @member}}
+    // Provision per-user key on page load
+    (async function() {
+        try {
+            const resp = await fetch(
+                `${API_BASE}/keys/provision?email=${encodeURIComponent(memberEmail)}`,
+                { method: 'POST' }
+            );
+            if (resp.ok) {
+                const data = await resp.json();
+                API_KEY = data.api_key;
+            }
+        } catch (e) {
+            console.warn('Could not provision API key:', e);
+        }
+    })();
+    {{/if}}
+
+    // Chart instance
+    let dataChart = null;
+    let currentTool = 'pan';
+
+    // Background image for chart area (loaded once)
+    const bgImage = new Image();
+    bgImage.src = 'https://www.eastasiaecon.com/content/images/size/w2400/2023/04/Image-29-4-2023-at-7.34-PM.jpeg';
+
+    // Chart.js plugin to draw background in chart area only
+    const chartAreaBgPlugin = {
+        id: 'chartAreaBg',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            if (!chartArea) return;
+
+            ctx.save();
+
+            // Draw green background fill (5% alpha like Bokeh)
+            ctx.fillStyle = 'rgba(34, 139, 34, 0.05)';
+            ctx.fillRect(chartArea.left, chartArea.top, chartArea.width, chartArea.height);
+
+            // Draw background image at 12% opacity (like Bokeh)
+            if (bgImage.complete) {
+                ctx.globalAlpha = 0.12;
+                ctx.drawImage(bgImage, chartArea.left, chartArea.top, chartArea.width, chartArea.height);
+                ctx.globalAlpha = 1;
+            }
+
+            ctx.restore();
+        }
+    };
+
+    // Plugin to draw horizontal line at zero (like Bokeh Span)
+    const zeroLinePlugin = {
+        id: 'zeroLine',
+        beforeDraw: (chart) => {
+            const ctx = chart.ctx;
+            const chartArea = chart.chartArea;
+            const yScale = chart.scales.y;
+            if (!chartArea || !yScale) return;
+
+            // Only draw if zero is within the visible range
+            const yMin = yScale.min;
+            const yMax = yScale.max;
+            if (yMin > 0 || yMax < 0) return;
+
+            const yPixel = yScale.getPixelForValue(0);
+
+            ctx.save();
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 1;
+            ctx.setLineDash([]);
+            ctx.beginPath();
+            ctx.moveTo(chartArea.left, yPixel);
+            ctx.lineTo(chartArea.right, yPixel);
+            ctx.stroke();
+            ctx.restore();
+        }
+    };
+
+    // Tool switching for chart
+    function setChartTool(tool) {
+        currentTool = tool;
+        // Update button states
+        document.querySelectorAll('.chart-toolbar button').forEach(btn => {
+            btn.classList.remove('active');
+        });
+        const activeBtn = document.getElementById('tool-' + tool);
+        if (activeBtn) activeBtn.classList.add('active');
+
+        // Update chart zoom/pan settings
+        if (dataChart) {
+            const zoomEnabled = (tool === 'zoom');
+            const panEnabled = (tool === 'pan');
+            dataChart.options.plugins.zoom.zoom.wheel.enabled = zoomEnabled;
+            dataChart.options.plugins.zoom.pan.enabled = panEnabled;
+            dataChart.update('none');
+        }
+    }
+
+    // Search for series (using v3 SQLite endpoint)
+    async function searchSeries() {
+        const query = document.getElementById('search-input').value;
+        const freq = document.getElementById('freq-select').value;
+        const country = document.getElementById('country-select').value;
+
+        if (!query.trim()) {
+            showStatus('search-status', 'Please enter a search term', 'error');
+            return;
+        }
+
+        // Build URL - use v3 endpoint
+        let url = `${API_BASE}/v3/search?q=${encodeURIComponent(query)}&limit=15`;
+        if (freq) {
+            url += `&freq=${freq}`;
+        }
+        if (country) {
+            url += `&country=${country}`;
+        }
+
+        // Show API call
+        document.getElementById('search-api-call').textContent =
+            `GET /v3/search?q=${query}${freq ? '&freq=' + freq : ''}${country ? '&country=' + country : ''}&limit=15`;
+
+        showStatus('search-status', 'Searching...', 'loading');
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.results && data.results.length > 0) {
+                displayResults(data.results);
+                showStatus('search-status', `Found ${data.count} series`, 'success');
+            } else {
+                document.getElementById('results-container').innerHTML =
+                    '<p><em>No results found. Try a different search term.</em></p>';
+                showStatus('search-status', 'No results found', 'error');
+            }
+        } catch (error) {
+            showStatus('search-status', `Error: ${error.message}`, 'error');
+        }
+    }
+
+    // Frequency labels for display
+    const FREQ_LABELS = { m: 'Monthly', q: 'Quarterly', a: 'Annual' };
+
+    // Display search results (v2 returns name, country, frequencies[])
+    function displayResults(results) {
+        const container = document.getElementById('results-container');
+        container.innerHTML = results.map(item => {
+            const name = item.name;
+            const country = item.country ? item.country.toUpperCase() : '';
+            const freqs = (item.frequencies || []).map(f => FREQ_LABELS[f] || f).join(', ');
+            // Build frequency buttons — first freq is the default when clicking the row
+            const availFreqs = item.frequencies || [];
+            const defaultFreq = availFreqs[0] || 'm';
+            const freqButtons = availFreqs.map(f =>
+                `<button class="freq-button" onclick="event.stopPropagation(); selectSeries('${escapeHtml(name)}', '${f}')">${f.toUpperCase()}</button>`
+            ).join('');
+            return `<div class="result-item" onclick="selectSeries('${escapeHtml(name)}', '${defaultFreq}')">
+                <strong>${name}</strong>
+                <span style="float:right;color:#666;font-size:12px;">${country} &nbsp; ${freqButtons}</span>
+            </div>`;
+        }).join('');
+    }
+
+    // Select a series and load data (using v3 SQLite endpoint)
+    async function selectSeries(name, freq) {
+        // Highlight selected
+        document.querySelectorAll('.result-item').forEach(el => el.classList.remove('selected'));
+        event.target.closest('.result-item').classList.add('selected');
+
+        document.getElementById('selected-series').textContent = name + (freq ? ` (${FREQ_LABELS[freq] || freq})` : '');
+
+        // Show API call - v3 uses path parameter + optional freq
+        const freqParam = freq ? `?freq=${freq}` : '';
+        const apiCall = `GET /v3/series/${encodeURIComponent(name)}${freqParam}`;
+        document.getElementById('data-api-call').textContent = apiCall;
+        document.getElementById('data-api-call').style.display = 'block';
+
+        // Fetch data - v3 endpoint with path parameter
+        let url = `${API_BASE}/v3/series/${encodeURIComponent(name)}`;
+        if (freq) {
+            url += `?freq=${freq}`;
+        }
+
+        // Clear chart and show loading
+        if (dataChart) {
+            dataChart.destroy();
+            dataChart = null;
+        }
+        document.getElementById('chart-container').innerHTML =
+            '<p class="chart-placeholder">Loading data...</p>';
+
+        try {
+            const fetchOptions = {};
+            if (API_KEY) {
+                fetchOptions.headers = { 'X-API-Key': API_KEY };
+            }
+            const response = await fetch(url, fetchOptions);
+            const data = await response.json();
+
+            if (data.data && data.data.length > 0) {
+                document.getElementById('chart-container').innerHTML = `
+                    <div class="chart-toolbar">
+                        <button onclick="setChartTool('pan')" id="tool-pan" title="Pan" class="active">
+                            <svg viewBox="0 0 24 24"><path d="M10 9h4V6h3l-5-5-5 5h3v3zm-1 1H6V7l-5 5 5 5v-3h3v-4zm14 2l-5-5v3h-3v4h3v3l5-5zm-9 3h-4v3H7l5 5 5-5h-3v-3z"/></svg>
+                        </button>
+                        <button onclick="setChartTool('zoom')" id="tool-zoom" title="Wheel Zoom">
+                            <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/><path d="M12 10h-2v2H9v-2H7V9h2V7h1v2h2v1z"/></svg>
+                        </button>
+                        <button onclick="resetChartZoom()" title="Reset">
+                            <svg viewBox="0 0 24 24"><path d="M12 5V1L7 6l5 5V7c3.31 0 6 2.69 6 6s-2.69 6-6 6-6-2.69-6-6H4c0 4.42 3.58 8 8 8s8-3.58 8-8-3.58-8-8-8z"/></svg>
+                        </button>
+                        <button onclick="downloadChart()" title="Save">
+                            <svg viewBox="0 0 24 24"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2v9.67z"/></svg>
+                        </button>
+                    </div>
+                    <canvas id="data-chart"></canvas>`;
+                renderChart(data.series_name || name, data.data);
+                displayDataTable(data.series_name || name, data.data);
+            } else if (data.detail && data.detail.includes('Authentication')) {
+                if (isMember) {
+                    // Logged-in member - direct to data app
+                    document.getElementById('chart-container').innerHTML = `
+                        <div class="subscription-message">
+                            <h3>Access Full Data</h3>
+                            <p>
+                                As a subscriber, you have full access to download data.
+                                Use the Data Explorer for interactive charts and downloads.
+                            </p>
+                            <a href="https://eae-data.fly.dev" target="_blank" class="api-button">
+                                Open Data Explorer
+                            </a>
+                        </div>`;
+                } else {
+                    // Not logged in
+                    document.getElementById('chart-container').innerHTML = `
+                        <div class="subscription-message">
+                            <h3>Subscription Required</h3>
+                            <p>
+                                Data access requires an active subscription.
+                                Subscribe to get full access to all economic data series.
+                            </p>
+                            <a href="#/portal/signup" class="api-button">
+                                Subscribe Now
+                            </a>
+                        </div>`;
+                }
+                document.getElementById('data-table-container').innerHTML = '';
+            } else if (data.detail) {
+                document.getElementById('chart-container').innerHTML =
+                    `<p class="chart-placeholder" style="color:#B7410E;">${data.detail}</p>`;
+            } else {
+                document.getElementById('chart-container').innerHTML =
+                    '<p class="chart-placeholder">No data available</p>';
+            }
+        } catch (error) {
+            document.getElementById('chart-container').innerHTML =
+                `<p class="chart-placeholder" style="color:#B7410E;">Error: ${error.message}</p>`;
+        }
+    }
+
+    // Render chart using Chart.js - styled to match cn_auto_exports Bokeh app
+    function renderChart(seriesName, data) {
+        // Destroy existing chart if any
+        if (dataChart) {
+            dataChart.destroy();
+        }
+
+        const ctx = document.getElementById('data-chart').getContext('2d');
+
+        // Prepare data - use last 120 data points (10 years of monthly data)
+        const chartData = data.slice(-120);
+        const labels = chartData.map(d => d.Date);
+        const values = chartData.map(d => d.value);
+
+        dataChart = new Chart(ctx, {
+            type: 'line',
+            plugins: [chartAreaBgPlugin, zeroLinePlugin],
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: seriesName,
+                    data: values,
+                    borderColor: '#556B2F',  // Dark olive green - matches Bokeh app
+                    backgroundColor: 'transparent',
+                    borderWidth: 3,  // Matches Bokeh line_width=3
+                    fill: false,
+                    tension: 0,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#556B2F',
+                    pointHoverBorderColor: '#556B2F'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false  // Not needed for single series
+                    },
+                    title: {
+                        display: false
+                    },
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                        titleColor: '#556B2F',
+                        bodyColor: '#556B2F',
+                        borderColor: '#A9A9A9',
+                        borderWidth: 0.5,
+                        titleFont: {
+                            family: 'Georgia, serif',
+                            size: 14,
+                            weight: 'bold'
+                        },
+                        bodyFont: {
+                            family: 'Georgia, serif',
+                            size: 14
+                        },
+                        padding: 10,
+                        callbacks: {
+                            title: function(tooltipItems) {
+                                // Format date as "Jan 2024" like Bokeh app
+                                const label = tooltipItems[0].label;
+                                if (label) {
+                                    const date = new Date(label);
+                                    if (!isNaN(date)) {
+                                        const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                        return months[date.getMonth()] + ' ' + date.getFullYear();
+                                    }
+                                }
+                                return label;
+                            },
+                            label: function(context) {
+                                // Format as "0,0.0" like Bokeh (1 decimal place)
+                                return context.parsed.y.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+                            }
+                        }
+                    },
+                    zoom: {
+                        pan: {
+                            enabled: true,
+                            mode: 'x'
+                        },
+                        zoom: {
+                            wheel: {
+                                enabled: true
+                            },
+                            pinch: {
+                                enabled: true
+                            },
+                            mode: 'x'
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        display: true,
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            maxTicksLimit: 10,
+                            font: {
+                                family: 'Georgia, serif',
+                                size: 14
+                            },
+                            color: '#333',
+                            callback: function(value, index, ticks) {
+                                // Format dates like my_functions.py line_chart:
+                                // >= 84 months: show years only ("2020")
+                                // < 84 months: show "Jan-24" format
+                                const label = this.getLabelForValue(value);
+                                if (label) {
+                                    const date = new Date(label);
+                                    if (!isNaN(date)) {
+                                        // Check total data span
+                                        const firstLabel = this.getLabelForValue(0);
+                                        const lastLabel = this.getLabelForValue(ticks.length - 1);
+                                        const firstDate = new Date(firstLabel);
+                                        const lastDate = new Date(lastLabel);
+                                        const monthSpan = (lastDate.getFullYear() - firstDate.getFullYear()) * 12 +
+                                                         (lastDate.getMonth() - firstDate.getMonth());
+
+                                        if (monthSpan >= 84) {
+                                            // Year mode: show just year
+                                            return date.getFullYear().toString();
+                                        } else {
+                                            // Month mode: show "Jan-24" format
+                                            const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+                                            const year = date.getFullYear().toString().slice(-2);
+                                            return months[date.getMonth()] + '-' + year;
+                                        }
+                                    }
+                                }
+                                return label;
+                            }
+                        },
+                        border: {
+                            color: '#999'
+                        }
+                    },
+                    y: {
+                        display: true,
+                        grid: {
+                            color: 'rgba(0, 0, 0, 0.1)',
+                            lineWidth: 1
+                        },
+                        ticks: {
+                            font: {
+                                family: 'Georgia, serif',
+                                size: 14  // Larger like Bokeh
+                            },
+                            color: '#333',
+                            callback: function(value) {
+                                // Format as "0,0.0" like Bokeh
+                                return value.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+                            }
+                        },
+                        border: {
+                            color: '#999'
+                        }
+                    }
+                },
+                interaction: {
+                    mode: 'nearest',
+                    axis: 'x',
+                    intersect: false
+                },
+                elements: {
+                    line: {
+                        borderJoinStyle: 'round'
+                    }
+                }
+            }
+        });
+
+        // Position toolbar to right of plot area
+        positionToolbar();
+    }
+
+    // Position toolbar inside chart area on the right
+    function positionToolbar() {
+        if (!dataChart) return;
+        const chartArea = dataChart.chartArea;
+        if (!chartArea) return;
+
+        const toolbar = document.querySelector('.chart-toolbar');
+        if (!toolbar) return;
+
+        // Position toolbar just inside the right edge of chartArea
+        toolbar.style.top = (chartArea.top + 5) + 'px';
+        toolbar.style.right = (document.getElementById('chart-container').offsetWidth - chartArea.right + 5) + 'px';
+    }
+
+    // Display data table (v3 format: {Date, value})
+    function displayDataTable(seriesName, data) {
+        const container = document.getElementById('data-table-container');
+
+        // Get last 20 rows
+        const recentData = data.slice(-20).reverse();
+
+        let html = `
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        recentData.forEach(row => {
+            const value = row.value;
+            const formattedValue = value !== null && value !== undefined
+                ? (typeof value === 'number' ? value.toLocaleString(undefined, {maximumFractionDigits: 2}) : value)
+                : '-';
+            html += `<tr><td>${row.Date}</td><td>${formattedValue}</td></tr>`;
+        });
+
+        html += '</tbody></table>';
+        html += `<p><em>Showing most recent 20 of ${data.length} observations for: ${seriesName}</em></p>`;
+
+        container.innerHTML = html;
+    }
+
+    // Chart toolbar functions
+    function resetChartZoom() {
+        if (dataChart) {
+            dataChart.resetZoom();
+        }
+    }
+
+    function downloadChart() {
+        if (dataChart) {
+            const link = document.createElement('a');
+            link.download = 'chart.png';
+            link.href = document.getElementById('data-chart').toDataURL('image/png');
+            link.click();
+        }
+    }
+
+    // Helper functions
+    function showStatus(elementId, message, type) {
+        const el = document.getElementById(elementId);
+        el.textContent = message;
+        el.className = `status ${type}`;
+        el.style.display = 'block';
+    }
+
+    function escapeHtml(text) {
+        return text.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+    }
+
+    // Tab switching
+    function switchTab(tab) {
+        document.getElementById('tab-search').style.display = tab === 'search' ? 'block' : 'none';
+        document.getElementById('tab-docs').style.display = tab === 'docs' ? 'block' : 'none';
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    // Search on Enter key
+    document.getElementById('search-input').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') searchSeries();
+    });
+
+    // Fetch live series count for stats box
+    (async function() {
+        try {
+            const resp = await fetch(`${API_BASE}/v3/stats`);
+            if (resp.ok) {
+                const stats = await resp.json();
+                document.getElementById('stats-total').textContent =
+                    stats.total_series.toLocaleString();
+            }
+        } catch (e) {}
+    })();
+</script>
