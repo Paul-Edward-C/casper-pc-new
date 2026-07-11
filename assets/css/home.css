@@ -58,14 +58,27 @@
    (height:auto, no cropping) rather than as a cropped cover band.
    --------------------------------------------------------------- */
 .home-template .home-banner {
-  margin: max(3vmin, 20px) auto 0;
+  padding: 0;             /* override .outer side padding -> full-bleed */
+  margin: 0;
+  width: 100%;
 }
 
 .home-template .home-banner-img {
   display: block;
   width: 100%;
-  max-width: 1200px;      /* matches the .inner content width below it */
-  height: auto;           /* show the full 16:9 banner, uncropped */
-  margin: 0 auto;
-  border-radius: 8px;     /* soft corners; set to 0 for hard edges */
+  max-width: none;                     /* fill the full screen width */
+  height: clamp(200px, 30vw, 460px);   /* narrower band; tune these numbers */
+  object-fit: cover;                   /* crop top sky / bottom mountains */
+  object-position: center center;      /* keep the logo lockup in view */
+  border-radius: 0;
+}
+
+/* Home header nav sits over the LIGHT banner, so make it dark green
+   instead of Casper's default white (screen.css sets color:#fff there). */
+.home-template.has-cover .gh-head,
+.home-template.has-cover .gh-head a,
+.home-template.has-cover .gh-head-logo,
+.home-template.has-cover .gh-head-link,
+.home-template.has-cover .gh-head .gh-icon-btn {
+  color: #1F3B2E !important;   /* brand green; use #000 for black */
 }
