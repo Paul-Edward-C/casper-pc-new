@@ -260,3 +260,8 @@ body:has(.page-banner) .article-header {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
 }
+
+/* Page background: brand cream instead of plain white (site-wide).
+   Header/footer/banner keep their own green; content blocks are transparent
+   so they show this cream through. */
+html:not(.dark-mode) body { background-color: #F0EDE4 !important; }
