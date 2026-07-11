@@ -133,11 +133,18 @@
   color: #F0EDE4 !important;   /* cream; use #fff for pure white */
 }
 
-/* The Account / Subscribe pill is a WHITE button on cover pages, so its
-   text must be green (the cream rule above would make it invisible). */
+/* Subscribe / Account pill: cream background (same as the "East Asia Econ"
+   wordmark) with green text (same as the banner background). */
 .home-template.has-cover .gh-head-button {
-  color: #204D39 !important;   /* brand green text */
-  background: #fff !important;  /* keep the white pill */
+  color: #204D39 !important;      /* green text (= banner background) */
+  background: #F0EDE4 !important;  /* cream (= "East Asia Econ" text) */
+}
+
+/* Other pages: the "East Asia Econ" logo link back to home should be cream
+   (the banner text colour), not the theme's default white. */
+.has-cover:not(.home-template) .gh-head-logo,
+.has-cover:not(.home-template) .gh-head-logo a {
+  color: #F0EDE4 !important;
 }
 
 
