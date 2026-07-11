@@ -1,0 +1,9 @@
+{{!-- Shared banner for custom pages: bamboo bands top & bottom with the page's
+     own title in the middle. Include with an explicit title:
+        {{> "page-banner" title="China"}}
+     or with no arg to fall back to the current page's {{title}}. --}}
+<div class="page-banner">
+    <div class="pb-band pb-band-top" aria-hidden="true"></div>
+    <h1 class="pb-title">{{title}}</h1>
+    <div class="pb-band pb-band-bottom" aria-hidden="true"></div>
+</div>

@@ -11,34 +11,7 @@ To add categories for a country, just edit the sections below for that country c
 --}}
 
 {{!-- Header with country name over feature image --}}
-{{#match @custom.publication_cover_style "!=" "None"}}
-    <div class="site-header-content{{#match @custom.publication_cover_style "Large"}} large{{/match}}">
-        {{#if feature_image}}
-            <img class="site-header-cover"
-                srcset="{{img_url feature_image size="s"}} 300w,
-                        {{img_url feature_image size="m"}} 600w,
-                        {{img_url feature_image size="l"}} 1000w,
-                        {{img_url feature_image size="xl"}} 2000w"
-                sizes="100vw"
-                src="{{img_url feature_image size="xl"}}"
-                alt="{{title}}"
-            />
-        {{/if}}
-        <h1 class="site-title">
-            {{#if @site.logo}}
-                <img class="site-logo" src="{{img_url @site.logo size="m"}}" alt="{{@site.title}}" />
-            {{else}}
-                {{#match slug "jp"}}Japan{{/match}}
-                {{#match slug "cn"}}China{{/match}}
-                {{#match slug "kr"}}South Korea{{/match}}
-                {{#match slug "tw"}}Taiwan{{/match}}
-                {{#match slug "hk"}}Hong Kong{{/match}}
-                {{#match slug "sg"}}Singapore{{/match}}
-                {{#match slug "all"}}East Asia{{/match}}
-            {{/if}}
-        </h1>
-    </div>
-{{/match}}
+{{> "page-banner"}}
 
 <div id="site-main" class="site-main outer">
     <main id="site-main" class="site-main outer">

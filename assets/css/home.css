@@ -139,3 +139,34 @@
   color: #204D39 !important;   /* brand green text */
   background: #fff !important;  /* keep the white pill */
 }
+
+
+/* ---------------------------------------------------------------
+   Custom-page banner (partials/page-banner.hbs): bamboo bands top
+   and bottom on brand green, with the page's own title centred.
+   Not scoped to .home-template, so it works on every custom page.
+   --------------------------------------------------------------- */
+.page-banner {
+  background: #1F4D3A;          /* matches the bamboo band's green */
+  overflow: hidden;
+}
+.page-banner .pb-band {
+  height: clamp(72px, 13vw, 190px);
+  background-image: url(../images/bamboo_band.png);
+  background-repeat: no-repeat;
+  background-size: cover;                      /* fill width, keep bamboo proportion */
+  background-position: center;
+}
+.page-banner .pb-band-bottom {
+  transform: scaleY(-1);                       /* mirror for the bottom band */
+}
+.page-banner .pb-title {
+  margin: 0;
+  text-align: center;
+  color: #F0EDE4;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.4rem, 8vw, 6rem);
+  line-height: 1.05;
+  padding: clamp(30px, 6vw, 76px) 20px;
+}
