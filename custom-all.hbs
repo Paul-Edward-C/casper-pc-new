@@ -45,10 +45,6 @@ into the {body} tag of the default.hbs template --}}
         <!-- get the list of posts -->
 
 
-        <div class="myBTNdiv">
-          <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
-        </div>
-
 {{#get "posts" filter="tag:hash-all" limit="9"}}
     <div class="inner posts">
         <div class="post-feed">
@@ -122,6 +118,11 @@ into the {body} tag of the default.hbs template --}}
         </div>
     </div>
 {{/get}}
+
+<div class="myBTNdiv">
+  <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a>
+</div>
+
 
    <style>
 
