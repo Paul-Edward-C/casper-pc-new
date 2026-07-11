@@ -73,12 +73,12 @@
   border-radius: 0;
 }
 
-/* Home header nav sits over the LIGHT banner, so make it dark green
-   instead of Casper's default white (screen.css sets color:#fff there). */
+/* Home header nav sits over the DARK-GREEN banner, so keep it cream
+   (the banner's own text colour) for contrast. */
 .home-template.has-cover .gh-head,
 .home-template.has-cover .gh-head a,
 .home-template.has-cover .gh-head-logo,
 .home-template.has-cover .gh-head-link,
 .home-template.has-cover .gh-head .gh-icon-btn {
-  color: #1F3B2E !important;   /* brand green; use #000 for black */
+  color: #F0EDE4 !important;   /* cream; use #fff for pure white */
 }
