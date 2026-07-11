@@ -49,3 +49,23 @@
 .home-template.has-cover .site-title { font-size: 4rem; }
 .home-template.has-cover :is(.site-logo, .site-title) + .site-description { font-size: 2rem; }
 
+
+
+/* ---------------------------------------------------------------
+   Home page branded banner (replaces the default cover header).
+   Scoped to .home-template so the custom country pages are unaffected.
+   The image already contains all branding, so it is shown whole
+   (height:auto, no cropping) rather than as a cropped cover band.
+   --------------------------------------------------------------- */
+.home-template .home-banner {
+  margin: max(3vmin, 20px) auto 0;
+}
+
+.home-template .home-banner-img {
+  display: block;
+  width: 100%;
+  max-width: 1200px;      /* matches the .inner content width below it */
+  height: auto;           /* show the full 16:9 banner, uncropped */
+  margin: 0 auto;
+  border-radius: 8px;     /* soft corners; set to 0 for hard edges */
+}

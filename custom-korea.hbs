@@ -71,18 +71,18 @@ into the {body} tag of the default.hbs template --}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
-                <article class="post-card {{post_class}} 
+                <article class="post-card {{post_class}}
                     {{#match @custom.feed_layout "Classic"}}
                         {{#is "home"}}
                             {{#has index="0"}} post-card-large{{/has}}
                             {{#has index="1,2"}} dynamic{{/has}}
                         {{/is}}
-                    {{/match}} 
-                    {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}} 
-                    {{#match @custom.feed_layout "List"}} 
-                        {{#is "home, paged"}} post-card-large{{/is}} 
+                    {{/match}}
+                    {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}}
+                    {{#match @custom.feed_layout "List"}}
+                        {{#is "home, paged"}} post-card-large{{/is}}
                     {{/match}}">
-                    
+
                     <a class="post-card-content-link" href="{{url}}">
                         <header class="post-card-header">
                             <div class="post-card-content">
@@ -163,7 +163,7 @@ into the {body} tag of the default.hbs template --}}
         .menu-item:hover, .myButton:hover {
             background-color: rgba(16, 75, 31, 0.7); /* Adjust hover background color */
         }
-        
+
         body {
             overflow-x: auto; /* Enable horizontal scrolling */
         }
@@ -218,15 +218,9 @@ into the {body} tag of the default.hbs template --}}
             margin-top: 20px; /* Adjust the value as needed to control the amount of space */
           }
     </style>
-    
-
-        <div class="myBTNdiv">
-          <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a> 
-        </div>
 
 
-
-    </main>
+</main>
 </div>
 
 <head>
@@ -234,11 +228,17 @@ into the {body} tag of the default.hbs template --}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charts</title>
 
+
 </head>
 <body>
 
 <div id="site-main" class="site-main outer">
     <!-- Your site content here -->
+</div>
+
+
+<div class="myBTNdiv">
+    <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a>
 </div>
 
 <div id="charts">
@@ -252,8 +252,10 @@ into the {body} tag of the default.hbs template --}}
         <a href="#kr_industry_charts_anchor" class="menu-item">Industry</a>
         <a href="#kr_labour_charts_anchor" class="menu-item">Labour</a>
         <a href="#kr_macro_charts_anchor" class="menu-item">Macro</a>
+        <a href="#kr_markets_charts_anchor" class="menu-item">Markets</a>
         <a href="#kr_money_charts_anchor" class="menu-item">Money</a>
-        <a href="#kr_prices_charts_anchor" class="menu-item">Prices</a>
+        <a href="#kr_corp_px_charts_anchor" class="menu-item">Prices, Corporate</a>
+        <a href="#kr_prices_charts_anchor" class="menu-item">Prices, Consumer</a>
     </div>
 </div>
 
@@ -262,7 +264,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="kr_consumer_charts_anchor"></a>
     <h2>Consumer</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_consumer" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_consumer"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -280,7 +282,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="kr_export_charts_anchor"></a>
     <h2>Foreign trade</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_exports" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_exports"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -288,15 +290,16 @@ into the {body} tag of the default.hbs template --}}
     <a id="kr_flows_charts_anchor"></a>
     <h2>Flows</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_flows" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_flows"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
+
 
 <div id="kr_industry_charts">
     <a id="kr_industry_charts_anchor"></a>
     <h2>Industry</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_industry" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_industry"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -304,7 +307,7 @@ into the {body} tag of the default.hbs template --}}
     <a id="kr_labour_charts_anchor"></a>
     <h2>Labour</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_labour" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_labour"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -312,7 +315,15 @@ into the {body} tag of the default.hbs template --}}
     <a id="kr_macro_charts_anchor"></a>
     <h2>Macro</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_macro" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_macro"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_markets_charts">
+    <a id="kr_markets_charts_anchor"></a>
+    <h2>Markets</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_markets"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -320,15 +331,23 @@ into the {body} tag of the default.hbs template --}}
     <a id="kr_money_charts_anchor"></a>
     <h2>Money</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_money" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_money"  class="responsive-iframe" loading="lazy"></iframe>
+    </figure>
+</div>
+
+<div id="kr_corp_px_charts">
+    <a id="kr_corp_px_charts_anchor"></a>
+    <h2>Prices, Corporate</h2>
+    <figure class="kg-image-card kg-width-full">
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_corp_px"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
 <div id="kr_prices_charts">
     <a id="kr_prices_charts_anchor"></a>
-    <h2>Prices</h2>
+    <h2>Prices, Consumer</h2>
     <figure class="kg-image-card kg-width-full">
-        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_prices" class="responsive-iframe" width="100%" style="height: auto;" loading="'lazy"></iframe>
+        <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/kr/kr_prices"  class="responsive-iframe" loading="lazy"></iframe>
     </figure>
 </div>
 
@@ -337,22 +356,16 @@ into the {body} tag of the default.hbs template --}}
 {{!-- JavaScript to check member tier and show/hide content --}}
 <script>
 (function() {
-    // Allowed tier names (case-sensitive, must match exactly)
     var allowedTiers = ['East Asia', 'Daily + Data'];
-    
-    // Get member data from Ghost
     {{#if @member}}
     var memberTiers = [
         {{#foreach @member.subscriptions}}
         '{{tier.name}}'{{#unless @last}},{{/unless}}
         {{/foreach}}
     ];
-    
-    // Check if member has any allowed tier
     var hasAccess = memberTiers.some(function(tier) {
         return allowedTiers.indexOf(tier) !== -1;
     });
-    
     if (hasAccess) {
         document.getElementById('tier-gated-content').style.display = 'block';
         document.getElementById('upgrade-cta').style.display = 'none';
@@ -361,7 +374,6 @@ into the {body} tag of the default.hbs template --}}
         document.getElementById('upgrade-cta').style.display = 'block';
     }
     {{else}}
-    // Not logged in - show upgrade CTA
     document.getElementById('tier-gated-content').style.display = 'none';
     document.getElementById('upgrade-cta').style.display = 'block';
     {{/if}}
@@ -370,4 +382,3 @@ into the {body} tag of the default.hbs template --}}
 
 </body>
 </html>
- 1
