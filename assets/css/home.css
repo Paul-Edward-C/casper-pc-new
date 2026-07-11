@@ -245,3 +245,11 @@
    inline <style> blocks — force them to the banner green too. */
 .myButton, .menu-item { background-color: #204D39 !important; }
 .myButton:hover, .menu-item:hover { background-color: rgba(32, 77, 57, 0.82) !important; }
+
+/* Match the home page's banner->heading spacing on custom pages.
+   The empty .article-header (no feature image) adds ~173px top padding;
+   collapse it only on pages that have our banner. */
+body:has(.page-banner) .article-header {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
