@@ -1,8 +1,14 @@
-{{!-- Shared banner for custom pages: the page's own title on sage green, with
-     a dark bamboo band along the bottom. Include with an explicit title:
-        {{> "page-banner" title="China"}}
-     or with no arg to fall back to the current page's {{title}}. --}}
+{{!-- Custom-page banner: same lockup as the home banner, but the PAGE NAME takes
+     the big left slot and the brand wordmark sits on the right.
+        {{> "page-banner" title="China"}}   (or no arg to use the page's {{title}}) --}}
 <div class="page-banner">
-    <h1 class="pb-title">{{title}}</h1>
-    <div class="pb-band pb-band-bottom" aria-hidden="true"></div>
+    <div class="page-banner-inner">
+        <div class="pb-name">{{title}}</div>
+        <span class="pb-divider" aria-hidden="true"></span>
+        <img class="pb-mark" src="{{asset "images/logo_mark.png"}}" alt="" aria-hidden="true" />
+        <div class="pb-brand">
+            <span class="pb-brand-title">East Asia Econ</span>
+            <span class="pb-brand-sub">Paul Cavey</span>
+        </div>
+    </div>
 </div>

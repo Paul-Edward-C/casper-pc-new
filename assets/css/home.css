@@ -147,23 +147,72 @@
    Not scoped to .home-template, so it works on every custom page.
    --------------------------------------------------------------- */
 .page-banner {
-  background: #6E9B5D;          /* sage green (matches the band's background) */
-  overflow: hidden;
+  width: 100%;
+  background: #204D39;         /* same deep green as the home banner */
 }
-.page-banner .pb-title {
-  margin: 0;
-  text-align: center;
+.page-banner .page-banner-inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: clamp(28px, 6vw, 110px) max(4vmin, 20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 5vw, 76px);
   color: #F0EDE4;
+  text-align: center;
+}
+
+/* PAGE NAME — big left slot (was "East Asia Econ" on the home banner) */
+.page-banner .pb-name {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 700;
-  font-size: clamp(2.4rem, 8vw, 6rem);
-  line-height: 1.05;
-  padding: clamp(40px, 8vw, 110px) 20px clamp(20px, 3.5vw, 44px);  /* space above, small gap before bamboo */
+  font-size: clamp(2.2rem, 7vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: 0.01em;
 }
-.page-banner .pb-band-bottom {
-  height: clamp(64px, 12vw, 168px);
-  background-image: url(../images/bamboo_band.png);
-  background-repeat: no-repeat;
-  background-size: cover;                      /* keep bamboo proportion */
-  background-position: center bottom;          /* stalks anchored to the bottom */
+
+/* vertical divider between the page name and the brand block */
+.page-banner .pb-divider {
+  flex: 0 0 auto;
+  width: 2px;
+  height: clamp(52px, 9vw, 140px);
+  background: #F0EDE4;
+  opacity: 0.55;
+}
+
+/* bamboo mark (middle) */
+.page-banner .pb-mark {
+  height: clamp(56px, 11vw, 150px);
+  width: auto;
+  flex: 0 0 auto;
+}
+
+/* brand wordmark — right slot (was "Macro. Markets. Strategy.") */
+.page-banner .pb-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.page-banner .pb-brand-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.4rem, 3.6vw, 3rem);
+}
+.page-banner .pb-brand-sub {
+  font-family: "Source Sans 3", -apple-system, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: clamp(0.62rem, 1.7vw, 1.15rem);
+  margin-top: 0.7em;
+}
+
+/* Mobile: stack the parts vertically and hide the vertical divider */
+@media (max-width: 640px) {
+  .page-banner .page-banner-inner {
+    flex-direction: column;
+    gap: clamp(12px, 4vw, 24px);
+  }
+  .page-banner .pb-divider { display: none; }
 }
