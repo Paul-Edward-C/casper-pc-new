@@ -31,13 +31,22 @@
 
  --}}
 
-{{!-- Home page banner: branded hero image (assets/images/home-banner.png).
-     This is hard-coded to the home page only — the custom country pages keep
-     their own headers and are unaffected. --}}
-<div class="home-banner outer">
-    <img class="home-banner-img"
-        src="{{asset "images/home-banner.png"}}"
-        alt="East Asia Econ — Paul Cavey. Independent analysis. East Asia focus." />
+{{!-- Home page banner: live HTML/CSS lockup (styled in assets/css/home.css)
+     so text + logo scale responsively on mobile. Home page only — the custom
+     country pages keep their own headers and are unaffected. --}}
+<div class="home-banner">
+    <div class="home-banner-inner">
+        <div class="hb-word">
+            <span class="hb-title">East Asia Econ</span>
+            <span class="hb-sub">Paul Cavey</span>
+        </div>
+        <img class="hb-mark" src="{{asset "images/logo_mark.png"}}" alt="" aria-hidden="true" />
+        <div class="hb-tag">
+            <span>Macro.</span>
+            <span>Markets.</span>
+            <span>Strategy.</span>
+        </div>
+    </div>
 </div>
 
 <section id="latest" class="section-feed">

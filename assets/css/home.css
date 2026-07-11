@@ -52,25 +52,75 @@
 
 
 /* ---------------------------------------------------------------
-   Home page branded banner (replaces the default cover header).
+   Home page branded banner — built as live HTML/CSS (not an image) so
+   the text + logo scale and re-stack responsively on every screen.
    Scoped to .home-template so the custom country pages are unaffected.
-   The image already contains all branding, so it is shown whole
-   (height:auto, no cropping) rather than as a cropped cover band.
+   Colours/fonts match the YouTube branding.
    --------------------------------------------------------------- */
 .home-template .home-banner {
-  padding: 0;             /* override .outer side padding -> full-bleed */
+  padding: 0;                 /* override .outer side padding */
   margin: 0;
   width: 100%;
+  background: #204D39;        /* brand deep green (full-bleed) */
 }
 
-.home-template .home-banner-img {
-  display: block;
-  width: 100%;
-  max-width: none;                     /* fill the full screen width */
-  height: clamp(200px, 30vw, 460px);   /* narrower band; tune these numbers */
-  object-fit: cover;                   /* crop top sky / bottom mountains */
-  object-position: center center;      /* keep the logo lockup in view */
-  border-radius: 0;
+.home-template .home-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: clamp(28px, 7vw, 72px) max(4vmin, 20px);   /* band height scales */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 5vw, 64px);
+  color: #F0EDE4;
+  text-align: center;
+}
+
+/* wordmark: "East Asia Econ" + "PAUL CAVEY" */
+.home-template .hb-word {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+.home-template .hb-title {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 6.5vw, 3.6rem);
+  letter-spacing: 0.01em;
+}
+.home-template .hb-sub {
+  font-family: "Source Sans 3", -apple-system, sans-serif;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.24em;
+  font-size: clamp(0.68rem, 2.1vw, 1.05rem);
+  margin-top: 0.7em;
+}
+
+/* bamboo mark */
+.home-template .hb-mark {
+  height: clamp(54px, 12vw, 104px);
+  width: auto;
+  flex: 0 0 auto;
+}
+
+/* tagline: Macro. / Markets. / Strategy. */
+.home-template .hb-tag {
+  display: flex;
+  flex-direction: column;
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(1.15rem, 3.6vw, 2rem);
+  line-height: 1.15;
+}
+
+/* Mobile: stack the three groups vertically so nothing is squashed */
+@media (max-width: 640px) {
+  .home-template .home-banner-inner {
+    flex-direction: column;
+    gap: clamp(14px, 4vw, 26px);
+  }
 }
 
 /* Home header nav sits over the DARK-GREEN banner, so keep it cream
