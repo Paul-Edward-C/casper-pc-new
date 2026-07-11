@@ -166,23 +166,24 @@
 .page-banner .pb-name {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 700;
-  font-size: clamp(2.2rem, 7vw, 6.5rem);
-  line-height: 1;
+  font-size: clamp(2.6rem, 8vw, 8rem);
+  line-height: 1.02;
   letter-spacing: 0.01em;
+  min-width: 0;                 /* allow long names to wrap instead of overflow */
 }
 
 /* vertical divider between the page name and the brand block */
 .page-banner .pb-divider {
   flex: 0 0 auto;
   width: 2px;
-  height: clamp(52px, 9vw, 140px);
+  height: clamp(58px, 10vw, 160px);
   background: #F0EDE4;
   opacity: 0.55;
 }
 
 /* bamboo mark (middle) */
 .page-banner .pb-mark {
-  height: clamp(56px, 11vw, 150px);
+  height: clamp(60px, 12vw, 170px);
   width: auto;
   flex: 0 0 auto;
 }
@@ -197,14 +198,15 @@
 .page-banner .pb-brand-title {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 600;
-  font-size: clamp(1.4rem, 3.6vw, 3rem);
+  font-size: clamp(1.5rem, 4vw, 3.4rem);
+  white-space: nowrap;
 }
 .page-banner .pb-brand-sub {
   font-family: "Source Sans 3", -apple-system, sans-serif;
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.24em;
-  font-size: clamp(0.62rem, 1.7vw, 1.15rem);
+  font-size: clamp(0.66rem, 1.9vw, 1.3rem);
   margin-top: 0.7em;
 }
 
