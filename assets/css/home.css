@@ -218,3 +218,30 @@
   }
   .page-banner .pb-divider { display: none; }
 }
+
+
+/* ===============================================================
+   Site-wide brand consistency
+   =============================================================== */
+
+/* Unify header, buttons and any accent-coloured UI with the banner
+   green (#204D39). Overrides the injected Ghost accent (#104b1f). */
+:root { --ghost-accent-color: #204D39 !important; }
+
+/* Footer: use the banner green instead of the default dark grey. */
+.site-footer { background: #204D39 !important; }
+
+/* "Articles" / "Charts" section headings on the custom pages — match the
+   home page's "Latest analysis" heading (was inline-styled in home.hbs). */
+.latest-title {
+  font-family: Georgia, serif;
+  font-size: 38px;
+  font-weight: bold;
+  color: #104b1f;          /* same EA green the home page uses */
+  margin-bottom: 20px;
+}
+
+/* In-content buttons (.myButton / .menu-item) hardcode the old green in
+   inline <style> blocks — force them to the banner green too. */
+.myButton, .menu-item { background-color: #204D39 !important; }
+.myButton:hover, .menu-item:hover { background-color: rgba(32, 77, 57, 0.82) !important; }
