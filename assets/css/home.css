@@ -65,9 +65,9 @@
 }
 
 .home-template .home-banner-inner {
-  max-width: 1300px;
+  max-width: 1500px;
   margin: 0 auto;
-  padding: clamp(30px, 7vw, 128px) max(4vmin, 20px);  /* taller band on desktop */
+  padding: clamp(30px, 7vw, 140px) max(4vmin, 20px);  /* taller band on desktop */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,7 +86,7 @@
 .home-template .hb-title {
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 700;
-  font-size: clamp(2.1rem, 7vw, 6.5rem);
+  font-size: clamp(2.2rem, 7.5vw, 8rem);
   letter-spacing: 0.01em;
 }
 .home-template .hb-sub {
@@ -94,13 +94,13 @@
   font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.24em;
-  font-size: clamp(0.7rem, 2.2vw, 1.7rem);
+  font-size: clamp(0.72rem, 2.3vw, 2rem);
   margin-top: 0.75em;
 }
 
 /* bamboo mark */
 .home-template .hb-mark {
-  height: clamp(58px, 13vw, 185px);
+  height: clamp(60px, 13.5vw, 198px);
   width: auto;
   flex: 0 0 auto;
 }
@@ -111,7 +111,7 @@
   flex-direction: column;
   font-family: "Cormorant Garamond", Georgia, serif;
   font-weight: 600;
-  font-size: clamp(1.2rem, 4.2vw, 3.4rem);
+  font-size: clamp(1.25rem, 4.4vw, 4rem);
   line-height: 1.15;
 }
 
@@ -131,4 +131,11 @@
 .home-template.has-cover .gh-head-link,
 .home-template.has-cover .gh-head .gh-icon-btn {
   color: #F0EDE4 !important;   /* cream; use #fff for pure white */
+}
+
+/* The Account / Subscribe pill is a WHITE button on cover pages, so its
+   text must be green (the cream rule above would make it invisible). */
+.home-template.has-cover .gh-head-button {
+  color: #204D39 !important;   /* brand green text */
+  background: #fff !important;  /* keep the white pill */
 }
