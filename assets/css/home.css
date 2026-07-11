@@ -147,18 +147,8 @@
    Not scoped to .home-template, so it works on every custom page.
    --------------------------------------------------------------- */
 .page-banner {
-  background: #1F4D3A;          /* matches the bamboo band's green */
+  background: #6E9B5D;          /* sage green (matches the band's background) */
   overflow: hidden;
-}
-.page-banner .pb-band {
-  height: clamp(72px, 13vw, 190px);
-  background-image: url(../images/bamboo_band.png);
-  background-repeat: no-repeat;
-  background-size: cover;                      /* fill width, keep bamboo proportion */
-  background-position: center;
-}
-.page-banner .pb-band-bottom {
-  transform: scaleY(-1);                       /* mirror for the bottom band */
 }
 .page-banner .pb-title {
   margin: 0;
@@ -168,5 +158,12 @@
   font-weight: 700;
   font-size: clamp(2.4rem, 8vw, 6rem);
   line-height: 1.05;
-  padding: clamp(30px, 6vw, 76px) 20px;
+  padding: clamp(40px, 8vw, 110px) 20px clamp(20px, 3.5vw, 44px);  /* space above, small gap before bamboo */
+}
+.page-banner .pb-band-bottom {
+  height: clamp(64px, 12vw, 168px);
+  background-image: url(../images/bamboo_band.png);
+  background-repeat: no-repeat;
+  background-size: cover;                      /* keep bamboo proportion */
+  background-position: center bottom;          /* stalks anchored to the bottom */
 }
