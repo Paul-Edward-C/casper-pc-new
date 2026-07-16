@@ -47,6 +47,23 @@ into the {body} tag of the default.hbs template --}}
 
 
 </div>
+<style>
+  /* ---- Region calendar table: brand frame, centred, gap below the banner ---- */
+  #region_calendar {
+    max-width: 1310px;
+    margin: clamp(30px, 5vw, 60px) auto clamp(44px, 6vw, 76px);  /* top gap from banner · centred · bottom space */
+    padding: clamp(14px, 2vw, 28px);
+    box-sizing: border-box;
+    background: #F0EDE4;                       /* cream — matches the table */
+    border: 2px solid #204D39;                 /* brand deep-green frame */
+    border-radius: 12px;
+    box-shadow: 0 8px 26px rgba(32, 77, 57, 0.13);
+    overflow-x: auto;                          /* wide table scrolls on small screens */
+  }
+  /* centre the fixed-width Bokeh table inside the frame */
+  #region_calendar .bk-root { display: block; margin: 0 auto; }
+</style>
+
 <div id="region_calendar">
 </div>
 
