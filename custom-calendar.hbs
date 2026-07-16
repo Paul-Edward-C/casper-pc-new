@@ -31,40 +31,33 @@ into the {body} tag of the default.hbs template --}}
             {{/if}}
         </header>
 
-
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-<script src="https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.3.min.js"
-        crossorigin="anonymous"></script>
-
-
-
-
 </div>
 <style>
-  /* ---- Region calendar table: brand frame, centred, gap below the banner ---- */
-  #region_calendar {
-    max-width: 1310px;
-    margin: clamp(30px, 5vw, 60px) auto clamp(44px, 6vw, 76px);  /* top gap from banner · centred · bottom space */
-    padding: clamp(14px, 2vw, 28px);
-    box-sizing: border-box;
-    background: #F0EDE4;                       /* cream — matches the table */
+  /* Region data-release calendar — embedded here in the template (not the post body).
+     Cross-origin iframe framed in brand green, spaced below the banner, centred. */
+  .region-calendar-embed {
+    width: 100%;
+    display: flex;
+    justify-content: center;   /* centre the table on the page */
+  }
+  .region-calendar-embed iframe {
+    display: block;
+    width: 100%;
+    max-width: 1300px;
+    min-height: 1000px;
+    margin: clamp(30px, 5vw, 60px) 0 clamp(44px, 6vw, 76px);  /* gap below banner · bottom space */
     border: 2px solid #204D39;                 /* brand deep-green frame */
     border-radius: 12px;
+    background: #F0EDE4;                        /* cream — matches the table */
     box-shadow: 0 8px 26px rgba(32, 77, 57, 0.13);
-    overflow-x: auto;                          /* wide table scrolls on small screens */
   }
-  /* centre the fixed-width Bokeh table inside the frame */
-  #region_calendar .bk-root { display: block; margin: 0 auto; }
 </style>
 
-<div id="region_calendar">
+<div class="region-calendar-embed">
+  <iframe
+    src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_calendar"
+    title="East Asia Econ — data release calendar"
+    loading="lazy"></iframe>
 </div>
 
 
