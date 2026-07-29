@@ -1,0 +1,305 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template --}}
+
+{{!-- 
+NO CONFIGURATION NEEDED!
+This template automatically detects the country from the page slug.
+Your page slugs should be: jp, cn, kr, tw, hk, sg, or all
+
+To add categories for a country, just edit the sections below for that country code.
+--}}
+
+{{!-- Header with country name over feature image --}}
+{{> "page-banner"}}
+
+<div id="site-main" class="site-main outer">
+    <main id="site-main" class="site-main outer">
+        <header class="article-header gh-canvas">
+            {{#if feature_image}}
+            <figure class="article-image">
+                <img
+                    srcset="{{img_url feature_image size="s"}} 300w,
+                            {{img_url feature_image size="m"}} 600w,
+                            {{img_url feature_image size="l"}} 1000w,
+                            {{img_url feature_image size="xl"}} 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="{{img_url feature_image size="xl"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                />
+                {{#if feature_image_caption}}
+                    <figcaption>{{feature_image_caption}}</figcaption>
+                {{/if}}
+            </figure>
+            {{/if}}
+        </header>
+
+        <div class="outer">
+            {{#page}}
+            <article class="post-full {{post_class}} no-image">
+                <section class="post-full-content">
+                    <div class="post-content">
+                        <h2 class="post-title latest-title">Articles</h2>
+                    </div>
+                </section>
+            </article>
+            {{/page}}
+        </div>
+
+{{#get "posts" filter="tag:hash-{{slug}}" limit="9"}}
+    <div class="inner posts">
+        <div class="post-feed">
+            {{#foreach posts}}
+                <article class="post-card {{post_class}} 
+                    {{#match @custom.feed_layout "Classic"}}
+                        {{#is "home"}}
+                            {{#has index="0"}} post-card-large{{/has}}
+                            {{#has index="1,2"}} dynamic{{/has}}
+                        {{/is}}
+                    {{/match}} 
+                    {{#match @custom.feed_layout "Grid"}} keep-ratio{{/match}} 
+                    {{#match @custom.feed_layout "List"}} 
+                        {{#is "home, paged"}} post-card-large{{/is}} 
+                    {{/match}}">
+                    
+                    <a class="post-card-content-link" href="{{url}}">
+                        <header class="post-card-header">
+                            <div class="post-card-content">
+                                {{#has visibility="public"}}
+                                    <span class="post-label">Public Post</span>
+                                {{/has}}
+                                {{#has visibility="members"}}
+                                    <span class="post-label">Members Only</span>
+                                {{/has}}
+                                {{#has visibility="paid"}}
+                                    <span class="post-label">Paid Member Post</span>
+                                {{/has}}
+                                {{#has visibility="tiers"}}
+                                    <span class="post-label">Subscribers Only</span>
+                                {{/has}}
+
+                                <h2 class="post-card-title">{{title}}</h2>
+
+                                {{#if feature_image}}
+                                    <a class="post-card-image-link" href="{{url}}">
+                                        <img class="post-card-image"
+                                            srcset="{{img_url feature_image size='s'}} 300w,
+                                                    {{img_url feature_image size='m'}} 600w,
+                                                    {{img_url feature_image size='l'}} 1000w,
+                                                    {{img_url feature_image size='xl'}} 2000w"
+                                            sizes="(max-width: 1000px) 400px, 800px"
+                                            src="{{img_url feature_image size='m'}}"
+                                            alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                                            loading="lazy"
+                                        />
+                                    </a>
+                                {{/if}}
+
+                                <p>{{excerpt words="70"}}</p>
+
+                                <footer class="post-card-meta">
+                                    <time class="post-card-meta-date" datetime="{{date format='YYYY-MM-DD'}}">
+                                        {{date}}
+                                    </time>
+                                    <span class="post-card-meta-length">{{reading_time}}</span>
+                                    {{#if @site.comments_enabled}}{{comment_count}}{{/if}}
+                                </footer>
+                            </div>
+                        </header>
+                    </a>
+                </article>
+            {{/foreach}}
+        </div>
+    </div>
+{{/get}}
+
+<div class="myBTNdiv">
+  <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a>
+</div>
+
+
+   <style>
+
+        .menu-item, .myButton {
+            display: inline-block;
+            margin: 10px 5px;
+            font-size: 16px;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 2px 15px;
+            border-radius: 5px;
+            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+            background-color: #104b1f;
+            transition: background-color 0.3s ease;
+            font-weight: bold;
+            text-align: center;
+            width: 150px;
+        }
+
+        .menu-item:hover, .myButton:hover {
+            background-color: rgba(16, 75, 31, 0.7);
+        }
+        
+        body {
+            overflow-x: auto;
+        }
+
+        .responsive-iframe {
+            width: 100%;
+            height: auto;
+            min-height: 1000px;
+        }
+
+        .myBTNdiv {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .menu-item {
+            margin: 0 10px;
+        }
+        #charts {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .myButton {
+        width: 200px;
+        }
+
+        .post-label {
+        display: inline-block;
+        padding: 5px 10px;
+        font-size: 14px;
+        font-weight: bold;
+        background-color: #ffffff;
+        border: 2px solid #104b1f;
+        border-radius: 5px;
+        color: #104b1f;
+        text-align: center;
+        margin: 5px 0;
+        }
+    </style>
+
+
+</main>
+</div>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charts</title>
+</head>
+<body>
+
+<div id="site-main" class="site-main outer">
+</div>
+
+<div id="charts" data-slug="{{slug}}">
+    <a href="#charts"></a><br>
+    <h2 class="post-title latest-title">Charts</h2>
+    <div id="chart-menu" style="display: flex; justify-content: center; flex-wrap: wrap;"></div>
+</div>
+
+<div id="chart-sections"></div>
+
+{{!-- Upgrade CTA shown to members without a qualifying tier --}}
+<div id="upgrade-cta" style="display: none; text-align: center; padding: 40px 20px; background-color: #f5f5f5; border-radius: 8px; margin: 20px auto; max-width: 600px;">
+    <h3>Additional Charts Available for Subscribers</h3>
+    <p>Access all {{title}} economic charts with an East Asia or Daily + Data subscription.</p>
+    <a href="#/portal/account/plans" class="myButton" style="display: inline-block; margin-top: 15px;">Upgrade</a>
+</div>
+
+{{!-- ==========================================================================
+     ONE template for every country page. The page SLUG is the country code
+     (jp / cn / kr / tw / all  -> the "all" page uses the region_* charts).
+     PACKS below is the SINGLE list of all possible chart packs; each is shown
+     only if its chart actually exists on netlify (probed live). The live probe
+     needs Access-Control-Allow-Origin on the netlify charts site -> add a
+     `_headers` file there ( /*  Access-Control-Allow-Origin: * ) and deploy it,
+     otherwise every probe fails (CORS) and no charts render.
+     'consumer' is public; every other pack is gated to East Asia / Daily + Data.
+     ========================================================================== --}}
+<script>
+(function () {
+    var NETLIFY = "https://main--beautiful-dolphin-db8ab2.netlify.app/charts";
+
+    var slug = (document.getElementById('charts').dataset.slug || "").trim();
+    var cc   = (slug === 'all') ? 'region' : slug;   // the "all" page uses the region charts
+
+    // --- master list of ALL possible chart packs (order = menu order) ---
+    // label = menu text ; slug = netlify file suffix  (<cc>_<slug>.html)
+    var PACKS = [
+        { slug: 'consumer', label: 'Consumer' },
+        { slug: 'exports',  label: 'Exports' },
+        { slug: 'prices',   label: 'Consumer prices' },
+        { slug: 'corp_px',  label: 'Industrial prices' },
+        { slug: 'surveys',  label: 'Surveys' },
+        { slug: 'markets',  label: 'Markets' },
+        { slug: 'flows',    label: 'Flows' },
+        { slug: 'labour',   label: 'Labour' },
+        { slug: 'macro',    label: 'Macro' },
+        { slug: 'money',    label: 'Money' },
+        { slug: 'industry', label: 'Industry' }
+        // other packs that also exist on netlify - uncomment to expose:
+        // ,{ slug: 'hh', label: 'Households' }   // always the cross-country region_hh chart
+    ];
+
+    // 'consumer' is free; everything else needs a qualifying subscription tier.
+    var PUBLIC = { consumer: true };
+    var allowedTiers = ['East Asia', 'Daily + Data'];
+    var memberTiers = [{{#if @member}}{{#foreach @member.subscriptions}}"{{tier.name}}"{{#unless @last}}, {{/unless}}{{/foreach}}{{/if}}];
+    var hasAccess = memberTiers.some(function (t) { return allowedTiers.indexOf(t) !== -1; });
+
+    function packUrl(p) {
+        // households is a single cross-country chart (region_hh) on every page
+        var suffix = (p.slug === 'hh') ? 'region/region_hh' : (cc + '/' + cc + '_' + p.slug);
+        return NETLIFY + '/' + suffix;
+    }
+
+    function sectionHtml(p, url) {
+        return '<div id="pack_' + p.slug + '">' +
+                 '<a id="pack_' + p.slug + '_anchor"></a>' +
+                 '<h2>' + p.label + '</h2>' +
+                 '<figure class="kg-image-card kg-width-full">' +
+                   '<iframe src="' + url + '" class="responsive-iframe" width="100%" style="height: auto;" loading="lazy"></iframe>' +
+                 '</figure>' +
+               '</div>';
+    }
+
+    if (!cc) { return; }
+    var menu = document.getElementById('chart-menu');
+    var sections = document.getElementById('chart-sections');
+    var cta = document.getElementById('upgrade-cta');
+
+    // probe every pack in parallel, then render the survivors in master-list order
+    Promise.all(PACKS.map(function (p) {
+        return fetch(packUrl(p), { method: 'HEAD' })
+            .then(function (r) { return { p: p, exists: r.status !== 404 }; })
+            .catch(function () { return { p: p, exists: false }; });
+    })).then(function (results) {
+        var gatedExists = 0;
+        results.forEach(function (res) {
+            if (!res.exists) { return; }                 // no such chart for this country
+            var p = res.p, isPublic = !!PUBLIC[p.slug];
+            if (!isPublic) {
+                gatedExists++;
+                if (!hasAccess) { return; }               // gated + no access -> skip (CTA shown)
+            }
+            var url = packUrl(p);
+            var a = document.createElement('a');
+            a.href = '#pack_' + p.slug + '_anchor';
+            a.className = 'menu-item';
+            a.textContent = p.label;
+            menu.appendChild(a);
+            sections.insertAdjacentHTML('beforeend', sectionHtml(p, url));
+        });
+        if (gatedExists > 0 && !hasAccess) { cta.style.display = 'block'; }
+    });
+})();
+</script>
+
+</body>
+</html>
