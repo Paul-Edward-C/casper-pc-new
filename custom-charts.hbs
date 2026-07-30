@@ -1,0 +1,72 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template --}}
+
+{{!-- ==========================================================================
+     Charts — the coverage matrix (every economy against every pack) from
+     charts.eastasiaecon.com, embedded as SVG/HTML in this page's own DOM. No
+     iframe, so it inherits the page width, resizes, prints and is indexable.
+
+     Header lockup is the same as custom-country-charts.hbs: the page banner,
+     then an optional feature image, then a section heading.
+
+     The embed reads three attributes:
+       data-eae-width="full"   break out of the 720px post column
+       data-eae-title="off"    suppress the embed's own "Chart packs" <h2>,
+                               because this template prints it as the section
+                               heading instead — otherwise it appears twice
+       data-eae-intro="..."    replaces the default blurb
+
+     NOTE: this template does not render {{content}}, so anything in the page
+     body in Ghost admin is ignored. That is deliberate — the old HTML card can
+     stay where it is without producing a second copy of the table.
+     ========================================================================== --}}
+
+{{!-- Header with page name over feature image --}}
+{{#post}}{{> "page-banner" title="Charts"}}{{/post}}
+
+<div class="site-main outer">
+    <main id="site-main" class="site-main outer">
+        <header class="article-header gh-canvas">
+            {{#if feature_image}}
+            <figure class="article-image">
+                <img
+                    srcset="{{img_url feature_image size="s"}} 300w,
+                            {{img_url feature_image size="m"}} 600w,
+                            {{img_url feature_image size="l"}} 1000w,
+                            {{img_url feature_image size="xl"}} 2000w"
+                    sizes="(min-width: 1400px) 1400px, 92vw"
+                    src="{{img_url feature_image size="xl"}}"
+                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
+                />
+                {{#if feature_image_caption}}
+                    <figcaption>{{feature_image_caption}}</figcaption>
+                {{/if}}
+            </figure>
+            {{/if}}
+        </header>
+
+        <div class="outer">
+            {{#page}}
+            <article class="post-full {{post_class}} no-image">
+                <section class="post-full-content">
+                    <div class="post-content">
+                        <h2 class="post-title latest-title">Chart packs</h2>
+                    </div>
+                </section>
+            </article>
+            {{/page}}
+        </div>
+
+        {{!-- .gh-content.gh-canvas is the grid the embed's width breakout is
+              measured against; without it data-eae-width has nothing to escape
+              from and the table renders at whatever width this container is. --}}
+        <section class="gh-content gh-canvas">
+            <div data-eae-index
+                 data-eae-width="full"
+                 data-eae-title="off"
+                 data-eae-intro="Every economy, every pack. Coverage differs by economy because national statistics offices publish different things."></div>
+            <script src="https://charts.eastasiaecon.com/assets/embed.js?v=5" async></script>
+        </section>
+    </main>
+</div>
