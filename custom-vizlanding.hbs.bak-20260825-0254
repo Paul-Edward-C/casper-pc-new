@@ -1,0 +1,187 @@
+{{!< default}}
+
+<style>
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin: 2rem auto;
+  width: 90vw;
+  max-width: none;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 900px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.dashboard-card {
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+}
+
+.dashboard-card img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.dashboard-card-content {
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+.dashboard-card h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 3rem;
+}
+
+.dashboard-card p {
+  margin: 0;
+  color: #666;
+  font-size: 2rem;
+}
+
+.responsive-iframe {
+  width: 100%;
+  min-height: 1000px;
+  height: auto;
+  border: none;
+}
+
+.menu-item, .myButton {
+  display: inline-block;
+  margin: 10px 5px;
+  font-size: 16px;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 2px 15px;
+  border-radius: 5px;
+  font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
+  background-color: #104b1f;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-align: center;
+  width: 150px;
+}
+
+.menu-item:hover, .myButton:hover {
+  background-color: rgba(16, 75, 31, 0.7);
+}
+
+body {
+  overflow-x: auto;
+}
+
+.myBTNdiv {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-label {
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 14px;
+  font-weight: bold;
+  background-color: #ffffff;
+  border: 2px solid #104b1f;
+  border-radius: 5px;
+  color: #104b1f;
+  text-align: center;
+  margin: 5px 0;
+}
+
+#charts {
+  text-align: center;
+  margin-bottom: 20px;
+}
+</style>
+
+{{> "page-banner" title="Data and visualisations"}}
+
+<div id="data-api" style="text-align: center; margin-bottom: 20px;">
+  <a href="#data-api"></a><br>
+  <h1>Data API</h1>
+</div>
+
+<div class="dashboard-cards" style="grid-template-columns: 1fr; max-width: 30vw; min-width: 320px; left: auto; transform: none; margin: 0 auto; width: 30vw;">
+  <a href="https://www.eastasiaecon.com/data-api/" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2026/01/Screenshot-2026-01-29-at-10-45-10-Data-API.png" alt="Data API">
+    <div class="dashboard-card-content">
+      <h3>Data API</h3>
+      <p>Search, download and integrate 246,000+ economic series via REST API</p>
+    </div>
+  </a>
+</div>
+
+<div id="dashboards" style="text-align: center; margin-bottom: 20px;">
+  <a href="#dashboards"></a><br>
+  <h1>Dashboards and visualisations</h1>
+</div>
+
+
+<div class="dashboard-cards">
+  <a href="https://www.eastasiaecon.com/data/" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-37-51-ECON-DB-1.png" alt="Dashboard 1">
+    <div class="dashboard-card-content">
+      <h3>Asia macro explorer</h3>
+      <p>Chart and download regional economic indicators</p>
+    </div>
+  </a>
+  <a href="https://www.eastasiaecon.com/tools/" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-14-49-35-China-----Trade-Snapshot---Series-1.png" alt="Dashboard 2">
+    <div class="dashboard-card-content">
+      <h3>China trade mapper</h3>
+      <p>Map, chart and download foreign trade indicators</p>
+    </div>
+  </a>
+  <a href="https://cn-region-df188a89a9d2.herokuapp.com/app" class="dashboard-card">
+    <img src="https://www.eastasiaecon.com/content/images/2025/11/Screenshot-2025-11-13-at-13-32-10-China-Provinces-----Investment-Data-3.png" alt="China provincial">
+    <div class="dashboard-card-content">
+      <h3>China provincial dashboard</h3>
+      <p>Map, chart and download provincial data</p>
+    </div>
+  </a>
+</div>
+
+<div id="site-main" class="site-main outer">
+    <!-- Your site content here -->
+</div>
+
+<div id="charts">
+  <a href="#charts"></a><br>
+  <h1>Chart packs</h1>
+  <p style="color: #666; font-size: 2rem; margin: 0 auto 20px auto; max-width: 600px;">Hundreds more interactive charts can be viewed and downloaded from each country page</p>
+</div>
+
+<div style="display: flex; justify-content: center;">
+  <a href="https://www.eastasiaecon.com/cn/#charts" class="menu-item">China</a>
+  <a href="https://www.eastasiaecon.com/jp/#charts" class="menu-item">Japan</a>
+  <a href="https://www.eastasiaecon.com/kr/#charts" class="menu-item">Korea</a>
+  <a href="https://www.eastasiaecon.com/tw/#charts" class="menu-item">Taiwan</a>
+  <a href="https://www.eastasiaecon.com/region/#charts" class="menu-item">Region</a>
+</div>
+
+<div id="region_export_charts">
+  <h2>Region, Exports</h2>
+  <figure class="kg-image-card kg-width-full">
+    <iframe src="https://main--beautiful-dolphin-db8ab2.netlify.app/charts/region/region_exports" class="responsive-iframe" loading="lazy"></iframe>
+  </figure>
+</div>
