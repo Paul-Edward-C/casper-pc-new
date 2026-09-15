@@ -163,14 +163,6 @@
   .viz-item .go { font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; color: var(--viz-green); font-weight: 600; white-space: nowrap; }
   .viz-item.lead { background: var(--viz-wash); border-left: 4px solid var(--viz-green); padding-left: 18px; }
 
-  /* Access badge. Reuses .post-label so it is visually identical to the labels on post
-     cards; only spacing and scale are adjusted for this list, where it sits under the
-     description rather than above a card title. */
-  .viz-item .viz-access {
-    margin: 10px 0 0; padding: 3px 9px; font-size: 1.15rem; letter-spacing: .06em;
-    text-transform: uppercase; border-width: 1px !important; border-radius: 4px;
-  }
-
   /* ---- tool cards (existing pattern, kept) ---- */
   .dashboard-cards {
     display: grid; grid-template-columns: 1fr; gap: 2rem; margin: 2rem auto 0;
@@ -262,33 +254,34 @@
 <section class="viz-section" id="charts">
   <p class="viz-kicker">Ways in</p>
   <h2>Explore it in the browser</h2>
-  <p class="viz-sub">Chart it, map it, and take the underlying numbers with you.</p>
+  <p class="viz-sub">Nothing to install and no key required &mdash; chart it, map it, and take the
+     underlying numbers with you.</p>
 
   <div class="viz-index">
     <a class="viz-item lead" href="https://www.eastasiaecon.com/charts/">
       <span class="no">01</span>
       <span><h3>Charts</h3><p>Hundreds of interactive charts, updated when data are released &mdash;
-        every market in one index, with the numbers behind each chart downloadable.</p><span class="post-label viz-access">Subscribers Only</span></span>
+        every market in one index, with the numbers behind each chart downloadable.</p></span>
       <span class="go">Browse &rarr;</span>
     </a>
     <a class="viz-item" href="https://www.eastasiaecon.com/data/">
       <span class="no">02</span>
-      <span><h3>Asia macro explorer</h3><p>Chart and download regional indicators side by side.</p><span class="post-label viz-access">Members Only</span></span>
+      <span><h3>Asia macro explorer</h3><p>Chart and download regional indicators side by side.</p></span>
       <span class="go">Open &rarr;</span>
     </a>
     <a class="viz-item" href="https://www.eastasiaecon.com/tools/">
       <span class="no">03</span>
-      <span><h3>China trade mapper</h3><p>Map, chart and download foreign trade by partner and product.</p><span class="post-label viz-access">Members Only</span></span>
+      <span><h3>China trade mapper</h3><p>Map, chart and download foreign trade by partner and product.</p></span>
       <span class="go">Open &rarr;</span>
     </a>
     <a class="viz-item" href="https://cn-region-df188a89a9d2.herokuapp.com/app">
       <span class="no">04</span>
-      <span><h3>China provincial dashboard</h3><p>Map, chart and download data province by province.</p><span class="post-label viz-access">Public</span></span>
+      <span><h3>China provincial dashboard</h3><p>Map, chart and download data province by province.</p></span>
       <span class="go">Open &rarr;</span>
     </a>
     <a class="viz-item" href="https://www.eastasiaecon.com/japan-fiscal-model/">
       <span class="no">05</span>
-      <span><h3>Japan fiscal model</h3><p>Set the primary balance, growth, interest rates and the residual, and watch the debt path respond.</p><span class="post-label viz-access">Members Only</span></span>
+      <span><h3>Japan fiscal model</h3><p>Set the primary balance, growth, interest rates and the residual, and watch the debt path respond.</p></span>
       <span class="go">Open &rarr;</span>
     </a>
   </div>
