@@ -18,7 +18,12 @@
     --viz-ink: #15171A;
     --viz-mid: #738a94;
     --viz-border: #e1e1e1;
-    --viz-wash: #e5eff5;
+    /* A tint of the bamboo icon's green (#6e9b5d) rather than the old pale blue.
+       Tinted, not the icon colour neat: at full strength it drops the price text
+       (--viz-green) to 2.98:1 against this ground, which is unreadable. At 15% it
+       matches the previous wash's luminance (0.854 vs 0.850), so every contrast
+       ratio on the page is unchanged. */
+    --viz-wash: #e9f0e7;
   }
 
   /* ---- standfirst, on the banner green ---- */
@@ -341,11 +346,7 @@
 </section>
 
 <section class="viz-section" id="viz-access">
-  <p class="viz-kicker">Access</p>
-  <h2>Search is open. Subscribe for downloading.</h2>
-  <p class="viz-sub">The whole catalogue is free to explore without an account &mdash; search every
-     series, read its metadata, check coverage and date ranges. A membership is only needed to pull
-     the numbers themselves.</p>
+  <h2>Access</h2>
 
   <div class="viz-tiers">
 
