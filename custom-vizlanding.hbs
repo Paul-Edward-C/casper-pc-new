@@ -163,6 +163,23 @@
   .viz-item .go { font-size: 1.2rem; letter-spacing: .14em; text-transform: uppercase; color: var(--viz-green); font-weight: 600; white-space: nowrap; }
   .viz-item.lead { background: var(--viz-wash); border-left: 4px solid var(--viz-green); padding-left: 18px; }
 
+  /* Access badge. Verbatim from partials/post-card.hbs and home.hbs so it matches the
+     labels on post cards exactly. It has to be repeated here: the served stylesheet
+     (assets/built/screen.css) carries no .post-label rule, so every template that uses
+     one declares it inline, and without this the labels render unstyled. */
+  .post-label {
+    display: inline-block;
+    padding: 5px 10px;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #ffffff;
+    border: 2px solid #104b1f;
+    border-radius: 5px;
+    color: #104b1f;
+    text-align: center;
+    margin: 5px 0;
+  }
+
   /* ---- tool cards (existing pattern, kept) ---- */
   .dashboard-cards {
     display: grid; grid-template-columns: 1fr; gap: 2rem; margin: 2rem auto 0;
@@ -325,10 +342,10 @@
 
 <section class="viz-section" id="viz-access">
   <p class="viz-kicker">Access</p>
-  <h2>Search is open. Membership is for pulling.</h2>
+  <h2>Search is open. Subscribe for downloading.</h2>
   <p class="viz-sub">The whole catalogue is free to explore without an account &mdash; search every
      series, read its metadata, check coverage and date ranges. A membership is only needed to pull
-     the numbers themselves, and your existing East Asia Econ tier already carries it.</p>
+     the numbers themselves.</p>
 
   <div class="viz-tiers">
 
