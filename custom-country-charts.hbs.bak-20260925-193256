@@ -122,46 +122,6 @@ To add categories for a country, just edit the sections below for that country c
         text-align: center;
         margin: 5px 0;
         }
-
-        /* Chart pack nav. Auto-width pills in one sticky row, rather than fixed 150px
-           buttons wrapping onto three lines - the region page carries 15 packs, which was
-           about 2,400px of button chrome. Scrolls sideways when it does not fit, and the
-           pack you are looking at is highlighted as you scroll. Overrides the shared
-           .menu-item/.myButton rule above; .myButton itself is untouched. */
-        #chart-menu {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            gap: 6px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            padding: 8px 12px;
-            margin-bottom: 4px;
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid #e3e6e3;
-            text-align: left;
-        }
-        #chart-menu::-webkit-scrollbar { height: 6px; }
-        #chart-menu::-webkit-scrollbar-thumb { background: #c9cdc9; border-radius: 3px; }
-
-        #chart-menu .menu-item {
-            flex: 0 0 auto;
-            width: auto;
-            margin: 0;
-            padding: 5px 13px;
-            font-size: 14px;
-            font-weight: 600;
-            border-radius: 999px;
-            background-color: #eef1ee;
-            color: #104b1f;
-            white-space: nowrap;
-        }
-        #chart-menu .menu-item:hover { background-color: #dde3dd; }
-        #chart-menu .menu-item.is-active { background-color: #104b1f; color: #ffffff; }
     </style>
 
 
@@ -181,7 +141,7 @@ To add categories for a country, just edit the sections below for that country c
 <div id="charts" data-slug="{{slug}}">
     <a href="#charts"></a><br>
     <h2 class="post-title latest-title">Charts</h2>
-    <div id="chart-menu"></div>
+    <div id="chart-menu" style="display: flex; justify-content: center; flex-wrap: wrap;"></div>
 </div>
 
 <div id="chart-sections"></div>
@@ -211,33 +171,42 @@ To add categories for a country, just edit the sections below for that country c
             || location.pathname.split('/').filter(Boolean)[0] || "").trim().toLowerCase();
     var cc   = (slug === 'all') ? 'region' : slug;   // the "all" page uses the region charts
 
-    // --- what packs exist comes from the manifest, not from a list kept in here ---------
-    // charts/index.json is written by netifly/build_chart_index.py, which scans the chart
-    // files on disk. Publishing <cc>_<pack>.html and re-running it is all that is needed for
-    // a new pack to appear here - no theme edit. Replaces the old hardcoded PACKS list, which
-    // silently ignored anything not written into it (kr_fiscal sat unused for months), and
-    // replaces one HEAD probe per pack per page load with a single request.
-    var FALLBACK = ['consumer', 'exports', 'prices', 'corp_px', 'surveys', 'markets',
-                    'flows', 'labour', 'macro', 'money', 'fiscal', 'industry'];
+    // --- master list of ALL possible chart packs (order = menu order) ---
+    // label = menu text ; slug = netlify file suffix  (<cc>_<slug>.html)
+    var PACKS = [
+        { slug: 'consumer', label: 'Consumer' },
+        { slug: 'exports',  label: 'Exports' },
+        { slug: 'prices',   label: 'Consumer prices' },
+        { slug: 'corp_px',  label: 'Industrial prices' },
+        { slug: 'surveys',  label: 'Surveys' },
+        { slug: 'markets',  label: 'Markets' },
+        { slug: 'flows',    label: 'Flows' },
+        { slug: 'labour',   label: 'Labour' },
+        { slug: 'macro',    label: 'Macro' },
+        { slug: 'money',    label: 'Money' },
+        { slug: 'industry', label: 'Industry' }
+        // other packs that also exist on netlify - uncomment to expose:
+        // ,{ slug: 'hh', label: 'Households' }   // always the cross-country region_hh chart
+    ];
 
-    // 'consumer' is free; everything else needs a qualifying subscription tier. Note a newly
-    // published pack is gated by default - add it here to make it public.
+    // 'consumer' is free; everything else needs a qualifying subscription tier.
     var PUBLIC = { consumer: true };
     var allowedTiers = ['East Asia', 'Daily + Data'];
     var memberTiers = [{{#if @member}}{{#foreach @member.subscriptions}}"{{tier.name}}"{{#unless @last}}, {{/unless}}{{/foreach}}{{/if}}];
     var hasAccess = memberTiers.some(function (t) { return allowedTiers.indexOf(t) !== -1; });
 
-    function titleCase(sl) {
-        return sl.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+    function packUrl(p) {
+        // households is a single cross-country chart (region_hh) on every page
+        var suffix = (p.slug === 'hh') ? 'region/region_hh' : (cc + '/' + cc + '_' + p.slug);
+        return NETLIFY + '/' + suffix;
     }
-    function packUrl(slug) { return NETLIFY + '/' + cc + '/' + cc + '_' + slug; }
 
-    function sectionHtml(slug, label) {
-        return '<div id="pack_' + slug + '">' +
-                 '<a id="pack_' + slug + '_anchor"></a>' +
-                 '<h2>' + label + '</h2>' +
+    function sectionHtml(p, url) {
+        return '<div id="pack_' + p.slug + '">' +
+                 '<a id="pack_' + p.slug + '_anchor"></a>' +
+                 '<h2>' + p.label + '</h2>' +
                  '<figure class="kg-image-card kg-width-full">' +
-                   '<iframe src="' + packUrl(slug) + '" class="responsive-iframe" width="100%" style="height: auto;" loading="lazy"></iframe>' +
+                   '<iframe src="' + url + '" class="responsive-iframe" width="100%" style="height: auto;" loading="lazy"></iframe>' +
                  '</figure>' +
                '</div>';
     }
@@ -247,58 +216,30 @@ To add categories for a country, just edit the sections below for that country c
     var sections = document.getElementById('chart-sections');
     var cta = document.getElementById('upgrade-cta');
 
-    function render(slugs, labels) {
+    // probe every pack in parallel, then render the survivors in master-list order
+    Promise.all(PACKS.map(function (p) {
+        return fetch(packUrl(p), { method: 'HEAD' })
+            .then(function (r) { return { p: p, exists: r.status !== 404 }; })
+            .catch(function () { return { p: p, exists: false }; });
+    })).then(function (results) {
         var gatedExists = 0;
-        slugs.forEach(function (slug) {
-            var isPublic = !!PUBLIC[slug];
+        results.forEach(function (res) {
+            if (!res.exists) { return; }                 // no such chart for this country
+            var p = res.p, isPublic = !!PUBLIC[p.slug];
             if (!isPublic) {
                 gatedExists++;
-                if (!hasAccess) { return; }            // gated + no access -> skip (CTA shown)
+                if (!hasAccess) { return; }               // gated + no access -> skip (CTA shown)
             }
-            var label = (labels && labels[slug]) || titleCase(slug);
+            var url = packUrl(p);
             var a = document.createElement('a');
-            a.href = '#pack_' + slug + '_anchor';
+            a.href = '#pack_' + p.slug + '_anchor';
             a.className = 'menu-item';
-            a.dataset.slug = slug;
-            a.textContent = label;
+            a.textContent = p.label;
             menu.appendChild(a);
-            sections.insertAdjacentHTML('beforeend', sectionHtml(slug, label));
+            sections.insertAdjacentHTML('beforeend', sectionHtml(p, url));
         });
         if (gatedExists > 0 && !hasAccess) { cta.style.display = 'block'; }
-        spy();
-    }
-
-    // Highlight the pack currently in view, and keep it scrolled into sight in the nav.
-    function spy() {
-        if (!('IntersectionObserver' in window)) { return; }
-        var items = menu.querySelectorAll('.menu-item');
-        if (!items.length) { return; }
-        var obs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) {
-                if (!e.isIntersecting) { return; }
-                var slug = e.target.id.replace('pack_', '');
-                items.forEach(function (a) {
-                    var on = a.dataset.slug === slug;
-                    a.classList.toggle('is-active', on);
-                    if (on && menu.scrollWidth > menu.clientWidth) {
-                        a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-                    }
-                });
-            });
-        }, { rootMargin: '-15% 0px -75% 0px' });
-        sections.querySelectorAll('[id^="pack_"]').forEach(function (el) { obs.observe(el); });
-    }
-
-    fetch(NETLIFY + '/index.json', { cache: 'no-cache' })
-        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-        .then(function (m) {
-            render(((m.countries || {})[cc] || []), m.labels || {});
-        })
-        .catch(function () {
-            // manifest missing or not yet deployed: fall back to the core packs so the page
-            // is not blank, and let a 404 iframe be the only cost of a pack that is absent.
-            render(FALLBACK, null);
-        });
+    });
 })();
 </script>
 
