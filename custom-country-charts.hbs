@@ -123,45 +123,68 @@ To add categories for a country, just edit the sections below for that country c
         margin: 5px 0;
         }
 
-        /* Chart pack nav. Auto-width pills in one sticky row, rather than fixed 150px
-           buttons wrapping onto three lines - the region page carries 15 packs, which was
-           about 2,400px of button chrome. Scrolls sideways when it does not fit, and the
-           pack you are looking at is highlighted as you scroll. Overrides the shared
-           .menu-item/.myButton rule above; .myButton itself is untouched. */
+        /* Chart pack nav: underline tabs, not buttons.
+           Fixed 150px green blocks did not scale - the region page carries 15 packs, about
+           2,400px of chrome wrapping onto three rows. These size to their label, sit in one
+           sticky row, and scroll sideways when they do not fit.
+           The bar is painted #F0EDE4 to match the body background (set !important in the
+           theme css), so what you see is a hairline rule rather than a white slab.
+           Colours carry !important because the shared .menu-item/.myButton rule above, and
+           Casper's own link styling, otherwise win the cascade and leave green on green. */
         #chart-menu {
             position: sticky;
             top: 0;
             z-index: 20;
             display: flex;
             flex-wrap: nowrap;
-            justify-content: flex-start;
-            gap: 6px;
+            justify-content: center;
+            justify-content: safe center;   /* falls back to start when it overflows */
+            gap: 26px;
             overflow-x: auto;
             -webkit-overflow-scrolling: touch;
-            scrollbar-width: thin;
-            padding: 8px 12px;
-            margin-bottom: 4px;
-            background: rgba(255, 255, 255, 0.95);
-            border-bottom: 1px solid #e3e6e3;
-            text-align: left;
+            scrollbar-width: none;
+            padding: 10px 16px 0;
+            margin-bottom: 18px;
+            background: #F0EDE4;
+            border-bottom: 1px solid rgba(16, 75, 31, 0.18);
         }
-        #chart-menu::-webkit-scrollbar { height: 6px; }
-        #chart-menu::-webkit-scrollbar-thumb { background: #c9cdc9; border-radius: 3px; }
+        #chart-menu::-webkit-scrollbar { display: none; }
 
         #chart-menu .menu-item {
             flex: 0 0 auto;
-            width: auto;
-            margin: 0;
-            padding: 5px 13px;
-            font-size: 14px;
+            width: auto !important;
+            margin: 0 !important;
+            padding: 6px 0 !important;
+            font-size: 15px;
             font-weight: 600;
-            border-radius: 999px;
-            background-color: #eef1ee;
-            color: #104b1f;
+            border-radius: 0 !important;
+            background: none !important;
+            background-color: transparent !important;
+            color: rgba(16, 75, 31, 0.6) !important;
+            border-bottom: 2px solid transparent;
             white-space: nowrap;
+            transition: color 0.15s ease, border-color 0.15s ease;
         }
-        #chart-menu .menu-item:hover { background-color: #dde3dd; }
-        #chart-menu .menu-item.is-active { background-color: #104b1f; color: #ffffff; }
+        #chart-menu .menu-item:hover {
+            color: #104b1f !important;
+            border-bottom-color: rgba(16, 75, 31, 0.35);
+        }
+        #chart-menu .menu-item.is-active {
+            color: #104b1f !important;
+            border-bottom-color: #104b1f;
+        }
+
+        /* Dark mode: the theme switches body to --color-darkmode, so follow it. */
+        @media (prefers-color-scheme: dark) {
+            #chart-menu {
+                background: var(--color-darkmode, #151719);
+                border-bottom-color: rgba(255, 255, 255, 0.18);
+            }
+            #chart-menu .menu-item { color: rgba(255, 255, 255, 0.6) !important; }
+            #chart-menu .menu-item:hover,
+            #chart-menu .menu-item.is-active { color: #ffffff !important; }
+            #chart-menu .menu-item.is-active { border-bottom-color: #ffffff; }
+        }
     </style>
 
 
