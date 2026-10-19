@@ -314,6 +314,14 @@
   <h2>Data API</h2>
   <p class="viz-sub">The same archive over REST &mdash; JSON or CSV, many series in one call,
      filtered by frequency and date range.</p>
+  <div class="viz-index" style="margin-top:26px">
+    <a class="viz-item lead" href="https://data-api-production-74e0.up.railway.app/guide">
+      <span class="no">GUIDE</span>
+      <span><h3>What&rsquo;s in the API</h3><p>Browse every series by market and topic, see which
+        frequencies and years each one covers, and copy exact names straight into your calls.</p><span class="post-label">Public</span></span>
+      <span class="go">Browse &rarr;</span>
+    </a>
+  </div>
   <div class="viz-split" style="align-items:start">
     <div>
       <div class="viz-ep">
@@ -321,11 +329,13 @@
         <code>GET /series?columns=&hellip;&amp;freq=m&amp;start=&hellip;</code>
         <code>GET /series/{name}</code>
         <code>GET /info/{name}</code>
+        <code>GET /catalog &middot; /catalog/topics/{topic}</code>
         <code>GET /countries &middot; /frequencies &middot; /stats</code>
       </div>
       <p class="viz-sub" style="font-size:1.6rem">Authenticate with an API key or your East Asia
          Econ membership. Append <code>&amp;format=csv</code> for a spreadsheet-ready response.
-         Full documentation on the <a href="https://www.eastasiaecon.com/data-api/">Data API page</a>.</p>
+         Find series names in the <a href="https://data-api-production-74e0.up.railway.app/guide">data guide</a>;
+         full documentation on the <a href="https://www.eastasiaecon.com/data-api/">Data API page</a>.</p>
     </div>
 <pre class="viz-pre">curl -H "X-API-Key: eae_&hellip;" \
   "https://data-api-production-74e0.up.railway.app/series?columns=Japan, JGB, 10Y&amp;freq=m&amp;start=2020-01-01"
