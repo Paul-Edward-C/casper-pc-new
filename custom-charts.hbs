@@ -51,7 +51,8 @@ into the {body} of the default.hbs template --}}
             <article class="post-full {{post_class}} no-image">
                 <section class="post-full-content">
                     <div class="post-content">
-                        <h2 class="post-title latest-title">Chart packs</h2>
+                        <p id="eae-back" hidden><a href="/charts/">&larr; All chart packs</a></p>
+                        <h2 class="post-title latest-title" id="eae-heading">Chart packs</h2>
                     </div>
                 </section>
             </article>
@@ -62,14 +63,51 @@ into the {body} of the default.hbs template --}}
               measured against; without it data-eae-width has nothing to escape
               from and the table renders at whatever width this container is. --}}
         <section class="gh-content gh-canvas">
-            {{!-- data-eae-link: every pack opens on the one Ghost pack page
-                  (custom-chart-pack.hbs), where a subscriber's login reaches the
-                  data API. Gated packs are not on the chart site at all. --}}
-            <div data-eae-index
+            {{!-- This page does two jobs. Plain /charts/ shows the coverage table;
+                  /charts/?p=cn-consumer shows that one pack instead. Every cell in
+                  the table links to the second form (data-eae-link). Packs open
+                  here, on a Ghost page, because gated packs are fetched from the
+                  data API with the reader's Ghost login, which the chart site's
+                  own domain cannot see. --}}
+            <div id="eae-slot"
+                 data-eae-index
                  data-eae-width="full"
                  data-eae-title="off"
-                 data-eae-link="/chart-pack/?p={economy}-{pack}"
+                 data-eae-link="/charts/?p={economy}-{pack}"
                  data-eae-intro="Every economy, every pack. Coverage differs by economy because national statistics offices publish different things."></div>
+            {{!-- Runs before embed.js (which is async, so it executes after this
+                  inline script): with ?p= it turns the table slot into a pack. --}}
+            <script>
+            (function () {
+                var id = new URLSearchParams(location.search).get("p") || "";
+                // economy-pack, both plain lowercase codes; anything else is not
+                // a pack id, is never written into the page, and leaves the table.
+                var m = /^([a-z]+)-([a-z]+)$/.exec(id);
+                if (!m) return;
+                var slot = document.getElementById("eae-slot");
+                var el = document.createElement("div");
+                el.setAttribute("data-eae-pack", m[1] + "/" + m[2]);
+                el.setAttribute("data-eae-width", "full");
+                slot.parentNode.replaceChild(el, slot);
+                document.getElementById("eae-back").hidden = false;
+
+                // Name the pack once embed.js has loaded the site manifest.
+                var tries = 0;
+                (function title() {
+                    var site = window.SITE;
+                    if (!site || !site.economies) {
+                        if (++tries < 50) setTimeout(title, 200);
+                        return;
+                    }
+                    var ec = site.economies.filter(function (e) { return e.code === m[1]; })[0];
+                    var pk = site.packs.filter(function (p) { return p.code === m[2]; })[0];
+                    if (ec && pk) {
+                        document.getElementById("eae-heading").textContent = ec.name + " \u2014 " + pk.name;
+                        document.title = ec.name + " " + pk.name + " \u2014 " + document.title;
+                    }
+                })();
+            })();
+            </script>
             <script src="https://charts.eastasiaecon.com/assets/embed.js?v=6" async></script>
         </section>
     </main>
