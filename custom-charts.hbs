@@ -69,9 +69,14 @@ into the {body} of the default.hbs template --}}
                   here, on a Ghost page, because gated packs are fetched from the
                   data API with the reader's Ghost login, which the chart site's
                   own domain cannot see. --}}
+            {{!-- Placed on the theme's own grid rather than with data-eae-width:
+                  the embed's "full" sizes itself at 96vw but keeps the narrow
+                  main column's start, so the table sat to the right of the
+                  heading and ran off the page. wide-start/wide-end is the column
+                  the "Chart packs" heading uses. --}}
             <div id="eae-slot"
+                 style="grid-column: wide-start / wide-end"
                  data-eae-index
-                 data-eae-width="full"
                  data-eae-title="off"
                  data-eae-link="/charts/?p={economy}-{pack}"
                  data-eae-intro="Every economy, every pack. Coverage differs by economy because national statistics offices publish different things."></div>
@@ -86,8 +91,9 @@ into the {body} of the default.hbs template --}}
                 if (!m) return;
                 var slot = document.getElementById("eae-slot");
                 var el = document.createElement("div");
+                // No width override: the pack sits in the post column, the same
+                // width a chart has in any Ghost post, so it is not stretched.
                 el.setAttribute("data-eae-pack", m[1] + "/" + m[2]);
-                el.setAttribute("data-eae-width", "full");
                 slot.parentNode.replaceChild(el, slot);
                 document.getElementById("eae-back").hidden = false;
 
