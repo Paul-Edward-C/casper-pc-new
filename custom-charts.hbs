@@ -62,11 +62,15 @@ into the {body} of the default.hbs template --}}
               measured against; without it data-eae-width has nothing to escape
               from and the table renders at whatever width this container is. --}}
         <section class="gh-content gh-canvas">
+            {{!-- data-eae-link: every pack opens on the one Ghost pack page
+                  (custom-chart-pack.hbs), where a subscriber's login reaches the
+                  data API. Gated packs are not on the chart site at all. --}}
             <div data-eae-index
                  data-eae-width="full"
                  data-eae-title="off"
+                 data-eae-link="/chart-pack/?p={economy}-{pack}"
                  data-eae-intro="Every economy, every pack. Coverage differs by economy because national statistics offices publish different things."></div>
-            <script src="https://charts.eastasiaecon.com/assets/embed.js?v=5" async></script>
+            <script src="https://charts.eastasiaecon.com/assets/embed.js?v=6" async></script>
         </section>
     </main>
 </div>

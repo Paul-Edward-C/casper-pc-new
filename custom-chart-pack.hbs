@@ -1,0 +1,80 @@
+{{!< default}}
+{{!-- The tag above means: insert everything in this file
+into the {body} of the default.hbs template --}}
+
+{{!-- ==========================================================================
+     Chart pack — ONE Ghost page that shows any pack, chosen by the URL:
+
+         /chart-pack/?p=cn-consumer
+
+     The coverage matrix on /charts/ links every cell here (its data-eae-link).
+     Packs above the public tier are not on charts.eastasiaecon.com at all: the
+     embed fetches them from the data API with this reader's Ghost member token,
+     and the API checks their tier. That only works on a page served by Ghost,
+     which is why gated packs open here rather than on the chart site, whose
+     domain cannot see the Ghost login.
+
+     Set up once in Ghost admin: a page with the slug "chart-pack" and this
+     template ("Chart pack"). Like custom-charts.hbs it does not render
+     {{content}}, so the page body is ignored.
+     ========================================================================== --}}
+
+{{#post}}{{> "page-banner" title="Charts"}}{{/post}}
+
+<div class="site-main outer">
+    <main id="site-main" class="site-main outer">
+        <div class="outer">
+            {{#page}}
+            <article class="post-full {{post_class}} no-image">
+                <section class="post-full-content">
+                    <div class="post-content">
+                        <p><a href="/charts/">&larr; All chart packs</a></p>
+                        <h2 class="post-title latest-title" id="eae-pack-title">Chart pack</h2>
+                    </div>
+                </section>
+            </article>
+            {{/page}}
+        </div>
+
+        <section class="gh-content gh-canvas" id="eae-pack-host"></section>
+    </main>
+</div>
+
+<script>
+(function () {
+    var host = document.getElementById("eae-pack-host");
+    var id = new URLSearchParams(location.search).get("p") || "";
+    // economy-pack, both plain lowercase codes; anything else is not a pack id
+    // and is never written into the page.
+    var m = /^([a-z]+)-([a-z]+)$/.exec(id);
+    if (!m) {
+        host.innerHTML = '<p>No chart pack chosen. <a href="/charts/">Pick one from the table.</a></p>';
+        return;
+    }
+    var el = document.createElement("div");
+    el.setAttribute("data-eae-pack", m[1] + "/" + m[2]);
+    el.setAttribute("data-eae-width", "full");
+    host.appendChild(el);
+
+    // Name the pack once the embed has loaded the site manifest.
+    var tries = 0;
+    (function title() {
+        var site = window.SITE;
+        if (!site || !site.economies) {
+            if (++tries < 50) setTimeout(title, 200);
+            return;
+        }
+        var ec = site.economies.filter(function (e) { return e.code === m[1]; })[0];
+        var pk = site.packs.filter(function (p) { return p.code === m[2]; })[0];
+        if (ec && pk) {
+            document.getElementById("eae-pack-title").textContent = ec.name + " — " + pk.name;
+            document.title = ec.name + " " + pk.name + " — " + document.title;
+        }
+    })();
+
+    var s = document.createElement("script");
+    s.src = "https://charts.eastasiaecon.com/assets/embed.js?v=6";
+    s.async = true;
+    document.body.appendChild(s);
+})();
+</script>
