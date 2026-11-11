@@ -72,7 +72,7 @@
 
   
 
-{{#get "posts" filter="tag:hash-home" limit="12"}}
+{{#get "posts" filter="tag:[hash-home,hash-jp,hash-cn,hash-kr,hash-tw,hash-all,hash-all-2]+tag:-hash-quick" limit="12"}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}

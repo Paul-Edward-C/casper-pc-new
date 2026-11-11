@@ -47,11 +47,11 @@ To add categories for a country, just edit the sections below for that country c
         </div>
 
 {{#post}}
-{{#match slug "tw"}}{{> "country-posts" tagfilter="tag:hash-tw"}}{{/match}}
-{{#match slug "cn"}}{{> "country-posts" tagfilter="tag:hash-cn"}}{{/match}}
-{{#match slug "jp"}}{{> "country-posts" tagfilter="tag:hash-jp"}}{{/match}}
-{{#match slug "kr"}}{{> "country-posts" tagfilter="tag:hash-kr"}}{{/match}}
-{{#match slug "all"}}{{> "country-posts" tagfilter="tag:hash-all"}}{{/match}}
+{{#match slug "tw"}}{{> "country-posts" tagfilter="tag:hash-tw+tag:-hash-quick"}}{{/match}}
+{{#match slug "cn"}}{{> "country-posts" tagfilter="tag:hash-cn+tag:-hash-quick"}}{{/match}}
+{{#match slug "jp"}}{{> "country-posts" tagfilter="tag:hash-jp+tag:-hash-quick"}}{{/match}}
+{{#match slug "kr"}}{{> "country-posts" tagfilter="tag:hash-kr+tag:-hash-quick"}}{{/match}}
+{{#match slug "all"}}{{> "country-posts" tagfilter="tag:[hash-all,hash-all-2]+tag:-hash-quick"}}{{/match}}
 {{/post}}
 
 <div class="myBTNdiv">

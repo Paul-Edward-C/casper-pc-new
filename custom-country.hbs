@@ -46,7 +46,7 @@ To add categories for a country, just edit the sections below for that country c
             {{/page}}
         </div>
 
-{{#get "posts" filter="tag:hash-{{slug}}" limit="9"}}
+{{#get "posts" filter="tag:hash-{{slug}}+tag:-hash-quick" limit="9"}}
     <div class="inner posts">
         <div class="post-feed">
             {{#foreach posts}}
