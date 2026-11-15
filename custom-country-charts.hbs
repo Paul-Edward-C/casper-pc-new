@@ -24,6 +24,7 @@
   .eae-dash .dash-msg .btns { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
   .eae-dash .dash-msg .btns a { display: inline-block; padding: 8px 18px; border-radius: 5px; background: #104b1f; color: #fff; text-decoration: none; font-weight: 600; }
   .eae-dash .dash-msg .btns a.alt { background: transparent; color: #104b1f; border: 1px solid #104b1f; }
+  .eae-dash .d-source { color: #66706a; font-size: 13px; padding: 18px 0 0; }
 </style>
 {{!-- The page header from the previous version: page name in the big slot, the EAE mark and wordmark on the right
      (partials/page-banner.hbs, styles in assets/css/home.css). Front pages render it from their Ghost page; the topic
@@ -70,7 +71,7 @@
   <div class="box chart-card"><button class="link-btn close" type="button" id="modal-close">Close</button>
     <div id="modal-card"></div></div>
 </div>
-<footer class="site-footer"><div class="wrap" id="d-foot"></div></footer>
+<div class="d-source"><div class="wrap" id="d-foot"></div></div>
   </div>
 </div>
 <script src="https://charts.eastasiaecon.com/assets/vendor/echarts.custom.js?v=20261115c"></script>

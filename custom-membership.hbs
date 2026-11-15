@@ -1,0 +1,157 @@
+{{!< default}}
+{{!--
+  MEMBERSHIP PAGE (/membership/) - what free membership gives, a taste of the dashboards, East Asia in Four Charts,
+  and the plans. Draft of 15 Nov 2026 for Paul to react to.
+  - The intro follows the reader: visitors get the free sign-up; free members are welcomed; paying members get their
+    dashboards.
+  - The taste (signed-in members, free included): the Region front page's headline tiles, live from the data API
+    (GET /dashboards/region/taste) and drawn by dashboard.js like the dashboards. Clicking a tile opens its chart.
+  - East Asia in Four Charts: listed with {{#get}}; the posts' own visibility (members) decides who can read them.
+  - Sizes are px, not rem: Casper sets html { font-size: 62.5% }.
+--}}
+{{#post}}{{> "page-banner"}}{{/post}}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://charts.eastasiaecon.com/assets/dashboard-live.css?v=20261115c">
+<style>
+  .eae-mem { max-width: 1180px; margin: 0 auto; padding: 24px 24px 60px; font-size: 16px; line-height: 1.55; color: #1d2a24; }
+  .eae-mem h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; font-weight: 600; margin: 44px 0 6px; line-height: 1.2; }
+  .eae-mem .lede { font-size: 19px; max-width: 760px; margin: 8px 0 18px; }
+  .eae-mem .sub { color: #66706a; font-size: 15px; margin: 0 0 18px; max-width: 760px; }
+  .eae-mem .btn { display: inline-block; padding: 9px 20px; border-radius: 5px; background: #104b1f; color: #fff !important; text-decoration: none; font-weight: 600; font-size: 15px; margin: 4px 8px 4px 0; }
+  .eae-mem .btn.alt { background: transparent; color: #104b1f !important; border: 1px solid #104b1f; }
+  .eae-mem .links a { color: #104b1f; text-decoration: underline; margin-right: 14px; }
+  .eae-mem .fc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .eae-mem .fc-card { border: 1px solid #e3e0d6; border-radius: 8px; overflow: hidden; background: #fff; display: flex; flex-direction: column; }
+  .eae-mem .fc-card img { width: 100%; aspect-ratio: 16/10; object-fit: cover; display: block; }
+  .eae-mem .fc-card .t { padding: 12px 14px 14px; } .eae-mem .fc-card .d { color: #66706a; font-size: 13px; }
+  .eae-mem .fc-card a { color: inherit; text-decoration: none; } .eae-mem .fc-card h3 { font-size: 18px; margin: 2px 0 6px; line-height: 1.3; }
+  .eae-mem .fc-card p { font-size: 14px; margin: 0; color: #3b4741; }
+  .eae-mem .fc-first { grid-column: span 3; display: grid; grid-template-columns: 1.3fr 1fr; }
+  .eae-mem .fc-first img { aspect-ratio: auto; height: 100%; } .eae-mem .fc-first .t { padding: 22px 24px; } .eae-mem .fc-first h3 { font-size: 26px; }
+  .eae-mem .fc-first p { font-size: 16px; }
+  .eae-mem .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .eae-mem .plan { border: 1px solid #e3e0d6; border-radius: 8px; padding: 18px 20px; background: #fff; }
+  .eae-mem .plan h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; margin: 0 0 8px; }
+  .eae-mem .plan ul { margin: 0; padding: 0 0 0 18px; } .eae-mem .plan li { font-size: 15px; line-height: 1.5; padding: 0; margin: 4px 0; }
+  .eae-mem .packs a { display: inline-block; border: 1px solid #e3e0d6; border-radius: 8px; padding: 12px 16px; margin: 0 12px 12px 0; color: #104b1f; text-decoration: none; font-weight: 600; background: #fff; }
+  .eae-mem .taste-msg { border: 1px dashed #c9c4b6; border-radius: 8px; padding: 18px 20px; color: #3b4741; }
+  .eae-mem .eae-dash .dash { padding: 0; max-width: none; }
+  .eae-mem .eae-dash #d-title, .eae-mem .eae-dash #d-intro, .eae-mem .eae-dash #tiles-head { display: none; }
+  @media (max-width: 860px) { .eae-mem .fc-grid, .eae-mem .plans { grid-template-columns: 1fr; } .eae-mem .fc-first { grid-column: auto; grid-template-columns: 1fr; } }
+  .eae-dash .d-source { color: #66706a; font-size: 13px; padding: 18px 0 0; }
+</style>
+
+<div class="eae-mem">
+  {{#if @member}}
+    {{#if @member.paid}}
+      <p class="lede">You're on a paid plan. Your dashboards:</p>
+      <p class="links"><a href="/all/">Region</a><a href="/jp/">Japan</a><a href="/kr/">Korea</a><a href="/tw/">Taiwan</a><a href="/cn/">China</a></p>
+    {{else}}
+      <p class="lede">Welcome{{#if @member.name}}, {{@member.name}}{{/if}}. As a member you get East Asia in Four Charts every week, the sample chart packs, and a live look at the region's headline numbers below.</p>
+    {{/if}}
+  {{else}}
+    <p class="lede">Free membership: East Asia in Four Charts every week, two open chart packs, and a live look at the region's headline numbers.</p>
+    <p><a class="btn" href="#/portal/signup/free">Join free</a><a class="btn alt" href="#/portal/signin">Sign in</a></p>
+  {{/if}}
+
+  <h2>A taste of the dashboards</h2>
+  <p class="sub">Headline indicators for Japan, Korea, Taiwan and China, updated every day. Click a tile for the chart. The full dashboards add the latest releases and notes, and a page for every topic.</p>
+  <div id="taste-msg" class="taste-msg" hidden></div>
+  <div class="eae-dash" id="eae-dash">
+    <div id="dash-app" hidden>
+<nav class="d-nav" id="d-nav" aria-label="Dashboard pages" hidden><div class="wrap"><ul id="d-menu"></ul></div></nav>
+<main class="wrap dash">
+  <h1 id="d-title"></h1>
+  <p class="lede" id="d-intro"></p>
+  <p class="stamp" id="d-stamp"></p>
+  <div id="notes-wrap" hidden>
+    <h2 class="band">Releases and notes <small id="n-count"></small>
+      <button class="link-btn n-toggle" type="button" id="n-toggle" aria-expanded="true" aria-controls="n-body">Hide</button></h2>
+    <div class="n-strip" id="n-strip" hidden></div>
+    <div class="n-rel" id="n-body">
+      <div class="n-feed" id="n-feed"><p class="n-msg">Loading notes…</p></div>
+      <aside class="n-side">
+        <div class="n-panel"><h4>Today's releases</h4><ul id="n-cal"></ul></div>
+        <div class="n-panel"><h4>Coming up</h4><ul id="n-next"></ul></div>
+        <p class="n-hint" id="n-hint"></p>
+      </aside>
+    </div>
+    <h2 class="band">Latest notes <small>Whatever their age. Quick reactions are only under Releases and notes.</small></h2>
+    <p class="n-sub">Cycle</p>
+    <div class="n-latest" id="n-latest"><p class="n-msg">Loading notes…</p></div>
+    <p class="n-sub">Thematic</p>
+    <div class="n-latest" id="n-other"><p class="n-msg">Loading notes…</p></div>
+    <p class="n-sub">Latest outlook and slide pack</p>
+    <div class="n-latest n-pair" id="n-pair"><p class="n-msg">Loading notes…</p></div>
+  </div>
+  <div id="sum-wrap" hidden>
+    <h2 class="band">Summary <small>From the latest notes on this data, newest first</small></h2>
+    <div class="sum" id="sum"><p class="n-msg">Loading notes…</p></div>
+  </div>
+  <h2 class="band" id="tiles-head">Headline indicators</h2>
+  <div class="tiles" id="tiles"></div>
+  <div id="sections"></div>
+</main>
+<div class="modal" id="modal" hidden>
+  <div class="box chart-card"><button class="link-btn close" type="button" id="modal-close">Close</button>
+    <div id="modal-card"></div></div>
+</div>
+<div class="d-source"><div class="wrap" id="d-foot"></div></div>
+    </div>
+  </div>
+
+  <h2>East Asia in Four Charts</h2>
+  <p class="sub">Every week, four charts on what matters across the region, with a short note on each. {{#unless @member}}Free with membership.{{/unless}}</p>
+  <div class="fc-grid">
+  {{#get "posts" filter="slug:~'east-asia-in-four-charts'+status:published" limit="7" order="published_at desc"}}
+    {{#foreach posts}}
+      <article class="fc-card{{#if @first}} fc-first{{/if}}">
+        {{#if feature_image}}<a href="{{url}}"><img src="{{img_url feature_image size="m"}}" alt="" loading="lazy"></a>{{/if}}
+        <div class="t"><div class="d">{{date published_at format="D MMMM YYYY"}}</div>
+          <a href="{{url}}"><h3>{{title}}</h3></a>
+          {{#if custom_excerpt}}<p>{{custom_excerpt}}</p>{{/if}}
+        </div>
+      </article>
+    {{/foreach}}
+  {{/get}}
+  </div>
+
+  <h2>Sample chart packs</h2>
+  <p class="sub">Open to everyone: every chart is interactive, with the data behind it.</p>
+  <p class="packs"><a href="https://charts.eastasiaecon.com/cn/macro/">China, macro →</a><a href="https://charts.eastasiaecon.com/jp/macro/">Japan, macro →</a></p>
+
+  <h2>Plans</h2>
+  <p class="sub">Every plan includes everything above.</p>
+  <div class="plans">
+    <div class="plan"><h3>Daily</h3><ul><li>East Asia Today, every weekday evening</li><li>The front page of each dashboard: Region, Japan, Korea, Taiwan and China</li><li>Notes on the dashboards as summaries with their charts</li></ul></div>
+    <div class="plan"><h3>Daily + Data</h3><ul><li>Everything in Daily</li><li>Every topic page of the dashboards (prices, labour, trade, money and more)</li><li>All the chart packs</li></ul></div>
+    <div class="plan"><h3>East Asia</h3><ul><li>Everything in Daily + Data</li><li>Every note in full: Cycle, Outlook and Thematic</li><li>The weekly 'Last week, next week'</li></ul></div>
+  </div>
+  <p style="margin-top:18px">{{#if @member.paid}}<a class="btn alt" href="#/portal/account/plans">Change plan</a>{{else}}{{#if @member}}<a class="btn" href="#/portal/account/plans">Upgrade</a>{{else}}<a class="btn" href="#/portal/signup">See the plans and prices</a>{{/if}}{{/if}}</p>
+</div>
+
+<script src="https://charts.eastasiaecon.com/assets/vendor/echarts.custom.js?v=20261115c"></script>
+<script src="https://charts.eastasiaecon.com/assets/charts.js?v=20261115c"></script>
+<script src="https://charts.eastasiaecon.com/assets/dashboard.js?v=20261115c"></script>
+<script>
+(function () {
+  var API = "https://data-api-production-74e0.up.railway.app";
+  var $ = function (id) { return document.getElementById(id); };
+  function msg(html) { $("taste-msg").innerHTML = html; $("taste-msg").hidden = false; }
+  fetch("/members/api/session", { credentials: "include" })
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .catch(function () { return ""; })
+    .then(function (tok) {
+      tok = (tok || "").trim();
+      if (!tok) { msg('<a class="btn" href="#/portal/signup/free">Join free</a> or <a href="#/portal/signin">sign in</a> to see the live headline numbers.'); return; }
+      return fetch(API + "/dashboards/region/taste", { headers: { Authorization: "Bearer " + tok }, credentials: "omit" })
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (j) {
+          $("dash-app").hidden = false;
+          window.EAEDash(j.data, { theme: "light", assets: "https://charts.eastasiaecon.com/assets/" });
+        });
+    })
+    .catch(function () { msg("The headline numbers couldn't load just now."); });
+})();
+</script>
