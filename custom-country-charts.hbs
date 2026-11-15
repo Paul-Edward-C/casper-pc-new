@@ -25,6 +25,10 @@
   .eae-dash .dash-msg .btns a { display: inline-block; padding: 8px 18px; border-radius: 5px; background: #104b1f; color: #fff; text-decoration: none; font-weight: 600; }
   .eae-dash .dash-msg .btns a.alt { background: transparent; color: #104b1f; border: 1px solid #104b1f; }
 </style>
+{{!-- The page header from the previous version: page name in the big slot, the EAE mark and wordmark on the right
+     (partials/page-banner.hbs, styles in assets/css/home.css). Front pages render it from their Ghost page; the topic
+     routes have no page behind them, so the script below writes the economy's name in. --}}
+{{#if post}}{{#post}}{{> "page-banner"}}{{/post}}{{else}}{{> "page-banner" title=" "}}{{/if}}
 <div class="eae-dash" id="eae-dash">
   <p class="dash-msg" id="dash-loading">Loading the dashboard…</p>
   <div class="dash-msg" id="dash-gate" hidden></div>
@@ -102,6 +106,8 @@
     show("dash-gate");
   }
 
+  var pbName = document.querySelector(".page-banner .pb-name");
+  if (pbName && !pbName.textContent.trim()) pbName.textContent = NAMES[cc] || "";
   if (!NAMES[cc]) { $("dash-loading").textContent = "No dashboard here."; return; }
   fetch("/members/api/session", { credentials: "include" })
     .then(function (r) { return r.ok ? r.text() : ""; })
