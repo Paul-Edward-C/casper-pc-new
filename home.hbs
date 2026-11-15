@@ -105,7 +105,7 @@
     <a class="dash" href="/cn/"><b>China</b><span>Activity, prices, credit and the PBC</span></a>
   </div>
 
-  <h2><a href="/cycle/">Latest analysis</a><a class="more" href="/cycle/">All notes →</a></h2>
+  <h2><a href="/cycle/">Latest analysis</a><a class="more" href="/cycle/">Article archive →</a></h2>
   <p class="sub">Cycle notes on each release, plus Outlook and Thematic pieces.</p>
   <div class="cards">
   {{#get "posts" filter="tag:[hash-home,hash-jp,hash-cn,hash-kr,hash-tw,hash-all,hash-all-2]+tag:-hash-quick+tag:-hash-charts" limit="7" include="tags"}}
@@ -124,7 +124,7 @@
 
   <div class="row3">
     <section>
-      <h2>East Asia Today</h2>
+      <h2><a href="/daily/">East Asia Today</a></h2>
       <p class="sub">Every weekday evening: the day's releases across the region.</p>
       {{#get "posts" filter="tag:hash-charts+slug:~'east-asia-today'" limit="1"}}{{#foreach posts}}
         <article class="card">
@@ -133,6 +133,7 @@
             <a href="{{url}}"><h3>{{title}}</h3></a>{{#if custom_excerpt}}<p>{{custom_excerpt}}</p>{{/if}}</div>
         </article>
       {{/foreach}}{{/get}}
+      <p style="margin-top:10px"><a class="more" style="margin:0" href="/daily/">Daily archive →</a></p>
     </section>
     <section>
       <h2>East Asia in Four Charts</h2>

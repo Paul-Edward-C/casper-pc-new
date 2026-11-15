@@ -12,7 +12,7 @@
 {{#post}}{{> "page-banner"}}{{/post}}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap">
-<link rel="stylesheet" href="https://charts.eastasiaecon.com/assets/dashboard-live.css?v=20261115c">
+<link rel="stylesheet" href="https://charts.eastasiaecon.com/assets/dashboard-live.css?v=20261115d">
 <style>
   .eae-mem { max-width: 1180px; margin: 0 auto; padding: 24px 24px 60px; font-size: 16px; line-height: 1.55; color: #1d2a24; }
   .eae-mem h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 30px; font-weight: 600; margin: 44px 0 6px; line-height: 1.2; }
@@ -30,7 +30,8 @@
   .eae-mem .fc-first { grid-column: span 3; display: grid; grid-template-columns: 1.3fr 1fr; }
   .eae-mem .fc-first img { aspect-ratio: auto; height: 100%; } .eae-mem .fc-first .t { padding: 22px 24px; } .eae-mem .fc-first h3 { font-size: 26px; }
   .eae-mem .fc-first p { font-size: 16px; }
-  .eae-mem .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .eae-mem .plans { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+  .eae-mem .plan .pd { font-size: 14.5px; color: #3b4741; margin: 0 0 10px; }
   .eae-mem .plan { border: 1px solid #e3e0d6; border-radius: 8px; padding: 18px 20px; background: #fff; }
   .eae-mem .plan h3 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 24px; margin: 0 0 8px; }
   .eae-mem .plan ul { margin: 0; padding: 0 0 0 18px; } .eae-mem .plan li { font-size: 15px; line-height: 1.5; padding: 0; margin: 4px 0; }
@@ -38,6 +39,7 @@
   .eae-mem .taste-msg { border: 1px dashed #c9c4b6; border-radius: 8px; padding: 18px 20px; color: #3b4741; }
   .eae-mem .eae-dash .dash { padding: 0; max-width: none; }
   .eae-mem .eae-dash #d-title, .eae-mem .eae-dash #d-intro, .eae-mem .eae-dash #tiles-head { display: none; }
+  @media (max-width: 980px) { .eae-mem .plans { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 860px) { .eae-mem .fc-grid, .eae-mem .plans { grid-template-columns: 1fr; } .eae-mem .fc-first { grid-column: auto; grid-template-columns: 1fr; } }
   .eae-dash .d-source { color: #66706a; font-size: 13px; padding: 18px 0 0; }
 </style>
@@ -47,6 +49,7 @@
     {{#if @member.paid}}
       <p class="lede">You're on a paid plan. Your dashboards:</p>
       <p class="links"><a href="/all/">Region</a><a href="/jp/">Japan</a><a href="/kr/">Korea</a><a href="/tw/">Taiwan</a><a href="/cn/">China</a></p>
+      <p class="links">Archives: <a href="/daily/">East Asia Today</a><a href="/cycle/">All notes</a></p>
     {{else}}
       <p class="lede">Welcome{{#if @member.name}}, {{@member.name}}{{/if}}. As a member you get East Asia in Four Charts every week, the sample chart packs, and a live look at the region's headline numbers below.</p>
     {{/if}}
@@ -122,18 +125,20 @@
   <p class="packs"><a href="https://charts.eastasiaecon.com/cn/macro/">China, macro →</a><a href="https://charts.eastasiaecon.com/jp/macro/">Japan, macro →</a></p>
 
   <h2>Plans</h2>
-  <p class="sub">Every plan includes everything above.</p>
+  <p class="sub">Every paid plan includes everything above.</p>
   <div class="plans">
-    <div class="plan"><h3>Daily</h3><ul><li>East Asia Today, every weekday evening</li><li>The front page of each dashboard: Region, Japan, Korea, Taiwan and China</li><li>Notes on the dashboards as summaries with their charts</li></ul></div>
-    <div class="plan"><h3>Daily + Data</h3><ul><li>Everything in Daily</li><li>Every topic page of the dashboards (prices, labour, trade, money and more)</li><li>All the chart packs</li></ul></div>
-    <div class="plan"><h3>East Asia</h3><ul><li>Everything in Daily + Data</li><li>Every note in full: Cycle, Outlook and Thematic</li><li>The weekly 'Last week, next week'</li></ul></div>
+  {{#get "tiers" include="monthly_price,yearly_price,benefits" limit="all"}}{{#foreach tiers}}
+    <div class="plan" style="order:{{#if monthly_price}}{{monthly_price}}{{else}}0{{/if}}"><h3>{{name}}</h3>
+      {{#if description}}<p class="pd">{{description}}</p>{{/if}}
+      <ul>{{#foreach benefits}}<li>{{this}}</li>{{/foreach}}</ul></div>
+  {{/foreach}}{{/get}}
   </div>
   <p style="margin-top:18px">{{#if @member.paid}}<a class="btn alt" href="#/portal/account/plans">Change plan</a>{{else}}{{#if @member}}<a class="btn" href="#/portal/account/plans">Upgrade</a>{{else}}<a class="btn" href="#/portal/signup">See the plans and prices</a>{{/if}}{{/if}}</p>
 </div>
 
-<script src="https://charts.eastasiaecon.com/assets/vendor/echarts.custom.js?v=20261115c"></script>
-<script src="https://charts.eastasiaecon.com/assets/charts.js?v=20261115c"></script>
-<script src="https://charts.eastasiaecon.com/assets/dashboard.js?v=20261115c"></script>
+<script src="https://charts.eastasiaecon.com/assets/vendor/echarts.custom.js?v=20261115d"></script>
+<script src="https://charts.eastasiaecon.com/assets/charts.js?v=20261115d"></script>
+<script src="https://charts.eastasiaecon.com/assets/dashboard.js?v=20261115d"></script>
 <script>
 (function () {
   var API = "https://data-api-production-74e0.up.railway.app";
