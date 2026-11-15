@@ -1,329 +1,140 @@
 {{!< default}}
-{{!-- The tag above means: insert everything in this file
-into the {body} of the default.hbs template --}}
+{{!--
+  LIVE DASHBOARD - /jp/ /kr/ /tw/ /cn/ and /all/ (Region), and their topic pages /jp/prices/ ... (routes.yaml).
+  The pages /jp/ etc. already use this template; the topic pages are static routes onto it.
 
-{{!-- 
-NO CONFIGURATION NEEDED!
-This template automatically detects the country from the page slug.
-Your page slugs should be: jp, cn, kr, tw, hk, sg, or all
-
-To add categories for a country, just edit the sections below for that country code.
+  Who sees what is decided by the EAE data API (dashboards.py in eae-data-api), from the reader's Ghost plan:
+    Daily (and the legacy Individual plan)  every front page, incl. Region; notes open as excerpt + charts
+    Daily + Data                            the same plus every topic page
+    East Asia                               everything; notes open as the full post
+  The page asks Ghost for the reader's member token (/members/api/session, same origin), sends it to the API and
+  draws what comes back with dashboard.js from the chart site (window.EAEDash). Nothing gated is in this file.
+  Markup below = the dashboard's own (chartsite/scripts/build_dashboard.py PAGE); styles = dashboard-live.css,
+  scoped under .eae-dash so they cannot touch the rest of the theme.
+  The previous template (banner, post list, chart-pack iframes) is in ghost/theme_backups/.
 --}}
-
-{{!-- Header with country name over feature image --}}
-{{#post}}{{> "page-banner"}}{{/post}}
-
-<div id="site-main" class="site-main outer">
-    <main id="site-main" class="site-main outer">
-        <header class="article-header gh-canvas">
-            {{#if feature_image}}
-            <figure class="article-image">
-                <img
-                    srcset="{{img_url feature_image size="s"}} 300w,
-                            {{img_url feature_image size="m"}} 600w,
-                            {{img_url feature_image size="l"}} 1000w,
-                            {{img_url feature_image size="xl"}} 2000w"
-                    sizes="(min-width: 1400px) 1400px, 92vw"
-                    src="{{img_url feature_image size="xl"}}"
-                    alt="{{#if feature_image_alt}}{{feature_image_alt}}{{else}}{{title}}{{/if}}"
-                />
-                {{#if feature_image_caption}}
-                    <figcaption>{{feature_image_caption}}</figcaption>
-                {{/if}}
-            </figure>
-            {{/if}}
-        </header>
-
-        <div class="outer">
-            {{#page}}
-            <article class="post-full {{post_class}} no-image">
-                <section class="post-full-content">
-                    <div class="post-content">
-                        <h2 class="post-title latest-title">Articles</h2>
-                    </div>
-                </section>
-            </article>
-            {{/page}}
-        </div>
-
-{{#post}}
-{{#match slug "tw"}}{{> "country-posts" tagfilter="tag:hash-tw+tag:-hash-quick"}}{{/match}}
-{{#match slug "cn"}}{{> "country-posts" tagfilter="tag:hash-cn+tag:-hash-quick"}}{{/match}}
-{{#match slug "jp"}}{{> "country-posts" tagfilter="tag:hash-jp+tag:-hash-quick"}}{{/match}}
-{{#match slug "kr"}}{{> "country-posts" tagfilter="tag:hash-kr+tag:-hash-quick"}}{{/match}}
-{{#match slug "all"}}{{> "country-posts" tagfilter="tag:[hash-all,hash-all-2]+tag:-hash-quick"}}{{/match}}
-{{/post}}
-
-<div class="myBTNdiv">
-  <a href="https://www.eastasiaecon.com/cycle" class="myButton">Article archive</a>
-</div>
-
-
-   <style>
-
-        .menu-item, .myButton {
-            display: inline-block;
-            margin: 10px 5px;
-            font-size: 16px;
-            color: #ffffff;
-            text-decoration: none;
-            padding: 2px 15px;
-            border-radius: 5px;
-            font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen","Ubuntu","Cantarell","Fira Sans","Droid Sans","Helvetica Neue",sans-serif;
-            background-color: #104b1f;
-            transition: background-color 0.3s ease;
-            font-weight: bold;
-            text-align: center;
-            width: 150px;
-        }
-
-        .menu-item:hover, .myButton:hover {
-            background-color: rgba(16, 75, 31, 0.7);
-        }
-        
-        body {
-            overflow-x: auto;
-        }
-
-        .responsive-iframe {
-            width: 100%;
-            height: auto;
-            min-height: 1000px;
-        }
-
-        .myBTNdiv {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .menu-item {
-            margin: 0 10px;
-        }
-        #charts {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .myButton {
-        width: 200px;
-        }
-
-        .post-label {
-        display: inline-block;
-        padding: 5px 10px;
-        font-size: 14px;
-        font-weight: bold;
-        background-color: #ffffff;
-        border: 2px solid #104b1f;
-        border-radius: 5px;
-        color: #104b1f;
-        text-align: center;
-        margin: 5px 0;
-        }
-
-        /* Chart pack nav: underline tabs, not buttons.
-           Fixed 150px green blocks did not scale - the region page carries 15 packs, about
-           2,400px of chrome wrapping onto three rows. These size to their label, sit in one
-           sticky row, and scroll sideways when they do not fit.
-           The bar is painted #F0EDE4 to match the body background (set !important in the
-           theme css), so what you see is a hairline rule rather than a white slab.
-           Colours carry !important because the shared .menu-item/.myButton rule above, and
-           Casper's own link styling, otherwise win the cascade and leave green on green. */
-        #chart-menu {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-            display: flex;
-            flex-wrap: nowrap;
-            justify-content: center;
-            justify-content: safe center;   /* falls back to start when it overflows */
-            gap: 26px;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            scrollbar-width: none;
-            padding: 10px 16px 0;
-            margin-bottom: 18px;
-            background: #F0EDE4;
-            border-bottom: 1px solid rgba(16, 75, 31, 0.18);
-        }
-        #chart-menu::-webkit-scrollbar { display: none; }
-
-        #chart-menu .menu-item {
-            flex: 0 0 auto;
-            width: auto !important;
-            margin: 0 !important;
-            padding: 6px 0 !important;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 0 !important;
-            background: none !important;
-            background-color: transparent !important;
-            color: rgba(16, 75, 31, 0.6) !important;
-            border-bottom: 2px solid transparent;
-            white-space: nowrap;
-            transition: color 0.15s ease, border-color 0.15s ease;
-        }
-        #chart-menu .menu-item:hover {
-            color: #104b1f !important;
-            border-bottom-color: rgba(16, 75, 31, 0.35);
-        }
-        #chart-menu .menu-item.is-active {
-            color: #104b1f !important;
-            border-bottom-color: #104b1f;
-        }
-
-        /* Dark mode: the theme switches body to --color-darkmode, so follow it. */
-        @media (prefers-color-scheme: dark) {
-            #chart-menu {
-                background: var(--color-darkmode, #151719);
-                border-bottom-color: rgba(255, 255, 255, 0.18);
-            }
-            #chart-menu .menu-item { color: rgba(255, 255, 255, 0.6) !important; }
-            #chart-menu .menu-item:hover,
-            #chart-menu .menu-item.is-active { color: #ffffff !important; }
-            #chart-menu .menu-item.is-active { border-bottom-color: #ffffff; }
-        }
-    </style>
-
-
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&display=swap">
+<link rel="stylesheet" href="https://charts.eastasiaecon.com/assets/dashboard-live.css">
+<style>
+  .eae-dash { padding: 0 0 40px; }
+  .eae-dash .dash-msg { max-width: 640px; margin: 60px auto; padding: 28px 24px; text-align: center; border: 1px solid var(--border, #e3e0d6); border-radius: 8px; }
+  .eae-dash .dash-msg h2 { font-family: "Cormorant Garamond", Georgia, serif; font-size: 1.9rem; margin: 0 0 10px; }
+  .eae-dash .dash-msg p { margin: 8px 0; }
+  .eae-dash .dash-msg .btns { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .eae-dash .dash-msg .btns a { display: inline-block; padding: 8px 18px; border-radius: 5px; background: #104b1f; color: #fff; text-decoration: none; font-weight: 600; }
+  .eae-dash .dash-msg .btns a.alt { background: transparent; color: #104b1f; border: 1px solid #104b1f; }
+</style>
+<div class="eae-dash" id="eae-dash">
+  <p class="dash-msg" id="dash-loading">Loading the dashboard…</p>
+  <div class="dash-msg" id="dash-gate" hidden></div>
+  <div id="dash-app" hidden>
+<nav class="d-nav" id="d-nav" aria-label="Dashboard pages" hidden><div class="wrap"><ul id="d-menu"></ul></div></nav>
+<main class="wrap dash">
+  <h1 id="d-title"></h1>
+  <p class="lede" id="d-intro"></p>
+  <p class="stamp" id="d-stamp"></p>
+  <div id="notes-wrap" hidden>
+    <h2 class="band">Releases and notes <small id="n-count"></small>
+      <button class="link-btn n-toggle" type="button" id="n-toggle" aria-expanded="true" aria-controls="n-body">Hide</button></h2>
+    <div class="n-strip" id="n-strip" hidden></div>
+    <div class="n-rel" id="n-body">
+      <div class="n-feed" id="n-feed"><p class="n-msg">Loading notes…</p></div>
+      <aside class="n-side">
+        <div class="n-panel"><h4>Today's releases</h4><ul id="n-cal"></ul></div>
+        <div class="n-panel"><h4>Coming up</h4><ul id="n-next"></ul></div>
+        <p class="n-hint" id="n-hint"></p>
+      </aside>
+    </div>
+    <h2 class="band">Latest notes <small>Whatever their age. Quick reactions are only under Releases and notes.</small></h2>
+    <p class="n-sub">Cycle</p>
+    <div class="n-latest" id="n-latest"><p class="n-msg">Loading notes…</p></div>
+    <p class="n-sub">Thematic</p>
+    <div class="n-latest" id="n-other"><p class="n-msg">Loading notes…</p></div>
+    <p class="n-sub">Latest outlook and slide pack</p>
+    <div class="n-latest n-pair" id="n-pair"><p class="n-msg">Loading notes…</p></div>
+  </div>
+  <div id="sum-wrap" hidden>
+    <h2 class="band">Summary <small>From the latest notes on this data, newest first</small></h2>
+    <div class="sum" id="sum"><p class="n-msg">Loading notes…</p></div>
+  </div>
+  <h2 class="band" id="tiles-head">Headline indicators</h2>
+  <div class="tiles" id="tiles"></div>
+  <div id="sections"></div>
 </main>
+<div class="modal" id="modal" hidden>
+  <div class="box chart-card"><button class="link-btn close" type="button" id="modal-close">Close</button>
+    <div id="modal-card"></div></div>
 </div>
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Charts</title>
-</head>
-<body>
-
-<div id="site-main" class="site-main outer">
+<footer class="site-footer"><div class="wrap" id="d-foot"></div></footer>
+  </div>
 </div>
-
-<div id="charts" data-slug="{{slug}}">
-    <a href="#charts"></a><br>
-    <h2 class="post-title latest-title">Charts</h2>
-    <div id="chart-menu"></div>
-</div>
-
-<div id="chart-sections"></div>
-
-{{!-- Upgrade CTA shown to members without a qualifying tier --}}
-<div id="upgrade-cta" style="display: none; text-align: center; padding: 40px 20px; background-color: #f5f5f5; border-radius: 8px; margin: 20px auto; max-width: 600px;">
-    <h3>Additional Charts Available for Subscribers</h3>
-    <p>Access all {{title}} economic charts with an East Asia or Daily + Data subscription.</p>
-    <a href="#/portal/account/plans" class="myButton" style="display: inline-block; margin-top: 15px;">Upgrade</a>
-</div>
-
-{{!-- ==========================================================================
-     ONE template for every country page. The page SLUG is the country code
-     (jp / cn / kr / tw / all  -> the "all" page uses the region_* charts).
-     PACKS below is the SINGLE list of all possible chart packs; each is shown
-     only if its chart actually exists on netlify (probed live). The live probe
-     needs Access-Control-Allow-Origin on the netlify charts site -> add a
-     `_headers` file there ( /*  Access-Control-Allow-Origin: * ) and deploy it,
-     otherwise every probe fails (CORS) and no charts render.
-     'consumer' is public; every other pack is gated to East Asia / Daily + Data.
-     ========================================================================== --}}
+<script src="https://charts.eastasiaecon.com/assets/vendor/echarts.custom.js"></script>
+<script src="https://charts.eastasiaecon.com/assets/charts.js"></script>
+<script src="https://charts.eastasiaecon.com/assets/dashboard.js"></script>
 <script>
 (function () {
-    var NETLIFY = "https://main--beautiful-dolphin-db8ab2.netlify.app/charts";
+  var API = "https://data-api-production-74e0.up.railway.app";
+  var ASSETS = "https://charts.eastasiaecon.com/assets/";
+  var NAMES = { jp: "Japan", kr: "Korea", tw: "Taiwan", cn: "China", region: "Region" };
+  var parts = location.pathname.split("/").filter(Boolean);
+  var base = parts[0] || "";
+  var cc = base === "all" ? "region" : base;
+  var page = parts[1] || "index";
+  var $ = function (id) { return document.getElementById(id); };
+  function navHref(slug) { return "/" + base + "/" + (slug === "index" ? "" : slug + "/"); }
+  function show(id) { ["dash-loading", "dash-gate", "dash-app"].forEach(function (x) { $(x).hidden = x !== id; }); }
 
-    var slug = (document.getElementById('charts').dataset.slug
-            || location.pathname.split('/').filter(Boolean)[0] || "").trim().toLowerCase();
-    var cc   = (slug === 'all') ? 'region' : slug;   // the "all" page uses the region charts
+  // Locked: not signed in (401) -> sign in / plans; signed in on too low a plan (403) -> upgrade. Same split as the API.
+  function gate(status, d) {
+    var name = NAMES[cc] || "This";
+    var need = d.required_label || "a subscription";
+    var html = status === 401
+      ? '<h2>The ' + name + ' dashboard is for subscribers</h2>' +
+        '<p>Headline data, the latest releases and notes, and the charts behind them. ' +
+        (page === "index" ? "The front pages come with the Daily plan." : "Topic pages come with the " + need + " plan.") + '</p>' +
+        '<div class="btns"><a href="#/portal/signin">Sign in</a><a class="alt" href="#/portal/signup">See the plans</a></div>'
+      : '<h2>This page is on the ' + need + ' plan</h2>' +
+        '<p>' + (page === "index" ? "The dashboards come with the Daily plan and above."
+                 : "Topic pages come with Daily + Data and East Asia. Your plan includes the " + name + ' <a href="' + navHref("index") + '">front page</a>.') + '</p>' +
+        '<div class="btns"><a href="#/portal/account/plans">Upgrade</a></div>';
+    $("dash-gate").innerHTML = html;
+    show("dash-gate");
+  }
 
-    // --- what packs exist comes from the manifest, not from a list kept in here ---------
-    // charts/index.json is written by netifly/build_chart_index.py, which scans the chart
-    // files on disk. Publishing <cc>_<pack>.html and re-running it is all that is needed for
-    // a new pack to appear here - no theme edit. Replaces the old hardcoded PACKS list, which
-    // silently ignored anything not written into it (kr_fiscal sat unused for months), and
-    // replaces one HEAD probe per pack per page load with a single request.
-    var FALLBACK = ['consumer', 'exports', 'prices', 'corp_px', 'surveys', 'markets',
-                    'flows', 'labour', 'macro', 'money', 'fiscal', 'industry'];
-
-    // 'consumer' is free; everything else needs a qualifying subscription tier. Note a newly
-    // published pack is gated by default - add it here to make it public.
-    var PUBLIC = { consumer: true };
-    var allowedTiers = ['East Asia', 'Daily + Data'];
-    var memberTiers = [{{#if @member}}{{#foreach @member.subscriptions}}"{{tier.name}}"{{#unless @last}}, {{/unless}}{{/foreach}}{{/if}}];
-    var hasAccess = memberTiers.some(function (t) { return allowedTiers.indexOf(t) !== -1; });
-
-    function titleCase(sl) {
-        return sl.replace(/_/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-    }
-    function packUrl(slug) { return NETLIFY + '/' + cc + '/' + cc + '_' + slug; }
-
-    function sectionHtml(slug, label) {
-        return '<div id="pack_' + slug + '">' +
-                 '<a id="pack_' + slug + '_anchor"></a>' +
-                 '<h2>' + label + '</h2>' +
-                 '<figure class="kg-image-card kg-width-full">' +
-                   '<iframe src="' + packUrl(slug) + '" class="responsive-iframe" width="100%" style="height: auto;" loading="lazy"></iframe>' +
-                 '</figure>' +
-               '</div>';
-    }
-
-    if (!cc) { return; }
-    var menu = document.getElementById('chart-menu');
-    var sections = document.getElementById('chart-sections');
-    var cta = document.getElementById('upgrade-cta');
-
-    function render(slugs, labels) {
-        var gatedExists = 0;
-        slugs.forEach(function (slug) {
-            var isPublic = !!PUBLIC[slug];
-            if (!isPublic) {
-                gatedExists++;
-                if (!hasAccess) { return; }            // gated + no access -> skip (CTA shown)
-            }
-            var label = (labels && labels[slug]) || titleCase(slug);
-            var a = document.createElement('a');
-            a.href = '#pack_' + slug + '_anchor';
-            a.className = 'menu-item';
-            a.dataset.slug = slug;
-            a.textContent = label;
-            menu.appendChild(a);
-            sections.insertAdjacentHTML('beforeend', sectionHtml(slug, label));
-        });
-        if (gatedExists > 0 && !hasAccess) { cta.style.display = 'block'; }
-        spy();
-    }
-
-    // Highlight the pack currently in view, and keep it scrolled into sight in the nav.
-    function spy() {
-        if (!('IntersectionObserver' in window)) { return; }
-        var items = menu.querySelectorAll('.menu-item');
-        if (!items.length) { return; }
-        var obs = new IntersectionObserver(function (entries) {
-            entries.forEach(function (e) {
-                if (!e.isIntersecting) { return; }
-                var slug = e.target.id.replace('pack_', '');
-                items.forEach(function (a) {
-                    var on = a.dataset.slug === slug;
-                    a.classList.toggle('is-active', on);
-                    if (on && menu.scrollWidth > menu.clientWidth) {
-                        a.scrollIntoView({ block: 'nearest', inline: 'nearest' });
-                    }
-                });
-            });
-        }, { rootMargin: '-15% 0px -75% 0px' });
-        sections.querySelectorAll('[id^="pack_"]').forEach(function (el) { obs.observe(el); });
-    }
-
-    fetch(NETLIFY + '/index.json', { cache: 'no-cache' })
-        .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-        .then(function (m) {
-            render(((m.countries || {})[cc] || []), m.labels || {});
+  if (!NAMES[cc]) { $("dash-loading").textContent = "No dashboard here."; return; }
+  fetch("/members/api/session", { credentials: "include" })
+    .then(function (r) { return r.ok ? r.text() : ""; })
+    .catch(function () { return ""; })
+    .then(function (tok) {
+      tok = (tok || "").trim();
+      var headers = tok ? { Authorization: "Bearer " + tok } : {};
+      return fetch(API + "/dashboards/" + cc + "/" + encodeURIComponent(page), { headers: headers, credentials: "omit" })
+        .then(function (r) {
+          if (r.status === 401 || r.status === 403) {
+            return r.json().catch(function () { return {}; }).then(function (b) { gate(r.status, (b && b.detail) || {}); return null; });
+          }
+          if (r.status === 404) { $("dash-loading").textContent = "There is no such dashboard page."; return null; }
+          if (!r.ok) throw new Error("HTTP " + r.status);
+          return r.json();
         })
-        .catch(function () {
-            // manifest missing or not yet deployed: fall back to the core packs so the page
-            // is not blank, and let a 404 iframe be the only cost of a pack that is absent.
-            render(FALLBACK, null);
+        .then(function (j) {
+          if (!j) return;
+          var full = j.your_access === "full";
+          show("dash-app");
+          document.title = j.data.title + " — East Asia Econ";
+          window.EAEDash(j.data, {
+            theme: "light", assets: ASSETS, navHref: navHref,
+            // Daily and Daily + Data: a note opens here as its excerpt and charts; East Asia readers go to the post
+            openNote: full ? null : function (id) {
+              return fetch(API + "/notes/" + id, { headers: headers, credentials: "omit" })
+                .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+                .then(function (x) { return x.note; });
+            },
+            upgradeHtml: full ? "" : 'The full note is on the East Asia plan &middot; <a href="#/portal/account/plans">Upgrade</a>'
+          });
         });
+    })
+    .catch(function () { $("dash-loading").textContent = "The dashboard couldn't load just now. Please try again in a minute."; show("dash-loading"); });
 })();
 </script>
-
-</body>
-</html>
